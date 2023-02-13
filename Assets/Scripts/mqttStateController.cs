@@ -2,11 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class mqttController : MonoBehaviour
+public class mqttStateController : MonoBehaviour
 {
-    public string nameController = "Controller 1";
-    public string tagOfTheMQTTReceiver="";
+    public string nameController = "State Controller";
+    public string tagOfTheMQTTReceiver = "MQTTState";
     public mqttReceiver _eventSender;
+
+    // Initial Values
+    public const float maxHealth = 100;    
+    public int bulletCount = 6;
+    public int grenadeCount = 2;
+    public int shieldCount = 3;
+    public int killCount = 0;  
+
+    // Player 1
+
+    // Player 2
 
     void Start()
     {
@@ -17,5 +28,6 @@ public class mqttController : MonoBehaviour
     private void OnMessageArrivedHandler(string newMsg)
     {
         Debug.Log("Event Fired. The message, from Object " +nameController+" is = " + newMsg);
+        
     }
 }

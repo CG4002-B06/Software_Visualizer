@@ -33,10 +33,10 @@ public class mqttReceiver : M2MqttUnityClient
 {
     [Header("MQTT topics")]
     [Tooltip("Set the topic to subscribe. !!!ATTENTION!!! multi-level wildcard # subscribes to all topics")]
-    public string topicSubscribe = "publisher/player1"; // topic to subscribe. !!! The multi-level wildcard # is used to subscribe to all the topics. Attention i if #, subscribe to all topics. Attention if MQTT is on data plan
+    public string topicSubscribe = "Player"; // topic to subscribe. !!! The multi-level wildcard # is used to subscribe to all the topics. Attention i if #, subscribe to all topics. Attention if MQTT is on data plan
     [Tooltip("Set the topic to publish (optional)")]
-    public string topicPublish = "test"; // topic to publish
-    public string messagePublish = "Hello"; // message to publish
+    public string topicPublish = ""; // topic to publish
+    public string messagePublish = ""; // message to publish
 
     [Tooltip("Set this to true to perform a testing cycle automatically on startup")]
     public bool autoTest = false;

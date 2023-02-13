@@ -795,7 +795,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1699045182}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: Disconnect
         m_Mode: 1
@@ -962,7 +962,7 @@ MonoBehaviour:
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1699045182}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: SetBrokerPort
         m_Mode: 0
@@ -1671,7 +1671,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1699045182}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: SetBrokerAddress
         m_Mode: 0
@@ -2044,7 +2044,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1699045182}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: SetUiMessage
         m_Mode: 5
@@ -2317,16 +2317,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbaa80705124f9e439d56ca6d5e6db69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brokerAddress: c3cdb3543d864e04ab578cac5a022296.s1.eu.hivemq.cloud
+  brokerAddress: 01f054988a0f4d7ea2bbe9aaa0b080f7.s2.eu.hivemq.cloud
   brokerPort: 8883
   isEncrypted: 1
   connectionDelay: 500
   timeoutOnConnection: 30000
   autoConnect: 1
-  mqttUserName: producer
-  mqttPassword: producer
-  topicSubscribe: publisher/player1
-  topicPublish: publisher/player1
+  mqttUserName: cg4002
+  mqttPassword: password
+  topicSubscribe: Player
+  topicPublish: test
   autoTest: 0
   consoleInputField: {fileID: 221991987}
   encryptedToggle: {fileID: 1740149083}
@@ -2363,17 +2363,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 109a27f6018a0c84ea0290fd1f057ea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brokerAddress: c3cdb3543d864e04ab578cac5a022296.s1.eu.hivemq.cloud
+  brokerAddress: 01f054988a0f4d7ea2bbe9aaa0b080f7.s2.eu.hivemq.cloud
   brokerPort: 8883
   isEncrypted: 1
   connectionDelay: 500
   timeoutOnConnection: 30000
   autoConnect: 1
-  mqttUserName: producer
-  mqttPassword: producer
-  topicSubscribe: publisher/player1
+  mqttUserName: cg4002
+  mqttPassword: password
+  topicSubscribe: '#'
   topicPublish: test
-  messagePublish: Hello
+  messagePublish: Siuuuu
   autoTest: 0
 --- !u!1 &1740149081
 GameObject:
@@ -2461,7 +2461,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1699045182}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: M2MqttUnity.Examples.M2MqttUnityTest, Assembly-CSharp
         m_MethodName: SetEncrypted
         m_Mode: 0

@@ -20,6 +20,7 @@ public class OpenScreen : MonoBehaviour
     public void OpenRedScreen(bool status)
     {
         hasHit = status;
+        hasReload = false;
         if(status == true)
         {
             currentTime = 1;
@@ -35,6 +36,7 @@ public class OpenScreen : MonoBehaviour
     public void OpenYellowScreen(bool status)
     {
         hasReload = status;
+        hasHit = false;
         if(status == true)
         {
             currentTime = 1;
