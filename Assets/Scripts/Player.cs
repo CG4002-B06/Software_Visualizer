@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 
     // Shield
     public const float maxShieldHealth = 30;
-    private float shieldHealth;
+    public float shieldHealth;
     public int shieldCount = 3;
   
     // Kill Count 
@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
     // Parameters
     public float chipSpeed = 2f;
     private float lerpTimer;
-    private bool isTimerOver = true;
 
     public bool status = true;
 
@@ -78,14 +77,44 @@ public class Player : MonoBehaviour
         Health();
         Shield();
         IsActiveShield();
-        HP.text = "" + health; 
+        InventoryCount();
+    }
+
+    public void InventoryCount()
+    {
         BulletCount.text = "" + bulletCount;
         ShieldCount.text = "" + shieldCount;
         GrenadeCount.text = "" + grenadeCount;
     }
+    public void UpdateHealth(float newHealth)
+    {
+        health = newHealth;
+    }
+
+    public void UpdateShieldHealth(float newShieldHealth)
+    {
+        shieldHealth = newShieldHealth;
+    }
+
+    public void UpdateBulletCount(int newBulletCount)
+    {
+        bulletCount = newBulletCount;
+    }
+
+    public void UpdateShieldCount(int newShieldCount)
+    {
+        shieldCount = newShieldCount;
+    }
+
+    public void UpdateGrenadeCount(int newGrenadeCount)
+    {
+        grenadeCount = newGrenadeCount;
+    }
+
 
     public void Health()
     {
+        HP.text = "" + health;
         health = Mathf.Clamp(health, 0, maxHealth);
 
         if(shieldHealth == 0)
@@ -113,7 +142,6 @@ public class Player : MonoBehaviour
 
     public void UpdateHealthUI(float health)
     {
-        Debug.Log(health);
         float fillF = FrontHealthBar.fillAmount;
         float fillB = BackHealthBar.fillAmount;
         float hFraction = health / maxHealth;
@@ -146,8 +174,6 @@ public class Player : MonoBehaviour
 
     public void UpdateShieldUI(float shieldHealth)
     {
-        Debug.Log(shieldHealth);
-        
         float fillF = FrontShieldBar.fillAmount;
         float hFraction = shieldHealth / maxShieldHealth;
 
@@ -172,7 +198,8 @@ public class Player : MonoBehaviour
         { 
             if(Players.Equals(GameObject.Find("P2")))
             {
-                bulletShooter.BulletShooter();   
+                openScreen.OpenWhiteScreen(true);
+                bulletShooter.BulletShooter(); 
             }
             else if(Players.Equals(GameObject.Find("P1")))
             {
@@ -265,7 +292,7 @@ public class Player : MonoBehaviour
 
     public bool IsActiveShield()
     {
-        if(shieldHealth > 0)
+        if(shieldHealth < 0)
         {
             return true;
         }
@@ -315,6 +342,11 @@ public class Player : MonoBehaviour
     public void TargetFound(bool target)
     {
         status = target;
+    }
+
+    public bool ReturnTargetQuery()
+    {
+        return status;
     }
 
 }

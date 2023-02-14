@@ -43,7 +43,7 @@ public class mqttReceiver : M2MqttUnityClient
 
     //using C# Property GET/SET and event listener to reduce Update overhead in the controlled objects
     private string m_msg;
-    
+
     public string msg
     {
         get
@@ -88,12 +88,13 @@ public class mqttReceiver : M2MqttUnityClient
 
     // a list to store the messages
     private List<string> eventMessages = new List<string>();
-
+    
     public void Publish()
     {
-        client.Publish("publisher/player1", System.Text.Encoding.UTF8.GetBytes("Hello"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        client.Publish(topicPublish, System.Text.Encoding.UTF8.GetBytes(messagePublish), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
         Debug.Log("Test message published");
     }
+
     public void SetEncrypted(bool isEncrypted)
         {
             this.isEncrypted = isEncrypted;
@@ -152,7 +153,7 @@ public class mqttReceiver : M2MqttUnityClient
             msg = System.Text.Encoding.UTF8.GetString(message);
 
             Debug.Log("Received: " + msg);
-            Debug.Log("from topic: " + m_msg);
+            Debug.Log("from topic: " + topicSubscribe);
 
             StoreMessage(msg);
             if (topic == topicSubscribe)
@@ -177,7 +178,6 @@ public class mqttReceiver : M2MqttUnityClient
     protected override void Update()
         {
             base.Update(); // call ProcessMqttEvents()
-
         }
 
     private void OnDestroy()

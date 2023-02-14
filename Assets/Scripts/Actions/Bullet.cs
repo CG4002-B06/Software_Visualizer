@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
 
     public void BulletShooter()
     {
-        GameObject bullet = Instantiate(impactEffect, transform.position, transform.rotation);
+        Instantiate(impactEffect, transform.position, transform.rotation);
    
         // RaycastHit hit;
         // if(Physics.Raycast(transform.position, transform.forward, out hit))
@@ -28,7 +28,5 @@ public class Bullet : MonoBehaviour
 
         // var bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
         // bullet.GetComponent<Rigidbody>().velocity = transform.forward * bulletSpeed;
-
-        // Destroy(gameObject);
     }
 }

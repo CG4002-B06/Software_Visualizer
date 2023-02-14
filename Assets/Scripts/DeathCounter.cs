@@ -6,12 +6,12 @@ using TMPro;
 public class DeathCounter : MonoBehaviour
 {
 
-    public TextMeshProUGUI PlayerKillCount;
+    public TextMeshProUGUI PlayerDeathCount;
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerKillCount.text = "0";
+        PlayerDeathCount.text = "0";
     }
 
     // Update is called once per frame
@@ -20,8 +20,8 @@ public class DeathCounter : MonoBehaviour
         
     }
 
-    public void UpdatePlayerDeathCount(int killCount)
+    public void UpdatePlayerDeathCount(int deathCount)
     {
-        PlayerKillCount.text = "" + killCount;
+        PlayerDeathCount.text = "" + deathCount;
     }
 }

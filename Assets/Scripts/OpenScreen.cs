@@ -11,9 +11,11 @@ public class OpenScreen : MonoBehaviour
     public GameObject RedPanel;
     public GameObject BluePanel;
     public GameObject YellowPanel;
+    public GameObject WhitePanel;
 
     bool hasShield = false;
     bool hasHit = false;
+    bool hasFired = false;
     bool hasReload = false;
     
     // When shot or hit by grenade
@@ -23,7 +25,17 @@ public class OpenScreen : MonoBehaviour
         hasReload = false;
         if(status == true)
         {
-            currentTime = 1;
+            currentTime = 0.5f;
+        }
+    }
+
+    public void OpenWhiteScreen(bool status)
+    {
+        hasFired = status;
+        hasHit = false;
+        if(status == true)
+        {
+            currentTime = 0.3f;
         }
     }
 
@@ -53,6 +65,19 @@ public class OpenScreen : MonoBehaviour
             if (currentTime <= 0)
             {
                 RedPanel.SetActive(false);
+                hasHit = false;
+            }
+        }
+
+        if(hasFired)
+        {
+            WhitePanel.SetActive(true);
+            currentTime -= 1 * Time.deltaTime;
+
+            if (currentTime <= 0)
+            {
+                WhitePanel.SetActive(false);
+                hasFired = false;
             }
         }
 
@@ -74,6 +99,7 @@ public class OpenScreen : MonoBehaviour
             if (currentTime <= 0)
             {
                 YellowPanel.SetActive(false);
+                hasReload = false;
             }
         }
     }     
