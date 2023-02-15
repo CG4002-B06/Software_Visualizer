@@ -4180,14 +4180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e4b01fc74789bc4698d2930f97973d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameController: Event Controller
-  tagOfTheMQTTReceiver: MQTTEvent
-  _eventSender: {fileID: 109222787}
-  simulatorMessage: {fileID: 1112290597}
-  bulletCount: 6
-  grenadeCount: 2
-  shieldCount: 3
-  killCount: 0
 --- !u!1 &906591217
 GameObject:
   m_ObjectHideFlags: 0
@@ -4475,7 +4467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &976171596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4488,16 +4480,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4d201c874c24464d9a433520329a7e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brokerAddress: localhost
-  brokerPort: 1883
-  isEncrypted: 0
+  brokerAddress: 01f054988a0f4d7ea2bbe9aaa0b080f7.s2.eu.hivemq.cloud
+  brokerPort: 8883
+  isEncrypted: 1
   connectionDelay: 500
   timeoutOnConnection: 30000
-  autoConnect: 0
-  mqttUserName: 
-  mqttPassword: 
+  autoConnect: 1
+  mqttUserName: cg4002
+  mqttPassword: password
   topicSubscribe: 
-  topicPublish: 
+  topicPublish: QueryGrenade
   messagePublish: 
   autoTest: 0
 --- !u!4 &976171597
@@ -6622,7 +6614,7 @@ MonoBehaviour:
   nameController: State Controller
   tagOfTheMQTTReceiver: MQTTState
   _eventSender: {fileID: 1695488131}
-  mqttSend: {fileID: 0}
+  mqttSend: {fileID: 976171596}
   simulatorMessage: {fileID: 1700433576}
   P1BulletCount: {fileID: 1373493980}
   P1GrenadeCount: {fileID: 312158176}

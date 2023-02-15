@@ -233,6 +233,17 @@ public class Player : MonoBehaviour
             }
         }
         else {
+
+            if(Players.Equals(GameObject.Find("P2")))
+            {
+                openScreen.OpenWhiteScreen(true);
+                bulletShooter.BulletShooter(); 
+            }
+            else if(Players.Equals(GameObject.Find("P1")))
+            {
+                openScreen.OpenRedScreen(true);
+            }
+            bulletCount -= 1;
             Debug.Log("Miss");
         }
     }
@@ -273,6 +284,19 @@ public class Player : MonoBehaviour
             }
         }
         else {
+
+            if(Players.Equals(GameObject.Find("P2")))
+            {
+                grenadeThrower1.ThrowGrenade();
+                SWShield.SetActive(false);
+            }
+            
+            if(Players.Equals(GameObject.Find("P1")))
+            {
+                grenadeThrower2.ThrowGrenade();  
+                openScreen.OpenBlueScreen(false);
+            }
+            grenadeCount -= 1;
             Debug.Log("Miss");
         }
     }
@@ -308,8 +332,8 @@ public class Player : MonoBehaviour
         }
 
         // If shield is not yet active and player activates shield
-        if(!IsActiveShield())
-        {
+        // if(!IsActiveShield())
+        // {
             if(Players.Equals(GameObject.Find("P2")))
             {
                 SWShield.SetActive(true);
@@ -325,7 +349,7 @@ public class Player : MonoBehaviour
             shieldHealth = maxShieldHealth;   
             FrontShieldBar.fillAmount = shieldHealth;
             lerpTimer = 0f;
-        }
+        // }
     }
 
     public void RestoreHealth()

@@ -44,7 +44,7 @@ public class mqttStateController : MonoBehaviour
         
         Debug.Log(gameState.p1.action);
         // Warning Message
-        Debug.Log(gameState.p1.invalid_action);
+        // Debug.Log(gameState.p1.invalid_action);
         
         simulatorMessage.text = "" + gameState.p1.action; 
 
@@ -53,42 +53,45 @@ public class mqttStateController : MonoBehaviour
             if(gameState.p1.action == "grenade")
             {
                 player2.Grenade();
-                // if(player2.ReturnTargetQuery())
-                // {
-                //     Output output = new Output();
-                //     output.p1.checkTarget = true;
-                //     string message = JsonUtility.ToJson(output);
-                //     mqttSend.SetMessage(message);
-                //     mqttSend.Publish();
-                // }
-                // else {
-                //     Output output = new Output();
-                //     output.p1.checkTarget = false;
-                //     string message = JsonUtility.ToJson(output);
-                //     mqttSend.SetMessage(message);
-                //     mqttSend.Publish();
-                // }
+                Debug.Log(player1.ReturnTargetQuery());
+                if(player1.ReturnTargetQuery())
+                {
+                    Output output = new Output();
+                    output.p1 = true;
+                    string message = JsonUtility.ToJson(output);
+                    Debug.Log(message);
+
+                    _eventSender.SetMessage(message);
+                    _eventSender.Publish();
+                }
+                else {
+                    Output output = new Output();
+                    output.p1 = false;
+                    string message = JsonUtility.ToJson(output);
+                    _eventSender.SetMessage(message);
+                    _eventSender.Publish();
+                }
             }
             if(gameState.p2.action == "grenade")
             {
                 player1.Grenade();
-                // if(player1.ReturnTargetQuery())
-                // {
-                //     Output output = new Output();
-                //     output.p2.checkTarget = true;
-                //     string message = JsonUtility.ToJson(output);
-                //     mqttSend.SetMessage(message);
-                //     mqttSend.Publish();
-                // }
-                // else {
-                //     Output output = new Output();
-                //     output.p2.checkTarget = false;
-                //     string message = JsonUtility.ToJson(output);
-                //     mqttSend.SetMessage(message);
-                //     mqttSend.Publish();
-                // }
+                if(player1.ReturnTargetQuery())
+                {
+                    Output output = new Output();
+                    output.p2 = true;
+                    string message = JsonUtility.ToJson(output);
+                    _eventSender.SetMessage(message);
+                    _eventSender.Publish();
+                }
+                else {
+                    Output output = new Output();
+                    output.p2 = false;
+                    string message = JsonUtility.ToJson(output);
+                    _eventSender.SetMessage(message);
+                    _eventSender.Publish();
+                }
             }
-            if(gameState.p1.action == "shoot")
+            if(gameState.p1.action == "shoot" && player1.ReturnTargetQuery())
             {
                 player2.Bullet();
             }
@@ -183,13 +186,8 @@ public class player
 [System.Serializable]
 public class Output
 {
-    public players p1;
-    public players p2;
+    public bool p1;
+    public bool p2;
 }
 
-[System.Serializable]
-public class players
-{
-    public bool checkTarget;
-} 
 

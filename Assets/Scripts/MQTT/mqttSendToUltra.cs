@@ -35,7 +35,7 @@ public class mqttSendToUltra : M2MqttUnityClient
     [Tooltip("Set the topic to subscribe. !!!ATTENTION!!! multi-level wildcard # subscribes to all topics")]
     public string topicSubscribe = ""; // topic to subscribe. !!! The multi-level wildcard # is used to subscribe to all the topics. Attention i if #, subscribe to all topics. Attention if MQTT is on data plan
     [Tooltip("Set the topic to publish (optional)")]
-    public string topicPublish = ""; // topic to publish
+    public string topicPublish = "QueryGrenade"; // topic to publish
     public string messagePublish = ""; // message to publish
 
     [Tooltip("Set this to true to perform a testing cycle automatically on startup")]
@@ -96,7 +96,7 @@ public class mqttSendToUltra : M2MqttUnityClient
     
     public void Publish()
     {
-        client.Publish(topicPublish, System.Text.Encoding.UTF8.GetBytes(messagePublish), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        client.Publish("QueryGrenade", System.Text.Encoding.UTF8.GetBytes(messagePublish), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
         Debug.Log("Test message published");
     }
 
