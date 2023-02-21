@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
-//Attach script to P1 and P2 separately
 public class Player : MonoBehaviour
 {
     // Damage
     public const int bulletDamage = 10;
-    public int bulletCount = 6;
+    public int bulletCount;
     public const int grenadeDamage = 30;
-    public int grenadeCount = 2;
+    public int grenadeCount;
     
     // Health
     public const float maxHealth = 100;
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     // Shield
     public const float maxShieldHealth = 30;
     public float shieldHealth;
-    public int shieldCount = 3;
+    public int shieldCount;
   
     // Kill Count 
     public int killCount = 0;  
@@ -28,8 +28,7 @@ public class Player : MonoBehaviour
     // Parameters
     public float chipSpeed = 2f;
     private float lerpTimer;
-
-    public bool status = true;
+    public bool status = false;
 
     // Texts
     public TextMeshProUGUI HP;
@@ -45,23 +44,29 @@ public class Player : MonoBehaviour
     public Bullet bulletShooter;
     public OpenScreen openScreen;
     public Destructible destruct;
+    public SoundEffects soundEffects;
+    public InventoryBars inventoryBars;
 
     // Gameobjects
     public GameObject Timer;
     public GameObject Players;
 
+    // Opponent Detection
+    public GameObject CrossHair;
+
     public GameObject ImgTarget;
     public GameObject SWShield;
+    public GameObject CrackedShield;
 
     // Health and Shield Bar
     public Image FrontHealthBar;
     public Image BackHealthBar;
     public Image FrontShieldBar;
 
-
     // Start is called before the first frame update
     void Start()
     {
+        // Initalising variables
         health = maxHealth;
         shieldHealth = 0;
         HP.text = "100";
@@ -69,6 +74,12 @@ public class Player : MonoBehaviour
         bulletCount = 6;
         grenadeCount = 2;
         shieldCount = 3;
+        BulletCount.text = "" + bulletCount;
+        ShieldCount.text = "" + shieldCount;
+        GrenadeCount.text = "" + grenadeCount;
+        inventoryBars.SetAmmoBar(bulletCount);
+        inventoryBars.SetGrenadeBar(grenadeCount);
+        inventoryBars.SetShieldBar(shieldCount);
     }
 
     // Update is called once per frame
@@ -76,41 +87,11 @@ public class Player : MonoBehaviour
     {
         Health();
         Shield();
-        IsActiveShield();
         InventoryCount();
     }
 
-    public void InventoryCount()
-    {
-        BulletCount.text = "" + bulletCount;
-        ShieldCount.text = "" + shieldCount;
-        GrenadeCount.text = "" + grenadeCount;
-    }
-    public void UpdateHealth(float newHealth)
-    {
-        health = newHealth;
-    }
-
-    public void UpdateShieldHealth(float newShieldHealth)
-    {
-        shieldHealth = newShieldHealth;
-    }
-
-    public void UpdateBulletCount(int newBulletCount)
-    {
-        bulletCount = newBulletCount;
-    }
-
-    public void UpdateShieldCount(int newShieldCount)
-    {
-        shieldCount = newShieldCount;
-    }
-
-    public void UpdateGrenadeCount(int newGrenadeCount)
-    {
-        grenadeCount = newGrenadeCount;
-    }
-
+    // General functions
+// ---------------------------------------------------------------------------------------------------------------------
 
     public void Health()
     {
@@ -125,21 +106,9 @@ public class Player : MonoBehaviour
                 openScreen.OpenBlueScreen(false);
             }
         }
-        
-        if(health <= 0)
-        {
-            RestoreHealth();
-            // bulletCount = 6;
-            // grenadeCount = 2;
-            // shieldCount = 3;
-            // BulletCount.text = "" + bulletCount;
-            // GrenadeCount.text = "" + grenadeCount;
-            // ShieldCount.text = "" + shieldCount;
-            killCount++;
-            deathCounter.UpdatePlayerDeathCount(killCount);
-        }
     }
 
+    // Update healthbar UI
     public void UpdateHealthUI(float health)
     {
         float fillF = FrontHealthBar.fillAmount;
@@ -170,8 +139,14 @@ public class Player : MonoBehaviour
     {
         shieldHealth = Mathf.Clamp(shieldHealth, 0, maxShieldHealth);
         UpdateShieldUI(shieldHealth);
+
+        if(shieldHealth <= 0)
+        {
+            CrackedShield.SetActive(false);
+        }
     }
 
+    // Update shieldbar UI
     public void UpdateShieldUI(float shieldHealth)
     {
         float fillF = FrontShieldBar.fillAmount;
@@ -186,186 +161,175 @@ public class Player : MonoBehaviour
             FrontShieldBar.fillAmount = Mathf.Lerp(fillF, hFraction, percentComplete);
         }
     }
-
-    public void Bullet()
+    
+    // Update UI for bullet, shield and grenade counts
+    public void InventoryCount()
     {
-        if(bulletCount == 0)
-        { 
-            return;
+        BulletCount.text = "" + bulletCount;
+        ShieldCount.text = "" + shieldCount;
+        GrenadeCount.text = "" + grenadeCount;
+        inventoryBars.SetAmmoBar(bulletCount);
+        inventoryBars.SetGrenadeBar(grenadeCount);
+        inventoryBars.SetShieldBar(shieldCount);
+        BulletCount.color = Color.white;
+        GrenadeCount.color = Color.white;
+        ShieldCount.color = Color.white;
+
+        if(bulletCount <= 2) 
+        {
+            BulletCount.color = Color.red;
         }
-        
-        if(status)
+        if(grenadeCount <= 1) 
+        {
+            GrenadeCount.color = Color.red;
+        }
+        if(shieldCount <= 1) 
+        {
+            ShieldCount.color = Color.red;
+        }
+    }
+
+    // Action functions
+// ---------------------------------------------------------------------------------------------------------------------
+
+    // Action function for bullet
+    public void Bullet()
+    {   
+        if(status) // Checks if opponents is in field of view
         { 
-            if(Players.Equals(GameObject.Find("P2")))
+            // Update AR and screen effects
+            if(Players.Equals(GameObject.Find("P1")))
             {
                 openScreen.OpenWhiteScreen(true);
                 bulletShooter.BulletShooter(); 
             }
-            else if(Players.Equals(GameObject.Find("P1")))
+            else if(Players.Equals(GameObject.Find("P2")))
             {
                 openScreen.OpenRedScreen(true);
             }
 
+            if(shieldHealth >= bulletDamage)
+            {
+                CrackedShield.SetActive(true);
+            }
+
+            // Update UI
             if(shieldHealth == bulletDamage)
             {
-                shieldHealth -= bulletDamage;
-                shieldHealth = 0;
-
                 SWShield.SetActive(false);
                 openScreen.OpenBlueScreen(false);
-
-                HP.text = "" + health;
-                bulletCount -= 1;
                 lerpTimer = 0f;
             }
-            else if(shieldHealth > bulletDamage)
-            {
-                shieldHealth -= bulletDamage;  
-                bulletCount -= 1;
-                lerpTimer = 0f;
-            }
-            else 
-            {
-                health -= bulletDamage;
-                HP.text = "" + health;
-                bulletCount -= 1;
-                lerpTimer = 0f;
-            }
+            
+            lerpTimer = 0f;
         }
         else {
-
-            if(Players.Equals(GameObject.Find("P2")))
+            // Update AR and screen effects
+            if(Players.Equals(GameObject.Find("P1")))
             {
                 openScreen.OpenWhiteScreen(true);
-                bulletShooter.BulletShooter(); 
+                bulletShooter.BulletShooter();
             }
-            else if(Players.Equals(GameObject.Find("P1")))
+            else if(Players.Equals(GameObject.Find("P2")))
             {
                 openScreen.OpenRedScreen(true);
+                // Probably add player grunting sound
             }
-            bulletCount -= 1;
+
             Debug.Log("Miss");
         }
     }
 
+    // Action function for grenade
     public void Grenade()
     {
-        if(grenadeCount == 0)
+        if(status) // Checks if opponents is in field of view
         {
-            return;
-        }
-        if(status)
-        {
-            if(Players.Equals(GameObject.Find("P2")))
+            // Update AR and screen effects
+            if(Players.Equals(GameObject.Find("P1")))
             {
                 grenadeThrower1.ThrowGrenade();
                 SWShield.SetActive(false);
+                grenadeCount -= 1;
             }
             
-            if(Players.Equals(GameObject.Find("P1")))
+            if(Players.Equals(GameObject.Find("P2")))
             {
                 grenadeThrower2.ThrowGrenade();  
                 openScreen.OpenBlueScreen(false);
-            }
-    
-            if(shieldHealth <= grenadeDamage)
-            {
-                health -= grenadeDamage - shieldHealth; 
-                shieldHealth = 0;
-                grenadeCount -= 1; 
-                lerpTimer = 0f;
-            }
-            else 
-            {
-                health -= grenadeDamage;
                 grenadeCount -= 1;
-                GrenadeCount.text = "" + grenadeCount;
-                lerpTimer = 0f;
             }
+            
+            lerpTimer = 0f;
         }
         else {
-
-            if(Players.Equals(GameObject.Find("P2")))
+            // Update AR and screen effects
+            if(Players.Equals(GameObject.Find("P1")))
             {
                 grenadeThrower1.ThrowGrenade();
                 SWShield.SetActive(false);
+                grenadeCount -= 1;
             }
             
-            if(Players.Equals(GameObject.Find("P1")))
+            if(Players.Equals(GameObject.Find("P2")))
             {
                 grenadeThrower2.ThrowGrenade();  
                 openScreen.OpenBlueScreen(false);
+                grenadeCount -= 1;
             }
-            grenadeCount -= 1;
+            
             Debug.Log("Miss");
-        }
+        }  
     }
 
+    // Action function for reload
     public void ReloadBullets()
     {
-        if(bulletCount == 0)
-        {
-            bulletCount = 6;
-            openScreen.OpenYellowScreen(true);
-        }
-        else
-        {
-            return;
-        }
+        openScreen.OpenYellowScreen(true);
     }
 
-    public bool IsActiveShield()
-    {
-        if(shieldHealth < 0)
-        {
-            return true;
-        }
-        
-        return false;
-    }
-
+    // Action function for shield
     public void ActivateShield()
     {
-        if(shieldCount == 0)
-        {
-            return;
-        }
-
-        // If shield is not yet active and player activates shield
-        // if(!IsActiveShield())
-        // {
-            if(Players.Equals(GameObject.Find("P2")))
-            {
-                SWShield.SetActive(true);
-            }
-            else if(Players.Equals(GameObject.Find("P1")))
-            {
-                openScreen.OpenBlueScreen(true);
-                Timer.SetActive(true);
-                shieldTimer.SetHasStart(true); 
-            }
-
-            shieldCount -= 1;
-            shieldHealth = maxShieldHealth;   
-            FrontShieldBar.fillAmount = shieldHealth;
-            lerpTimer = 0f;
-        // }
-    }
-
-    public void RestoreHealth()
-    {
-        health = maxHealth;
+        // Update UI
+        FrontShieldBar.fillAmount = shieldHealth;
         lerpTimer = 0f;
+
+        // Update AR and screen effects
+        if(Players.Equals(GameObject.Find("P2")))
+        {
+            SWShield.SetActive(true);
+        }
+        
+        if(Players.Equals(GameObject.Find("P1")))
+        {
+            openScreen.OpenBlueScreen(true);
+            Timer.SetActive(true);
+            shieldTimer.SetHasStart(true); 
+        }
     }
 
+    // Helper functions
+// ---------------------------------------------------------------------------------------------------------------------
     public void DeactivateShield()
     {
         shieldHealth = 0;
+        soundEffects.playShieldDeactivationSound();
     }
 
     public void TargetFound(bool target)
     {
         status = target;
+        if(target == false)
+        {
+            CrossHair.SetActive(false);
+            soundEffects.playsTargetOffSightSound();
+        } 
+        else 
+        {
+            CrossHair.SetActive(true);
+            soundEffects.playsTargetOnSightSound();
+        }
     }
 
     public bool ReturnTargetQuery()
@@ -373,4 +337,36 @@ public class Player : MonoBehaviour
         return status;
     }
 
+    public void Logout()
+    {
+        SceneManager.LoadScene("LogoutScene");
+    }
+
+    // Updating new component values after recieveing new data packet from Game Engine
+// ---------------------------------------------------------------------------------------------------------------------
+
+    public void UpdateHealth(float newHealth)
+    {
+        health = newHealth;
+    }
+
+    public void UpdateShieldHealth(float newShieldHealth)
+    {
+        shieldHealth = newShieldHealth;
+    }
+
+    public void UpdateBulletCount(int newBulletCount)
+    {
+        bulletCount = newBulletCount;
+    }
+
+    public void UpdateShieldCount(int newShieldCount)
+    {
+        shieldCount = newShieldCount;
+    }
+
+    public void UpdateGrenadeCount(int newGrenadeCount)
+    {
+        grenadeCount = newGrenadeCount;
+    }
 }

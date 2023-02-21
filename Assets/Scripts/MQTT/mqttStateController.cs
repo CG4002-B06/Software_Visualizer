@@ -8,18 +8,8 @@ public class mqttStateController : MonoBehaviour
     public string nameController = "State Controller";
     public string tagOfTheMQTTReceiver = "MQTTState";
     public mqttReceiver _eventSender;
-    public mqttSendToUltra mqttSend;
 
     public TextMeshProUGUI simulatorMessage;
-    public TextMeshProUGUI P1BulletCount;
-    public TextMeshProUGUI P1GrenadeCount;
-    public TextMeshProUGUI P1ShieldCount;
-    public TextMeshProUGUI P1DeathCount;
-    
-    public TextMeshProUGUI P2BulletCount;
-    public TextMeshProUGUI P2GrenadeCount;
-    public TextMeshProUGUI P2ShieldCount;
-    public TextMeshProUGUI P2DeathCount;
 
     // Initial Values
     public const float maxHealth = 100;    
@@ -31,132 +21,165 @@ public class mqttStateController : MonoBehaviour
 
     public Player player1;
     public Player player2;
+    public SoundEffects soundEffect;
+    public MessageTimer message;
 
     void Start()
     {
         _eventSender=GameObject.FindGameObjectsWithTag(tagOfTheMQTTReceiver)[0].gameObject.GetComponent<mqttReceiver>();
         _eventSender.OnMessageArrived += OnMessageArrivedHandler;
     }
+
     // Separate data and link it to variables used in the other scripts and call the necessary functions
     private void OnMessageArrivedHandler(string newMsg)
     {
         var gameState = JsonUtility.FromJson<mqttState>(newMsg);
-        
+
         Debug.Log(gameState.p1.action);
-        // Warning Message
-        // Debug.Log(gameState.p1.invalid_action);
+        Debug.Log(gameState.p1.hp);
+        Debug.Log(gameState.p1.bullets);
         
-        simulatorMessage.text = "" + gameState.p1.action; 
-
-        if(gameState.correction == false)
+        if(gameState.correction == false) // No need correction. Show action and update all parameters
         {
-            if(gameState.p1.action == "grenade")
-            {
-                player2.Grenade();
-                Debug.Log(player1.ReturnTargetQuery());
-                if(player1.ReturnTargetQuery())
-                {
-                    Output output = new Output();
-                    output.p1 = true;
-                    string message = JsonUtility.ToJson(output);
-                    Debug.Log(message);
-
-                    _eventSender.SetMessage(message);
-                    _eventSender.Publish();
-                }
-                else {
-                    Output output = new Output();
-                    output.p1 = false;
-                    string message = JsonUtility.ToJson(output);
-                    _eventSender.SetMessage(message);
-                    _eventSender.Publish();
-                }
-            }
-            if(gameState.p2.action == "grenade")
-            {
-                player1.Grenade();
-                if(player1.ReturnTargetQuery())
-                {
-                    Output output = new Output();
-                    output.p2 = true;
-                    string message = JsonUtility.ToJson(output);
-                    _eventSender.SetMessage(message);
-                    _eventSender.Publish();
-                }
-                else {
-                    Output output = new Output();
-                    output.p2 = false;
-                    string message = JsonUtility.ToJson(output);
-                    _eventSender.SetMessage(message);
-                    _eventSender.Publish();
-                }
-            }
-            if(gameState.p1.action == "shoot" && player1.ReturnTargetQuery())
-            {
-                player2.Bullet();
-            }
-            else if(gameState.p2.action == "shoot")
-            {
-                player1.Bullet();
-            }
-            else if(gameState.p1.action == "shield")
-            {
-                player1.ActivateShield();
-            }
-            else if(gameState.p2.action == "shield")
-            {
-                player2.ActivateShield();
-            }
-            else if(gameState.p1.action == "reload")
-            {
-                player1.ReloadBullets();
-            }
-            else if(gameState.p2.action == "reload")
-            {
-                player2.ReloadBullets();
-            }
-        }
-
-        // When a corrected packet (normal != eval packet) is sent to the visualiser
-
-        // Correct player status and Update UI
-        else if(gameState.correction == true)
-        {
-            gameState.p1.hp = Mathf.Clamp(gameState.p1.hp, 0, maxHealth);
-            gameState.p1.shield_health = Mathf.Clamp(gameState.p1.shield_health, 0, maxShieldHealth);
-            player1.UpdateHealth(gameState.p1.hp);
-            // player1.UpdateHealthUI(gameState.p1.hp);
+            // Display warning emssage saying that game is updating 
+            // soundEffect.playStatusUpdatingSound();
+            // message.SetWarning("Game State Updating... \n Please wait a moment");
+                        
+            // Correct player status and Update UI
+    
+            float p1Health = Mathf.Clamp(gameState.p1.hp, 0, maxHealth);
+            float p1ShieldHealth = Mathf.Clamp(gameState.p1.shield_health, 0, maxShieldHealth);
+            player1.UpdateHealth(p1Health);
             player1.UpdateShieldHealth(gameState.p1.shield_health);
 
-            gameState.p2.hp = Mathf.Clamp(gameState.p2.hp, 0, maxHealth);
-            gameState.p2.shield_health = Mathf.Clamp(gameState.p2.shield_health, 0, maxShieldHealth);
+            float p2Health = Mathf.Clamp(gameState.p2.hp, 0, maxHealth);
+            float p2ShieldHealth = Mathf.Clamp(gameState.p2.shield_health, 0, maxShieldHealth);
             player2.UpdateHealth(gameState.p2.hp);
-            // player2.UpdateHealthUI(gameState.p2.hp);
             player2.UpdateShieldHealth(gameState.p2.shield_health);
 
             // Player 1
-            player1.UpdateBulletCount(gameState.p2.bullet);
-            // player2.BulletCount.text = "" + gameState.p1.bullet;
-
-            player1.UpdateGrenadeCount(gameState.p2.grenade);
-            // player2.GrenadeCount.text = "" + gameState.p1.grenade;
-
-            player1.UpdateShieldCount(gameState.p1.num_of_shield);
-            // player1.ShieldCount.text = "" + gameState.p1.num_of_shield;
-
-            player1.deathCounter.UpdatePlayerDeathCount(gameState.p1.num_of_death);
+            player1.UpdateBulletCount(gameState.p1.bullets);
+            player1.UpdateGrenadeCount(gameState.p1.grenades);
+            player1.UpdateShieldCount(gameState.p1.num_shield);
+            player1.deathCounter.UpdatePlayerDeathCount(gameState.p1.num_deaths);
             
             // Player 2   
-            player2.UpdateBulletCount(gameState.p1.bullet);
-            // player1.BulletCount.text = "" + gameState.p2.bullet;
+            player2.UpdateBulletCount(gameState.p2.bullets);
+            player2.UpdateGrenadeCount(gameState.p2.grenades);
+            player2.UpdateShieldCount(gameState.p2.num_shield);
+            player2.deathCounter.UpdatePlayerDeathCount(gameState.p2.num_deaths);
+        }
 
-            player2.UpdateGrenadeCount(gameState.p1.grenade);
-            // player1.GrenadeCount.text = "" + gameState.p2.grenade;
+        // Action
+        Debug.Log(gameState.p1.action);
 
-            player2.UpdateShieldCount(gameState.p2.num_of_shield);
-            // player2.ShieldCount.text = "" + gameState.p2.num_of_shield;
+        // Warning Message
+        Debug.Log(gameState.p1.invalid_action);
+        
+        // Display action (not necessary)
+        simulatorMessage.text = "" + gameState.p1.action;
 
-            player2.deathCounter.UpdatePlayerDeathCount(gameState.p2.num_of_death);
+        // Display Warning message
+        message.SetWarning(gameState.p1.invalid_action);
+
+        if(gameState.p1.action == "grenade")
+        {
+            player2.Grenade();
+            soundEffect.playGrenadeThrowSound();
+            Invoke("soundEffect.playGrenadeExplosionSound()", 2f);
+            
+            if(player2.ReturnTargetQuery())
+            {
+                soundEffect.playHitSound();
+                Output output = new Output();
+                output.p1 = true;
+                string message = JsonUtility.ToJson(output);
+                Debug.Log(message);
+
+                _eventSender.SetMessage(message);
+                _eventSender.Publish();
+            }
+            else {
+                soundEffect.playMissSound();
+                Output output = new Output();
+                output.p1 = false;
+                string message = JsonUtility.ToJson(output);
+                _eventSender.SetMessage(message);
+                _eventSender.Publish();
+            }
+        }
+        if(gameState.p2.action == "grenade")
+        {
+            player1.Grenade();
+            Invoke("soundEffect.playGrenadeIncomingSound()", 2f);
+
+            if(player1.ReturnTargetQuery())
+            {
+                Output output = new Output();
+                output.p2 = true;
+                string message = JsonUtility.ToJson(output);
+                _eventSender.SetMessage(message);
+                _eventSender.Publish();
+            }
+            else {
+                Output output = new Output();
+                output.p2 = false;
+                string message = JsonUtility.ToJson(output);
+                _eventSender.SetMessage(message);
+                _eventSender.Publish();
+            }
+        }
+        if(gameState.p1.action == "shoot") // Need to check if hit
+        {
+            if(gameState.p1.isHit == true)
+            {
+                player2.Bullet();
+                soundEffect.playBulletShootSound();
+                soundEffect.playHitSound();
+            }
+            else if(gameState.p1.isHit == false)
+            {
+                player2.Bullet();
+                soundEffect.playMissSound();
+            }         
+        }
+        else if(gameState.p2.action == "shoot")
+        {
+            if(gameState.p2.isHit == true)
+            {
+                player1.Bullet();
+                // Probably add player grunting sound
+                if(gameState.p1.shield_health >= 0)
+                {
+                    soundEffect.playsShieldCooldownSound();
+                }
+            }
+            else if(gameState.p2.isHit == false)
+            {
+                //  Opponent has missed shooting you
+            }
+        }
+        else if(gameState.p1.action == "shield")
+        {
+            player1.ActivateShield();
+            soundEffect.playShieldActivationSound();
+        }
+        else if(gameState.p2.action == "shield")
+        {
+            player2.ActivateShield();
+        }
+        else if(gameState.p1.action == "reload")
+        {
+            player1.ReloadBullets();
+            soundEffect.playReloadSound();
+        }
+        else if(gameState.p2.action == "reload")
+        {
+            player2.ReloadBullets();
+        }
+        else if(gameState.p1.action  == "logout" || gameState.p2.action == "logout")
+        {
+            player1.Logout();
         }
     }
 }
@@ -173,14 +196,16 @@ public class mqttState
 public class player 
 {
     public float hp;
-    public int grenade;
-    public int num_of_death;
-    public int num_of_shield;
-    public int bullet;
+    public int grenades;
+    public int num_deaths;
+    public int num_shield;
+    public int bullets;
     public float shield_health;
     public string action;
+    public float shield_time;
     public bool shot;
     public string invalid_action;
+    public bool isHit;
 }
 
 [System.Serializable]
@@ -189,5 +214,3 @@ public class Output
     public bool p1;
     public bool p2;
 }
-
-
