@@ -17,12 +17,16 @@ public class ShieldTimer : MonoBehaviour
     public Player shieldHealth;
     bool hasStart = false;
 
+    public void SetTime(float time)
+    {
+        currentTime = time;
+    }
+
     public void SetHasStart(bool status)
     {
         hasStart = status;
         if(status == true)
         {
-            currentTime = 10;
             countdownText.color = Color.white;
             P1ShieldButton.SetActive(false);
         }

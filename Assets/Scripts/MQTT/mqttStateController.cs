@@ -23,6 +23,7 @@ public class mqttStateController : MonoBehaviour
     public Player player2;
     public SoundEffects soundEffect;
     public MessageTimer message;
+    public ShieldTimer shieldTimer;
 
     void Start()
     {
@@ -69,24 +70,18 @@ public class mqttStateController : MonoBehaviour
             player2.UpdateShieldCount(gameState.p2.num_shield);
             player2.deathCounter.UpdatePlayerDeathCount(gameState.p2.num_deaths);
         }
-
-        // Action
-        Debug.Log(gameState.p1.action);
-
-        // Warning Message
-        Debug.Log(gameState.p1.invalid_action);
         
         // Display action (not necessary)
         simulatorMessage.text = "" + gameState.p1.action;
 
         // Display Warning message
-        message.SetWarning(gameState.p1.invalid_action);
+        message.SetWarning(gameState.p1.invalid);
 
         if(gameState.p1.action == "grenade")
         {
-            player2.Grenade();
+            player1.Grenade();
             soundEffect.playGrenadeThrowSound();
-            Invoke("soundEffect.playGrenadeExplosionSound()", 2f);
+            soundEffect.Invoke("playGrenadeExplosionSound", 2f);
             
             if(player2.ReturnTargetQuery())
             {
@@ -108,10 +103,10 @@ public class mqttStateController : MonoBehaviour
                 _eventSender.Publish();
             }
         }
-        if(gameState.p2.action == "grenade")
+        else if(gameState.p2.action == "grenade")
         {
-            player1.Grenade();
-            Invoke("soundEffect.playGrenadeIncomingSound()", 2f);
+            player2.Grenade();
+            soundEffect.Invoke("playGrenadeIncomingSound", 2f);
 
             if(player1.ReturnTargetQuery())
             {
@@ -129,7 +124,7 @@ public class mqttStateController : MonoBehaviour
                 _eventSender.Publish();
             }
         }
-        if(gameState.p1.action == "shoot") // Need to check if hit
+        else if(gameState.p1.action == "shoot") // Need to check if hit
         {
             if(gameState.p1.isHit == true)
             {
@@ -163,10 +158,16 @@ public class mqttStateController : MonoBehaviour
         {
             player1.ActivateShield();
             soundEffect.playShieldActivationSound();
+            
+            // Set Shield Timer
+            shieldTimer.SetTime(gameState.p1.shield_time);
         }
         else if(gameState.p2.action == "shield")
         {
             player2.ActivateShield();
+
+            // Set Shield Timer
+            shieldTimer.SetTime(gameState.p2.shield_time);
         }
         else if(gameState.p1.action == "reload")
         {
@@ -204,7 +205,7 @@ public class player
     public string action;
     public float shield_time;
     public bool shot;
-    public string invalid_action;
+    public string invalid;
     public bool isHit;
 }
 
