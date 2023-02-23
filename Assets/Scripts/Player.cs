@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Health();
-        Shield();
+        // Shield();
         InventoryCount();
     }
 
@@ -229,7 +229,7 @@ public class Player : MonoBehaviour
         if(Players.Equals(GameObject.Find("P1")))
         {
             grenadeThrower1.ThrowGrenade();
-            SWShield.SetActive(false);
+            // SWShield.SetActive(false);
         }
         
         if(Players.Equals(GameObject.Find("P2")))

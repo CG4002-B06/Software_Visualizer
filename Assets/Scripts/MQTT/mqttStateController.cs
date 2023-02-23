@@ -35,36 +35,17 @@ public class mqttStateController : MonoBehaviour
     private void OnMessageArrivedHandler(string newMsg)
     {
         var gameState = JsonUtility.FromJson<mqttState>(newMsg);
+        var player1_object = gameState.p1;
+        var player2_object = gameState.p2;
         
-        if(gameState.correction == false) // No need correction. Show action and update all parameters
+        // this is a correct packet. should update player status
+        if(gameState.correction) // No need correction. Show action and update all parameters
         {
             // Display warning emssage saying that game is updating 
             // soundEffect.playStatusUpdatingSound();
-            // message.SetWarning("Game State Updating... \n Please wait a moment");
-                        
-            // Correct player status and Update UI
-    
-            float p1Health = Mathf.Clamp(gameState.p1.hp, 0, maxHealth);
-            float p1ShieldHealth = Mathf.Clamp(gameState.p1.shield_health, 0, maxShieldHealth);
-            player1.UpdateHealth(p1Health);
-            player1.UpdateShieldHealth(gameState.p1.shield_health);
-
-            float p2Health = Mathf.Clamp(gameState.p2.hp, 0, maxHealth);
-            float p2ShieldHealth = Mathf.Clamp(gameState.p2.shield_health, 0, maxShieldHealth);
-            player2.UpdateHealth(gameState.p2.hp);
-            player2.UpdateShieldHealth(gameState.p2.shield_health);
-
-            // Player 1
-            player1.UpdateBulletCount(gameState.p1.bullets);
-            player1.UpdateGrenadeCount(gameState.p1.grenades);
-            player1.UpdateShieldCount(gameState.p1.num_shield);
-            player1.deathCounter.UpdatePlayerDeathCount(gameState.p1.num_deaths);
-            
-            // Player 2   
-            player2.UpdateBulletCount(gameState.p2.bullets);
-            player2.UpdateGrenadeCount(gameState.p2.grenades);
-            player2.UpdateShieldCount(gameState.p2.num_shield);
-            player2.deathCounter.UpdatePlayerDeathCount(gameState.p2.num_deaths);
+            message.SetWarning("Game State Updating... \n Please wait a moment");
+            updatePlayerStatus(player1_object, player2_object);
+            return;
         }
         
         // Display action (not necessary)
@@ -72,37 +53,31 @@ public class mqttStateController : MonoBehaviour
 
         // Perform actions only when there are no warning messages
         if(gameState.p1.invalid == null)
-        {      if(gameState.p1.action == "grenade")
+        {      
+            if(gameState.p1.action == "grenade")
             {
-                if(player2.ReturnTargetQuery())
+                if (gameState.p1.num_deaths < 0)
                 {
+                    Output output = new Output();
                     player1.Grenade();
                     // soundEffect.playGrenadeThrowSound();
-                    // // soundEffect.Invoke("playGrenadeExplosionSound", 2f);
-                    // Debug.Log(player2.ReturnTargetQuery());
-                    // soundEffect.playHitSound();
-
-                    Output output = new Output();
-                    output.p1 = true;
-                    string message = JsonUtility.ToJson(output);
-                    Debug.Log(message);
-                    _eventSender.SetMessage(message);
+                    if(player2.ReturnTargetQuery())
+                    {
+                        // soundEffect.Invoke("playGrenadeExplosionSound", 2f);
+                        // soundEffect.playHitSound();
+                        output.p1 = true;
+                    }
+                    else {
+                        // soundEffect.playMissSound();
+                        output.p1 = false;
+                    }
+                    Debug.Log(output.p1);
+                    _eventSender.SetMessage(JsonUtility.ToJson(output));
                     _eventSender.Publish();
+                    return;
                 }
-                else {
-                    player1.Grenade();
-                    // soundEffect.playMissSound();
-                    // soundEffect.playGrenadeThrowSound();
-
-                    Output output = new Output();
-                    output.p1 = false;
-                    string message = JsonUtility.ToJson(output);
-                    Debug.Log(message);
-                    _eventSender.SetMessage(message);
-                    _eventSender.Publish();
-                }
-            }
-            if(gameState.p1.action == "shoot") // Need to check if hit
+            }    
+            else if(gameState.p1.action == "shoot") // Need to check if hit
             {
                 if(gameState.p1.shot == true)
                 {
@@ -156,12 +131,39 @@ public class mqttStateController : MonoBehaviour
                 player1.Logout();
                 player2.Logout();
             }
+            updatePlayerStatus(player1_object, player2_object);
         }
+        
         else 
         {
             // Display Warning message
             message.SetWarning(gameState.p1.invalid);
         }
+    }
+
+    private void updatePlayerStatus(player player1_object, player player2_object)
+    {
+            float p1Health = Mathf.Clamp(player1_object.hp, 0, maxHealth);
+            float p1ShieldHealth = Mathf.Clamp(player1_object.shield_health, 0, maxShieldHealth);
+            player1.UpdateHealth(p1Health);
+            player1.UpdateShieldHealth(player1_object.shield_health);
+
+            float p2Health = Mathf.Clamp(player2_object.hp, 0, maxHealth);
+            float p2ShieldHealth = Mathf.Clamp(player2_object.shield_health, 0, maxShieldHealth);
+            player2.UpdateHealth(p2Health);
+            player2.UpdateShieldHealth(player2_object.shield_health);
+
+            // Player 1
+            player1.UpdateBulletCount(player1_object.bullets);
+            player1.UpdateGrenadeCount(player1_object.grenades);
+            player1.UpdateShieldCount(player1_object.num_shield);
+            player1.deathCounter.UpdatePlayerDeathCount(player1_object.num_deaths);
+            
+            // Player 2   
+            player2.UpdateBulletCount(player2_object.bullets);
+            player2.UpdateGrenadeCount(player2_object.grenades);
+            player2.UpdateShieldCount(player2_object.num_shield);
+            player2.deathCounter.UpdatePlayerDeathCount(player2_object.num_deaths);
     }
 }
 
@@ -182,7 +184,7 @@ public class player
     public int grenades;
     public float shield_time;
     public float shield_health;
-    public int num_deaths;
+    public int num_deaths = -1;
     public int num_shield;
     public bool shot;
     public string invalid;
