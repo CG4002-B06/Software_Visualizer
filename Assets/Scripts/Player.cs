@@ -195,91 +195,50 @@ public class Player : MonoBehaviour
     // Action function for bullet
     public void Bullet()
     {   
-        if(status) // Checks if opponents is in field of view
-        { 
-            // Update AR and screen effects
-            if(Players.Equals(GameObject.Find("P1")))
-            {
-                openScreen.OpenWhiteScreen(true);
-                bulletShooter.BulletShooter(); 
-            }
-            else if(Players.Equals(GameObject.Find("P2")))
-            {
-                openScreen.OpenRedScreen(true);
-            }
+        // Update AR and screen effects
+        if(Players.Equals(GameObject.Find("P1")))
+        {
+            openScreen.OpenWhiteScreen(true);
+            bulletShooter.BulletShooter(); 
+        }
+        else if(Players.Equals(GameObject.Find("P2")))
+        {
+            openScreen.OpenRedScreen(true);
+        }
 
-            if(shieldHealth >= bulletDamage)
-            {
-                CrackedShield.SetActive(true);
-            }
+        if(shieldHealth >= bulletDamage)
+        {
+            CrackedShield.SetActive(true);
+        }
 
-            // Update UI
-            if(shieldHealth == bulletDamage)
-            {
-                SWShield.SetActive(false);
-                openScreen.OpenBlueScreen(false);
-                lerpTimer = 0f;
-            }
-            
+        // Update UI
+        if(shieldHealth == bulletDamage)
+        {
+            SWShield.SetActive(false);
+            openScreen.OpenBlueScreen(false);
             lerpTimer = 0f;
         }
-        else {
-            // Update AR and screen effects
-            if(Players.Equals(GameObject.Find("P1")))
-            {
-                openScreen.OpenWhiteScreen(true);
-                bulletShooter.BulletShooter();
-            }
-            else if(Players.Equals(GameObject.Find("P2")))
-            {
-                openScreen.OpenRedScreen(true);
-                // Probably add player grunting sound
-            }
-
-            Debug.Log("Miss");
-        }
+        
+        lerpTimer = 0f;
     }
 
     // Action function for grenade
     public void Grenade()
     {
-        if(status) // Checks if opponents is in field of view
+        // Update AR and screen effects
+        if(Players.Equals(GameObject.Find("P1")))
         {
-            // Update AR and screen effects
-            if(Players.Equals(GameObject.Find("P1")))
-            {
-                grenadeThrower1.ThrowGrenade();
-                SWShield.SetActive(false);
-                grenadeCount -= 1;
-            }
-            
-            if(Players.Equals(GameObject.Find("P2")))
-            {
-                grenadeThrower2.ThrowGrenade();  
-                openScreen.OpenBlueScreen(false);
-                grenadeCount -= 1;
-            }
-            
-            lerpTimer = 0f;
+            grenadeThrower1.ThrowGrenade();
+            SWShield.SetActive(false);
         }
-        else {
-            // Update AR and screen effects
-            if(Players.Equals(GameObject.Find("P1")))
-            {
-                grenadeThrower1.ThrowGrenade();
-                SWShield.SetActive(false);
-                grenadeCount -= 1;
-            }
-            
-            if(Players.Equals(GameObject.Find("P2")))
-            {
-                grenadeThrower2.ThrowGrenade();  
-                openScreen.OpenBlueScreen(false);
-                grenadeCount -= 1;
-            }
-            
-            Debug.Log("Miss");
-        }  
+        
+        if(Players.Equals(GameObject.Find("P2")))
+        {
+            grenadeThrower2.ThrowGrenade();  
+            openScreen.OpenBlueScreen(false);
+        }
+        
+        lerpTimer = 0f;
     }
 
     // Action function for reload
@@ -348,11 +307,13 @@ public class Player : MonoBehaviour
     public void UpdateHealth(float newHealth)
     {
         health = newHealth;
+        lerpTimer = 0f;
     }
 
     public void UpdateShieldHealth(float newShieldHealth)
     {
         shieldHealth = newShieldHealth;
+        lerpTimer = 0f;
     }
 
     public void UpdateBulletCount(int newBulletCount)

@@ -8,12 +8,14 @@ public class MessageTimer : MonoBehaviour
 {
     float currentTime = 3;
     [SerializeField] TextMeshProUGUI warningText;
-    public RawImage warningBg;
+    public GameObject warningBg;
     public SoundEffects soundEffects;
 
     public void SetWarning(string warning)
     {
         warningText.text = warning;
+        currentTime = 3;
+        warningBg.SetActive(true);
 
         if(warning == "Warning! \n\n Unable to reload as you still have ammo") 
         {
@@ -39,14 +41,13 @@ public class MessageTimer : MonoBehaviour
 
     void Update()
     {
-        warningBg.enabled = true;
         currentTime -= 1 * Time.deltaTime;
 
         if (currentTime <= 0)
         {
             currentTime = 0;
-            warningText.text = "";
-            warningBg.enabled = false;
+            warningText.text = null;
+            warningBg.SetActive(false);
         }   
     }
 }

@@ -11,8 +11,6 @@ public class ShieldTimer : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI countdownText;
     public GameObject Timer;
-    public GameObject P1ShieldButton;
-    public Image FrontShieldBar;
     public OpenScreen openScreen;
     public Player shieldHealth;
     bool hasStart = false;
@@ -28,7 +26,6 @@ public class ShieldTimer : MonoBehaviour
         if(status == true)
         {
             countdownText.color = Color.white;
-            P1ShieldButton.SetActive(false);
         }
     }
 
