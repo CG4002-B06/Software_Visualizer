@@ -94,7 +94,7 @@ public class mqttStateController : MonoBehaviour
                 if(p2.shot == true)
                 {
                     player2.Bullet();
-                    // Probably add player grunting sound
+
                     if(p1.shield_health >= 0)
                     {
                         soundEffect.playsShieldCooldownSound();
@@ -132,7 +132,6 @@ public class mqttStateController : MonoBehaviour
             }
             updatePlayerStatus(p1, p2);
         }
-        
         else 
         {
             // Display Warning message
@@ -145,12 +144,12 @@ public class mqttStateController : MonoBehaviour
             float p1Health = Mathf.Clamp(player1_object.hp, 0, maxHealth);
             float p1ShieldHealth = Mathf.Clamp(player1_object.shield_health, 0, maxShieldHealth);
             player1.UpdateHealth(p1Health);
-            player1.UpdateShieldHealth(player1_object.shield_health);
+            player1.UpdateShieldHealth(p1ShieldHealth);
 
             float p2Health = Mathf.Clamp(player2_object.hp, 0, maxHealth);
             float p2ShieldHealth = Mathf.Clamp(player2_object.shield_health, 0, maxShieldHealth);
             player2.UpdateHealth(p2Health);
-            player2.UpdateShieldHealth(player2_object.shield_health);
+            player2.UpdateShieldHealth(p2ShieldHealth);
 
             // Player 1
             player1.UpdateBulletCount(player1_object.bullets);
