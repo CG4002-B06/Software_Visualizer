@@ -39,7 +39,6 @@ public class Player : MonoBehaviour
     // Scripts
     public DeathCounter deathCounter;
     public ShieldTimer shieldTimer;
-    public Shield2Timer shield2Timer;
     public GrenadeThrowerP1 grenadeThrower1;
     public GrenadeThrowerP2 grenadeThrower2;
     public BulletShooter bulletShooter;
@@ -50,7 +49,6 @@ public class Player : MonoBehaviour
 
     // Gameobjects
     public GameObject Timer;
-    public GameObject Timer2;
     public GameObject Players;
     public GameObject Laser;
 
@@ -260,6 +258,7 @@ public class Player : MonoBehaviour
             grenadeThrower1.ThrowGrenade();
             SWShield.SetActive(false);
             changeCrossHairSize.changeSize(2f);
+            soundEffects.PlayGrenadeThrowSound();
         }
         
         if(Players.Equals(GameObject.Find("P2")))
@@ -267,6 +266,7 @@ public class Player : MonoBehaviour
             grenadeThrower2.ThrowGrenade();
             openScreen.OpenBlueScreen(false);
             openScreen.InvokeRedScreen();
+            soundEffects.PlayGrenadeIncomingSound();
             soundEffects.InvokePlayBeingHitSound();
         }
         
@@ -277,6 +277,7 @@ public class Player : MonoBehaviour
     public void ReloadBullets()
     {
         openScreen.OpenYellowScreen(true);
+        soundEffects.PlayReloadSound();
     }
 
     // Action function for shield
@@ -290,8 +291,6 @@ public class Player : MonoBehaviour
         if(Players.Equals(GameObject.Find("P2")))
         {
             SWShield.SetActive(true);
-            Timer2.SetActive(true);
-            shield2Timer.SetHasStart(true);
         }
         
         if(Players.Equals(GameObject.Find("P1")))
@@ -299,6 +298,7 @@ public class Player : MonoBehaviour
             
             Timer.SetActive(true);
             shieldTimer.SetHasStart(true); 
+            soundEffects.PlayShieldActivationSound();
         }
     }
 
@@ -337,6 +337,8 @@ public class Player : MonoBehaviour
 
     public void InvokeLogout()
     {
+        soundEffects.PlayLogOutSound();
+        soundEffects.PlaySiuuuSound();
         Invoke("Logout", 1.5f);
     }
 

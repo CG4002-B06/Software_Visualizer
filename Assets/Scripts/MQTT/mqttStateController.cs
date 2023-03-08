@@ -24,7 +24,7 @@ public class mqttStateController : MonoBehaviour
     public SoundEffects soundEffect;
     public MessageTimer message;
     public ShieldTimer shieldTimer;
-    public Shield2Timer shield2Timer;
+    public Summary summary;
 
     void Start()
     {
@@ -38,6 +38,25 @@ public class mqttStateController : MonoBehaviour
         var gameState = JsonUtility.FromJson<mqttState>(newMsg);
         var p1 = gameState.p1;
         var p2 = gameState.p2;
+
+        // Information for summary table
+        int p1MissCount = 0;
+        int p1ShootCount = 0;
+        int p1GrenadeMissCount = 0;
+        int p1GrenadeHitCount = 0;
+        int p1DeathCounter = p1.num_deaths;
+        int p1ShootAcc = p1ShootCount*100/(p1ShootCount + p1MissCount);
+        int p1GrenadeAcc = p1GrenadeHitCount*100/(p1GrenadeHitCount + p1GrenadeMissCount);
+
+        int p2MissCount = 0;
+        int p2ShootCount = 0;
+        int p2GrenadeMissCount = 0;
+        int p2GrenadeHitCount = 0;
+        int p2DeathCounter = p2.num_deaths; 
+        int p2ShootAcc = p2ShootCount*100/(p2ShootCount + p2MissCount);
+        int p2GrenadeAcc = p2GrenadeHitCount*100/(p2GrenadeHitCount + p2GrenadeMissCount);
+
+        summary.SendSummary(p1DeathCounter, p1ShootAcc, p1GrenadeAcc, p2DeathCounter, p2ShootAcc, p2GrenadeAcc);
         
         // These all show the correct numbers recieved from the packet
         Debug.Log(p1.bullets);
@@ -65,17 +84,18 @@ public class mqttStateController : MonoBehaviour
                 {
                     Output output = new Output();
                     player1.Grenade();
-                    soundEffect.PlayGrenadeThrowSound();
 
                     if(player2.ReturnTargetQuery())
                     {
                         soundEffect.InvokePlayGrenadeExplosionSound();
                         soundEffect.PlayHitSound();
                         output.p1 = true;
+                        p1GrenadeHitCount += 1;
                     }
                     else {
                         soundEffect.PlayMissSound();
                         output.p1 = false;
+                        p1GrenadeMissCount += 1;
                     }
                     
                     Debug.Log(output.p1);
@@ -83,18 +103,25 @@ public class mqttStateController : MonoBehaviour
                     _eventSender.Publish();
                     return;
                 }
-            }    
-            else if(p1.action == "shoot") // Need to check if hit
+            } 
+            else if(p2.action == "grenade")
+            {
+                player2.Grenade();
+                p2GrenadeHitCount += 1;
+            }   
+            else if(p1.action == "shoot") 
             {
                 if(p1.shot == true)
                 {
-                player1.Bullet();
-                soundEffect.PlayBulletShootSound();
-                soundEffect.PlayHitSound();
+                    player1.Bullet();
+                    soundEffect.PlayBulletShootSound();
+                    soundEffect.PlayHitSound();
+                    p1ShootCount += 1;
                 }
                 else if(p1.shot == false)
                 {
                     soundEffect.PlayMissSound();
+                    p1MissCount += 1;
                 }        
             }
             else if(p2.action == "shoot")
@@ -102,28 +129,25 @@ public class mqttStateController : MonoBehaviour
                 if(p2.shot == true)
                 {
                     player2.Bullet();
+                    p2ShootCount += 1;
                 }
                 else if(p2.shot == false)
                 {
-                    //  Opponent has missed shooting you
-                    return;
+                    p2MissCount += 1;
                 }
             }
             else if(p1.action == "shield")
             {
                 player1.ActivateShield();
-                soundEffect.PlayShieldActivationSound();
                 shieldTimer.SetTime(p1.shield_time);
             }
             else if(p2.action == "shield")
             {
                 player2.ActivateShield();
-                shield2Timer.SetTime(p2.shield_time);
             }
             else if(p1.action == "reload")
             {
                 player1.ReloadBullets();
-                soundEffect.PlayReloadSound();
             }
             else if(p2.action == "reload")
             {
@@ -131,8 +155,6 @@ public class mqttStateController : MonoBehaviour
             }
             else if(p1.action  == "logout" || p2.action == "logout")
             {
-                soundEffect.PlayLogOutSound();
-                soundEffect.PlaySiuuuSound();
                 player1.InvokeLogout();
                 player2.InvokeLogout();
             }
