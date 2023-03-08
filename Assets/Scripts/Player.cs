@@ -109,11 +109,15 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(health >= 30 && health <= 50)
+        if(health > 50)
+        {
+            HP.color = Color.white;
+        }
+        else if(health >= 30 && health <= 50)
         {
             HP.color = Color.yellow;
         }
-        if(health < 30)
+        else
         {
             HP.color = Color.red;
         }
@@ -150,11 +154,6 @@ public class Player : MonoBehaviour
     {
         shieldHealth = Mathf.Clamp(shieldHealth, 0, maxShieldHealth);
         UpdateShieldUI(shieldHealth);
-
-        if(shieldHealth <= 0)
-        {
-            CrackedShield.SetActive(false);
-        }
     }
 
     // Update shieldbar UI
@@ -354,6 +353,11 @@ public class Player : MonoBehaviour
     {
         shieldHealth = newShieldHealth;
         lerpTimer = 0f;
+        
+        if(shieldHealth <= 0)
+        {
+            CrackedShield.SetActive(false);
+        }
     }
 
     public void UpdateBulletCount(int newBulletCount)

@@ -39,6 +39,11 @@ public class mqttStateController : MonoBehaviour
         var p1 = gameState.p1;
         var p2 = gameState.p2;
         
+        // These all show the correct numbers recieved from the packet
+        Debug.Log(p1.bullets);
+        Debug.Log(p1.grenades);
+        Debug.Log(p1.num_shield);
+        
         // this is a correct packet. should update player status
         if(gameState.correction)
         {
@@ -83,14 +88,14 @@ public class mqttStateController : MonoBehaviour
             {
                 if(p1.shot == true)
                 {
-                    player1.Bullet();
-                    soundEffect.PlayBulletShootSound();
-                    soundEffect.PlayHitSound();
+                player1.Bullet();
+                soundEffect.PlayBulletShootSound();
+                soundEffect.PlayHitSound();
                 }
                 else if(p1.shot == false)
                 {
                     soundEffect.PlayMissSound();
-                }         
+                }        
             }
             else if(p2.action == "shoot")
             {
@@ -143,41 +148,49 @@ public class mqttStateController : MonoBehaviour
 
     private void updatePlayerStatus(player player1_object, player player2_object)
     {
-            float p1Health = Mathf.Clamp(player1_object.hp, 0, maxHealth);
-            float p1ShieldHealth = Mathf.Clamp(player1_object.shield_health, 0, maxShieldHealth);
-            player1.UpdateHealth(p1Health);
-            player1.UpdateShieldHealth(p1ShieldHealth);
+        float p1Health = Mathf.Clamp(player1_object.hp, 0, maxHealth);
+        float p1ShieldHealth = Mathf.Clamp(player1_object.shield_health, 0, maxShieldHealth);
+        player1.UpdateHealth(p1Health);
+        player1.UpdateShieldHealth(p1ShieldHealth);
 
-            float p2Health = Mathf.Clamp(player2_object.hp, 0, maxHealth);
-            float p2ShieldHealth = Mathf.Clamp(player2_object.shield_health, 0, maxShieldHealth);
-            player2.UpdateHealth(p2Health);
-            player2.UpdateShieldHealth(p2ShieldHealth);
+        Debug.Log(player1_object.bullets);
+        Debug.Log(player1_object.grenades);
+        Debug.Log(player1_object.num_shield);
 
-            // Player 1
-            player1.UpdateBulletCount(player1_object.bullets);
-            player1.UpdateGrenadeCount(player1_object.grenades);
-            player1.UpdateShieldCount(player1_object.num_shield);
-            player1.deathCounter.UpdatePlayerDeathCount(player1_object.num_deaths);
-            
-            // Player 2   
-            player2.UpdateBulletCount(player2_object.bullets);
-            player2.UpdateGrenadeCount(player2_object.grenades);
-            player2.UpdateShieldCount(player2_object.num_shield);
-            player2.deathCounter.UpdatePlayerDeathCount(player2_object.num_deaths);
-            
-            if(player1_object.num_deaths > player2_object.num_deaths)
-            {
-                player1.deathCounter.SetColorAndSize(Color.red, 22);
-            } 
-            else if (player1_object.num_deaths < player2_object.num_deaths)
-            {
-                player2.deathCounter.SetColorAndSize(Color.red, 22);
-            } 
-            else
-            {
-                player1.deathCounter.SetColorAndSize(Color.white, 24);
-                player2.deathCounter.SetColorAndSize(Color.white, 24);
-            }
+        float p2Health = Mathf.Clamp(player2_object.hp, 0, maxHealth);
+        float p2ShieldHealth = Mathf.Clamp(player2_object.shield_health, 0, maxShieldHealth);
+        player2.UpdateHealth(p2Health);
+        player2.UpdateShieldHealth(p2ShieldHealth);
+
+        // Debug.Log(player1_object.bullets);
+        // Debug.Log(player1_object.grenades);
+        // Debug.Log(player1_object.num_shield);
+        
+        // Player 1
+        player1.UpdateBulletCount(player1_object.bullets);
+        player1.UpdateGrenadeCount(player1_object.grenades);
+        player1.UpdateShieldCount(player1_object.num_shield);
+        player1.deathCounter.UpdatePlayerDeathCount(player1_object.num_deaths);
+        
+        // Player 2   
+        player2.UpdateBulletCount(player2_object.bullets);
+        player2.UpdateGrenadeCount(player2_object.grenades);
+        player2.UpdateShieldCount(player2_object.num_shield);
+        player2.deathCounter.UpdatePlayerDeathCount(player2_object.num_deaths);
+        
+        if(player1_object.num_deaths > player2_object.num_deaths)
+        {
+            player1.deathCounter.SetColorAndSize(Color.red, 22);
+        } 
+        else if (player1_object.num_deaths < player2_object.num_deaths)
+        {
+            player2.deathCounter.SetColorAndSize(Color.red, 22);
+        } 
+        else
+        {
+            player1.deathCounter.SetColorAndSize(Color.white, 24);
+            player2.deathCounter.SetColorAndSize(Color.white, 24);
+        }
     }
 }
 

@@ -17,7 +17,7 @@ public class BulletShooter : MonoBehaviour
         // bullet.GetComponent<ShotBehavior>().setTarget(new Vector3(0, 0, 90));
         // GameObject.Destroy(bullet, 2f);
 
-        Invoke("InvokeLaserExplosion", 1f);   
+        Invoke("InvokeLaserExplosion", 0.1f);   
     }
 
     public void InvokeLaserExplosion()
