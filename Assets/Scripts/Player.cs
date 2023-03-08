@@ -39,21 +39,23 @@ public class Player : MonoBehaviour
     // Scripts
     public DeathCounter deathCounter;
     public ShieldTimer shieldTimer;
+    public Shield2Timer shield2Timer;
     public GrenadeThrowerP1 grenadeThrower1;
     public GrenadeThrowerP2 grenadeThrower2;
-    public Bullet bulletShooter;
+    public BulletShooter bulletShooter;
     public OpenScreen openScreen;
-    public Destructible destruct;
     public SoundEffects soundEffects;
     public InventoryBars inventoryBars;
+    public ChangeCrossHairSize changeCrossHairSize;
 
     // Gameobjects
     public GameObject Timer;
+    public GameObject Timer2;
     public GameObject Players;
+    public GameObject Laser;
 
     // Opponent Detection
     public GameObject CrossHair;
-
     public GameObject ImgTarget;
     public GameObject SWShield;
     public GameObject CrackedShield;
@@ -105,6 +107,15 @@ public class Player : MonoBehaviour
             {
                 openScreen.OpenBlueScreen(false);
             }
+        }
+
+        if(health >= 30 && health <= 50)
+        {
+            HP.color = Color.yellow;
+        }
+        if(health < 30)
+        {
+            HP.color = Color.red;
         }
     }
 
@@ -179,13 +190,23 @@ public class Player : MonoBehaviour
         {
             BulletCount.color = Color.red;
         }
+        else if (bulletCount == 3 || bulletCount == 4)
+        {
+            BulletCount.color = Color.yellow;
+        }
+
         if(grenadeCount <= 1) 
         {
             GrenadeCount.color = Color.red;
         }
+
         if(shieldCount <= 1) 
         {
             ShieldCount.color = Color.red;
+        } 
+        else if (shieldCount == 2)
+        {
+            ShieldCount.color = Color.yellow;
         }
     }
 
@@ -193,17 +214,26 @@ public class Player : MonoBehaviour
 // ---------------------------------------------------------------------------------------------------------------------
 
     // Action function for bullet
+    public void InvokeShootLaser()
+    {
+        Laser.SetActive(false);
+    }
     public void Bullet()
     {   
         // Update AR and screen effects
         if(Players.Equals(GameObject.Find("P1")))
         {
             openScreen.OpenWhiteScreen(true);
-            bulletShooter.BulletShooter(); 
+            Laser.SetActive(true);
+            Invoke("InvokeShootLaser", 1f);
+            bulletShooter.ShootBullet();
+            changeCrossHairSize.changeSize(1f);
         }
-        else if(Players.Equals(GameObject.Find("P2")))
+        
+        if(Players.Equals(GameObject.Find("P2")))
         {
             openScreen.OpenRedScreen(true);
+            soundEffects.PlayBeingHitSound();
         }
 
         if(shieldHealth >= bulletDamage)
@@ -230,12 +260,15 @@ public class Player : MonoBehaviour
         {
             grenadeThrower1.ThrowGrenade();
             SWShield.SetActive(false);
+            changeCrossHairSize.changeSize(2f);
         }
         
         if(Players.Equals(GameObject.Find("P2")))
         {
-            grenadeThrower2.ThrowGrenade();  
+            grenadeThrower2.ThrowGrenade();
             openScreen.OpenBlueScreen(false);
+            openScreen.InvokeRedScreen();
+            soundEffects.InvokePlayBeingHitSound();
         }
         
         lerpTimer = 0f;
@@ -258,11 +291,13 @@ public class Player : MonoBehaviour
         if(Players.Equals(GameObject.Find("P2")))
         {
             SWShield.SetActive(true);
+            Timer2.SetActive(true);
+            shield2Timer.SetHasStart(true);
         }
         
         if(Players.Equals(GameObject.Find("P1")))
         {
-            openScreen.OpenBlueScreen(true);
+            
             Timer.SetActive(true);
             shieldTimer.SetHasStart(true); 
         }
@@ -272,8 +307,8 @@ public class Player : MonoBehaviour
 // ---------------------------------------------------------------------------------------------------------------------
     public void DeactivateShield()
     {
-        shieldHealth = 0;
-        soundEffects.playShieldDeactivationSound();
+        // shieldHealth = 0;
+        soundEffects.PlayShieldDeactivationSound();
     }
 
     public void TargetFound(bool target)
@@ -282,12 +317,12 @@ public class Player : MonoBehaviour
         if(target == false)
         {
             CrossHair.SetActive(false);
-            soundEffects.playsTargetOffSightSound();
+            soundEffects.PlayTargetOffSightSound();
         } 
         else 
         {
             CrossHair.SetActive(true);
-            soundEffects.playsTargetOnSightSound();
+            soundEffects.PlayTargetOnSightSound();
         }
     }
 
@@ -299,6 +334,11 @@ public class Player : MonoBehaviour
     public void Logout()
     {
         SceneManager.LoadScene("LogoutScene");
+    }
+
+    public void InvokeLogout()
+    {
+        Invoke("Logout", 1.5f);
     }
 
     // Updating new component values after recieveing new data packet from Game Engine

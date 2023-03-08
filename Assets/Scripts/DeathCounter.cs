@@ -24,4 +24,10 @@ public class DeathCounter : MonoBehaviour
     {
         PlayerDeathCount.text = "" + deathCount;
     }
+
+    public void SetColorAndSize(Color color, int size)
+    {
+        PlayerDeathCount.color = color;
+        PlayerDeathCount.fontSize = size;
+    }
 }

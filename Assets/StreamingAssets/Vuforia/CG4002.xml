@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="IronManPic" size="0.297000 0.297000" />
+    <ImageTarget name="Iron_Man" size="0.297000 0.297000" />
+    <ImageTarget name="IronMan" size="0.215000 0.215000" />
     <ImageTarget name="shield" size="0.200000 0.177778" />
   </Tracking>
 </QCARConfig>

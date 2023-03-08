@@ -19,23 +19,23 @@ public class MessageTimer : MonoBehaviour
 
         if(warning == "Warning! \n\n Unable to reload as you still have ammo") 
         {
-            soundEffects.playReloadUnableSound();
+            soundEffects.PlayReloadUnableSound();
         } 
         else if(warning == "Warning! \n\n You are out of ammo") 
         {
-            soundEffects.playAmmoWarningSound();
+            soundEffects.PlayAmmoWarningSound();
         }
         else if(warning == "Warning! \n\n You are out of grenades") 
         {
-            soundEffects.playGrenadeUnableSound();
+            soundEffects.PlayGrenadeUnableSound();
         }
         else if(warning == "Warning! \n\n You are out of shields") 
         {
-            soundEffects.playShieldUnableSound();
+            soundEffects.PlayShieldUnableSound();
         }
         else if(warning == "Warning! \n\n Shield on cooldown") 
         {
-            soundEffects.playsShieldCooldownSound();
+            soundEffects.PlayShieldCooldownSound();
         }
     }
 

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SoundEffects : MonoBehaviour 
 {
@@ -14,6 +13,7 @@ public class SoundEffects : MonoBehaviour
     public AudioSource shieldDeactivationSound;
     public AudioSource reloadSound;
     public AudioSource deathSound;
+    public AudioSource beingHitSound;
 
     // Warning Sounds
     public AudioSource ammoWarningSound;
@@ -26,7 +26,9 @@ public class SoundEffects : MonoBehaviour
     public AudioSource shieldCooldownSound;
     public AudioSource targetOnSightSound;
     public AudioSource targetOffSightSound;
-    public AudioSource statusUpdatingSound;
+    public AudioSource statusUpdatingSound; 
+    public AudioSource logOutSound; 
+    public AudioSource siuuuSound;
 
     // Start is called before the first frame update
     void Start()
@@ -40,136 +42,123 @@ public class SoundEffects : MonoBehaviour
 
     }
 
-    public void playSettingsButtonSound()
+    public void PlayBeingHitSound()
+    {
+        beingHitSound.Play();
+    }
+
+    public void InvokePlayBeingHitSound()
+    {
+        Invoke("PlayBeingHitSound", 2f);
+    }
+
+    public void PlaySettingsButtonSound()
     {
         settingsSound.Play();
-   
-        DontDestroyOnLoad(settingsSound);
     }
 
-    public void playGrenadeThrowSound()
+    public void PlayGrenadeThrowSound()
     {
         grenadeThrowSound.Play();
-   
-        DontDestroyOnLoad(grenadeThrowSound);
     }
 
-    public void playBulletShootSound()
+    public void PlayBulletShootSound()
     {
         bulletShootSound.Play();
-   
-        DontDestroyOnLoad(bulletShootSound);
     }
 
-    public void playGrenadeExplosionSound()
+    public void PlayGrenadeExplosionSound()
     {
         grenadeExplosionSound.Play();
-   
-        DontDestroyOnLoad(grenadeExplosionSound);
     }
 
-    public void playShieldActivationSound()
+    public void InvokePlayGrenadeExplosionSound()
+    {
+        Invoke("PlayGrenadeExplosionSound", 2f);
+    }
+
+    public void PlayShieldActivationSound()
     {
         shieldActivationSound.Play();
-   
-        DontDestroyOnLoad(shieldActivationSound); 
     }
 
-    public void playShieldDeactivationSound()
+    public void PlayShieldDeactivationSound()
     {
         shieldDeactivationSound.Play();
-   
-        DontDestroyOnLoad(shieldDeactivationSound); 
     }
 
-    public void playReloadSound()
+    public void PlayReloadSound()
     {
         reloadSound.Play();
-   
-        DontDestroyOnLoad(reloadSound); 
     }
 
-    public void playDeathSound()
+    public void PlayDeathSound()
     {
         deathSound.Play();
-   
-        DontDestroyOnLoad(deathSound);
     }
 
-    public void playAmmoWarningSound()
+    public void PlayAmmoWarningSound()
     {
         ammoWarningSound.Play();
-   
-        DontDestroyOnLoad(ammoWarningSound);
     }
 
-    public void playGrenadeUnableSound()
+    public void PlayGrenadeUnableSound()
     {
         grenadeUnableSound.Play();
-   
-        DontDestroyOnLoad(grenadeUnableSound);
     }
 
-    public void playShieldUnableSound()
+    public void PlayShieldUnableSound()
     {
         shieldUnableSound.Play();
-   
-        DontDestroyOnLoad(shieldUnableSound);
     }
 
-    public void playReloadUnableSound()
+    public void PlayReloadUnableSound()
     {
         reloadUnableSound.Play();
-   
-        DontDestroyOnLoad(reloadUnableSound);
     }
 
-    public void playGrenadeIncomingSound()
+    public void PlayGrenadeIncomingSound()
     {
         grenadeIncomingSound.Play();
-   
-        DontDestroyOnLoad(grenadeIncomingSound);
     }
 
-    public void playHitSound()
+    public void PlayHitSound()
     {
         hitSound.Play();
-   
-        DontDestroyOnLoad(hitSound);
     }
 
-    public void playMissSound()
+    public void PlayMissSound()
     {
         missSound.Play();
-   
-        DontDestroyOnLoad(missSound);
     }
 
-    public void playsShieldCooldownSound()
+    public void PlayShieldCooldownSound()
     {
         shieldCooldownSound.Play();
-   
-        DontDestroyOnLoad(shieldCooldownSound);
     }
 
-    public void playsTargetOnSightSound()
+    public void PlayTargetOnSightSound()
     {
         targetOnSightSound.Play();
-   
-        DontDestroyOnLoad(targetOnSightSound);
     }
     
-    public void playsTargetOffSightSound()
+    public void PlayTargetOffSightSound()
     {
         targetOffSightSound.Play();
-   
-        DontDestroyOnLoad(targetOffSightSound);
     }
 
-    // public void playStatusUpdatingSound()
-    // {
-    //     statusUpdatingSound.Play();
-   
-    //     DontDestroyOnLoad(statusUpdatingSound);
-    // }
+    public void PlayLogOutSound()
+    {
+        logOutSound.Play();
+    }
+
+    public void PlayStatusUpdatingSound()
+    {
+        statusUpdatingSound.Play();
+    }
+
+    public void PlaySiuuuSound()
+    {
+        siuuuSound.Play();
+    }
 }

@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 859226564144021904}
   - component: {fileID: 859226564153618032}
-  - component: {fileID: 859226562938117469}
   - component: {fileID: 859226562938117465}
-  - component: {fileID: 859226562938117464}
-  - component: {fileID: 3189308608413486369}
+  - component: {fileID: 3595456709735568286}
+  - component: {fileID: 7155298868540718713}
   m_Layer: 0
   m_Name: WPN_MK2Grenade
   m_TagString: Untagged
@@ -29,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859226564144258480}
   m_LocalRotation: {x: -0.07734114, y: 0.6979908, z: 0.07639743, w: 0.70780694}
-  m_LocalPosition: {x: -14, y: -0, z: 996}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1575.67, y: 1472, z: 2670.5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -59,7 +58,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!54 &859226562938117469
+--- !u!136 &859226562938117465
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859226564144258480}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.05
+  m_Height: 0.05
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.04, z: 0}
+--- !u!114 &3595456709735568286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 859226564144258480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c295be107c76c954dbc2d68e016186a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 2
+  explosionEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b,
+    type: 3}
+--- !u!54 &7155298868540718713
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,51 +103,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &859226562938117465
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859226564144258480}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.05
-  m_Height: 0.05
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.04, z: 0}
---- !u!114 &859226562938117464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859226564144258480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c295be107c76c954dbc2d68e016186a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 2
-  radius: 5
-  force: 500
-  explosionEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b,
-    type: 3}
---- !u!114 &3189308608413486369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 859226564144258480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 721514da0e9a68f42b773642a961f5d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyedVersion: {fileID: 486204015865992849, guid: 0f5f9d115aa52cd498d386a178c7ff7f,
-    type: 3}
 --- !u!1 &859226564144258482
 GameObject:
   m_ObjectHideFlags: 0

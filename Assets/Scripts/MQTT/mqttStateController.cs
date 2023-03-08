@@ -24,6 +24,7 @@ public class mqttStateController : MonoBehaviour
     public SoundEffects soundEffect;
     public MessageTimer message;
     public ShieldTimer shieldTimer;
+    public Shield2Timer shield2Timer;
 
     void Start()
     {
@@ -41,7 +42,7 @@ public class mqttStateController : MonoBehaviour
         // this is a correct packet. should update player status
         if(gameState.correction)
         {
-            // soundEffect.playStatusUpdatingSound();
+            soundEffect.PlayStatusUpdatingSound();
             message.SetWarning("Game State Updating... \n Please wait a moment");
             updatePlayerStatus(p1, p2);
             return;
@@ -52,24 +53,26 @@ public class mqttStateController : MonoBehaviour
 
         // Perform actions only when there are no warning messages
         if(p1.invalid == null)
-        {      
+        {     
             if(p1.action == "grenade")
             {
                 if (p1.num_deaths < 0)
                 {
                     Output output = new Output();
                     player1.Grenade();
-                    // soundEffect.playGrenadeThrowSound();
+                    soundEffect.PlayGrenadeThrowSound();
+
                     if(player2.ReturnTargetQuery())
                     {
-                        // soundEffect.Invoke("playGrenadeExplosionSound", 2f);
-                        // soundEffect.playHitSound();
+                        soundEffect.InvokePlayGrenadeExplosionSound();
+                        soundEffect.PlayHitSound();
                         output.p1 = true;
                     }
                     else {
-                        // soundEffect.playMissSound();
+                        soundEffect.PlayMissSound();
                         output.p1 = false;
                     }
+                    
                     Debug.Log(output.p1);
                     _eventSender.SetMessage(JsonUtility.ToJson(output));
                     _eventSender.Publish();
@@ -81,12 +84,12 @@ public class mqttStateController : MonoBehaviour
                 if(p1.shot == true)
                 {
                     player1.Bullet();
-                    soundEffect.playBulletShootSound();
-                    soundEffect.playHitSound();
+                    soundEffect.PlayBulletShootSound();
+                    soundEffect.PlayHitSound();
                 }
                 else if(p1.shot == false)
                 {
-                    soundEffect.playMissSound();
+                    soundEffect.PlayMissSound();
                 }         
             }
             else if(p2.action == "shoot")
@@ -94,32 +97,28 @@ public class mqttStateController : MonoBehaviour
                 if(p2.shot == true)
                 {
                     player2.Bullet();
-
-                    if(p1.shield_health >= 0)
-                    {
-                        soundEffect.playsShieldCooldownSound();
-                    }
                 }
                 else if(p2.shot == false)
                 {
                     //  Opponent has missed shooting you
+                    return;
                 }
             }
             else if(p1.action == "shield")
             {
                 player1.ActivateShield();
-                soundEffect.playShieldActivationSound();
+                soundEffect.PlayShieldActivationSound();
                 shieldTimer.SetTime(p1.shield_time);
             }
             else if(p2.action == "shield")
             {
                 player2.ActivateShield();
-                shieldTimer.SetTime(p2.shield_time);
+                shield2Timer.SetTime(p2.shield_time);
             }
             else if(p1.action == "reload")
             {
                 player1.ReloadBullets();
-                soundEffect.playReloadSound();
+                soundEffect.PlayReloadSound();
             }
             else if(p2.action == "reload")
             {
@@ -127,9 +126,12 @@ public class mqttStateController : MonoBehaviour
             }
             else if(p1.action  == "logout" || p2.action == "logout")
             {
-                player1.Logout();
-                player2.Logout();
+                soundEffect.PlayLogOutSound();
+                soundEffect.PlaySiuuuSound();
+                player1.InvokeLogout();
+                player2.InvokeLogout();
             }
+            
             updatePlayerStatus(p1, p2);
         }
         else 
@@ -162,6 +164,20 @@ public class mqttStateController : MonoBehaviour
             player2.UpdateGrenadeCount(player2_object.grenades);
             player2.UpdateShieldCount(player2_object.num_shield);
             player2.deathCounter.UpdatePlayerDeathCount(player2_object.num_deaths);
+            
+            if(player1_object.num_deaths > player2_object.num_deaths)
+            {
+                player1.deathCounter.SetColorAndSize(Color.red, 22);
+            } 
+            else if (player1_object.num_deaths < player2_object.num_deaths)
+            {
+                player2.deathCounter.SetColorAndSize(Color.red, 22);
+            } 
+            else
+            {
+                player1.deathCounter.SetColorAndSize(Color.white, 24);
+                player2.deathCounter.SetColorAndSize(Color.white, 24);
+            }
     }
 }
 
