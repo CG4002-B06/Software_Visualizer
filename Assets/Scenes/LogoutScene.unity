@@ -4024,6 +4024,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HelpCanvas: {fileID: 799254793}
   SummaryCanvas: {fileID: 538454667}
+  UILayoutCanvas: {fileID: 0}
 --- !u!1 &1419805441
 GameObject:
   m_ObjectHideFlags: 0

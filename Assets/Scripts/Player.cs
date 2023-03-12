@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         // Initalising variables
-        health = maxHealth;
+        health = 20;
         shieldHealth = 0;
         HP.text = "100";
         deathCounter.UpdatePlayerDeathCount(0);
@@ -223,7 +223,6 @@ public class Player : MonoBehaviour
             openScreen.OpenWhiteScreen(true);
             Laser.SetActive(true);
             Invoke("InvokeShootLaser", 1f);
-            bulletShooter.ShootBullet();
             changeCrossHairSize.changeSize(1f);
         }
         

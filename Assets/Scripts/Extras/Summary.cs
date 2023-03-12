@@ -27,11 +27,11 @@ public class Summary : MonoBehaviour
     void Update()
     {
         p1Death.text = "" + p1DeathCounter;
-        p1ShotAcc.text = "" + p1ShotAccuracy;
-        p1GrenadeAcc.text = "" + p1GrenadeAccuracy;
+        p1ShotAcc.text = "" + p1ShotAccuracy + "%";
+        p1GrenadeAcc.text = "" + p1GrenadeAccuracy + "%";
         p2Death.text = "" + p2DeathCounter; 
-        p2ShotAcc.text = "" + p2ShotAccuracy;
-        p2GrenadeAcc.text = "" + p2GrenadeAccuracy;
+        p2ShotAcc.text = "" + p2ShotAccuracy + "%";
+        p2GrenadeAcc.text = "" + p2GrenadeAccuracy + "%";
     }
 
     public void SendSummary(int p1D, int p1SA, int p1GA, int p2D, int p2SA, int p2GA)

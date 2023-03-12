@@ -31,9 +31,18 @@ public class ChangeScene : MonoBehaviour
         SceneManager.LoadScene("LoginScene");
     }
 
-    public void ChangeSceneToGameplay()
+    public void ChangeSceneToGameplayP1()
     {
+        PlayerSelection.PlayerIndex = 1;
         SceneManager.LoadScene("GameplayScene");
+        Debug.Log("Player 1 has been set");
+    }
+
+    public void ChangeSceneToGameplayP2()
+    {
+        PlayerSelection.PlayerIndex = 2;
+        SceneManager.LoadScene("GameplayScene");
+        Debug.Log("Player 2 has been set");
     }
 
     public void ChangeSceneToLogout()
