@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         // Initalising variables
-        health = 20;
+        health = maxHealth;
         shieldHealth = 0;
         HP.text = "100";
         deathCounter.UpdatePlayerDeathCount(0);
