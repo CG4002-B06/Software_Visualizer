@@ -41,22 +41,24 @@ public class mqttStateController : MonoBehaviour
         PlayerNo player = gameState.p1;
         PlayerNo opponent = gameState.p2;
 
-        // Information for summary table
-        int playerMissCount = 0;
-        int playerShootCount = 0;
-        int playerGrenadeMissCount = 0;
-        int playerGrenadeHitCount = 0;
-        int playerDeathCounter = player.num_deaths;
-        int playerShootAcc = playerShootCount*100/(playerShootCount + playerMissCount);
-        int playerGrenadeAcc = playerGrenadeHitCount*100/(playerGrenadeHitCount + playerGrenadeMissCount);
+        Debug.Log(PlayerSelection.PlayerIndex);
 
-        int opponentMissCount = 0;
-        int opponentShootCount = 0;
-        int opponentGrenadeMissCount = 0;
-        int opponentGrenadeHitCount = 0;
-        int opponentDeathCounter = opponent.num_deaths; 
-        int opponentShootAcc = opponentShootCount*100/(opponentShootCount + opponentMissCount);
-        int opponentGrenadeAcc = opponentGrenadeHitCount*100/(opponentGrenadeHitCount + opponentGrenadeMissCount);
+        // Information for summary table
+        // int playerMissCount = 0;
+        // int playerShootCount = 0;
+        // int playerGrenadeMissCount = 0;
+        // int playerGrenadeHitCount = 0;
+        // int playerDeathCounter = player.num_deaths;
+        // int playerShootAcc = playerShootCount*100/(playerShootCount + playerMissCount);
+        // int playerGrenadeAcc = playerGrenadeHitCount*100/(playerGrenadeHitCount + playerGrenadeMissCount);
+
+        // int opponentMissCount = 0;
+        // int opponentShootCount = 0;
+        // int opponentGrenadeMissCount = 0;
+        // int opponentGrenadeHitCount = 0;
+        // int opponentDeathCounter = opponent.num_deaths; 
+        // int opponentShootAcc = opponentShootCount*100/(opponentShootCount + opponentMissCount);
+        // int opponentGrenadeAcc = opponentGrenadeHitCount*100/(opponentGrenadeHitCount + opponentGrenadeMissCount);
 
         if(PlayerSelection.PlayerIndex == 1)
         {
@@ -64,7 +66,7 @@ public class mqttStateController : MonoBehaviour
             opponent = gameState.p2;
             Debug.Log("Player 1 and Opponent Set");
             DisplayPlayerAction(player, opponent);
-            summary.SendSummary(playerDeathCounter, playerShootAcc, playerGrenadeAcc, opponentDeathCounter, opponentShootAcc, opponentGrenadeAcc);
+            // summary.SendSummary(playerDeathCounter, playerShootAcc, playerGrenadeAcc, opponentDeathCounter, opponentShootAcc, opponentGrenadeAcc);
         } 
         else if (PlayerSelection.PlayerIndex == 2)
         {
@@ -74,13 +76,16 @@ public class mqttStateController : MonoBehaviour
             DisplayPlayerAction(player, opponent);
         }
 
-        // These all show the correct numbers recieved from the packet
-        Debug.Log(player.bullets);
-        Debug.Log(player.grenades);
-        Debug.Log(player.num_shield);
+        
+
         
         void DisplayPlayerAction(PlayerNo player, PlayerNo opponent)
         {
+            // These all show the correct numbers recieved from the packet
+            Debug.Log(player.bullets);
+            Debug.Log(player.grenades);
+            Debug.Log(player.num_shield);
+            
             // this is a correct packet. should update player status
             if(gameState.correction)
             {
@@ -108,12 +113,12 @@ public class mqttStateController : MonoBehaviour
                             soundEffect.InvokePlayGrenadeExplosionSound();
                             soundEffect.PlayHitSound();
                             output.p1 = true;
-                            playerGrenadeHitCount += 1;
+                            // playerGrenadeHitCount += 1;
                         }
                         else {
                             soundEffect.PlayMissSound();
                             output.p1 = false;
-                            playerGrenadeMissCount += 1;
+                            // playerGrenadeMissCount += 1;
                         }
                         
                         Debug.Log(output.p1);
@@ -125,7 +130,7 @@ public class mqttStateController : MonoBehaviour
                 else if(opponent.action == "grenade")
                 {
                     player2.Grenade();
-                    opponentGrenadeHitCount += 1;
+                    // opponentGrenadeHitCount += 1;
                 }   
                 else if(player.action == "shoot") 
                 {
@@ -136,12 +141,12 @@ public class mqttStateController : MonoBehaviour
                         shootEffect.ShootBullet();
                         soundEffect.PlayBulletShootSound();
                         soundEffect.PlayHitSound();
-                        playerShootCount += 1;
+                        // playerShootCount += 1;
                     }
                     else if(player.shot == false)
                     {
                         soundEffect.PlayMissSound();
-                        playerMissCount += 1;
+                        // playerMissCount += 1;
                     }        
                 }
                 else if(opponent.action == "shoot")
@@ -149,11 +154,11 @@ public class mqttStateController : MonoBehaviour
                     if(opponent.shot == true)
                     {
                         player2.Bullet();
-                        opponentShootCount += 1;
+                        // opponentShootCount += 1;
                     }
                     else if(opponent.shot == false)
                     {
-                        opponentMissCount += 1;
+                        // opponentMissCount += 1;
                     }
                 }
                 else if(player.action == "shield")
