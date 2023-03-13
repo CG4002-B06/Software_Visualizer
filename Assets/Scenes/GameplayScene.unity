@@ -7924,7 +7924,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 973259806}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8297,8 +8297,8 @@ RectTransform:
   m_LocalScale: {x: 0.8174617, y: 0.8174617, z: 0.8174618}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1565143175}
   - {fileID: 906591218}
+  - {fileID: 1565143175}
   m_Father: {fileID: 153264410}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0.72, y: 0, z: 4.054}
@@ -11070,7 +11070,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 973259806}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11365,9 +11365,9 @@ MonoBehaviour:
   tagOfTheMQTTReceiver: MQTTState
   _eventSender: {fileID: 1695488131}
   simulatorMessage: {fileID: 1700433576}
-  bulletCount: 6
-  grenadeCount: 2
-  shieldCount: 3
+  bulletCount: 0
+  grenadeCount: 0
+  shieldCount: 0
   killCount: 0
   player1: {fileID: 153264412}
   player2: {fileID: 1184189741}
@@ -11375,7 +11375,7 @@ MonoBehaviour:
   message: {fileID: 251490806}
   shieldTimer: {fileID: 291626093}
   summary: {fileID: 0}
-  shootEffect: {fileID: 0}
+  shootEffect: {fileID: 2001871780}
 --- !u!1 &1581476327
 GameObject:
   m_ObjectHideFlags: 0

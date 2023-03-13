@@ -41,8 +41,6 @@ public class mqttStateController : MonoBehaviour
         PlayerNo player = gameState.p1;
         PlayerNo opponent = gameState.p2;
 
-        Debug.Log(PlayerSelection.PlayerIndex);
-
         // Information for summary table
         // int playerMissCount = 0;
         // int playerShootCount = 0;
@@ -75,17 +73,14 @@ public class mqttStateController : MonoBehaviour
             Debug.Log("Player 2 and Opponent Set");
             DisplayPlayerAction(player, opponent);
         }
-
-        
-
-        
+   
         void DisplayPlayerAction(PlayerNo player, PlayerNo opponent)
         {
             // These all show the correct numbers recieved from the packet
             Debug.Log(player.bullets);
             Debug.Log(player.grenades);
             Debug.Log(player.num_shield);
-            
+
             // this is a correct packet. should update player status
             if(gameState.correction)
             {
@@ -138,6 +133,7 @@ public class mqttStateController : MonoBehaviour
 
                     if(player.shot == true)
                     {
+                        Debug.Log("isHit is true");
                         shootEffect.ShootBullet();
                         soundEffect.PlayBulletShootSound();
                         soundEffect.PlayHitSound();
@@ -145,6 +141,7 @@ public class mqttStateController : MonoBehaviour
                     }
                     else if(player.shot == false)
                     {
+                        Debug.Log("isHit is false");
                         soundEffect.PlayMissSound();
                         // playerMissCount += 1;
                     }        

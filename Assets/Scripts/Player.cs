@@ -152,6 +152,11 @@ public class Player : MonoBehaviour
     {
         shieldHealth = Mathf.Clamp(shieldHealth, 0, maxShieldHealth);
         UpdateShieldUI(shieldHealth);
+
+        if(shieldHealth <= 0 && Players.Equals(GameObject.Find("P1")))
+        {
+            CrackedShield.SetActive(false);
+        }
     }
 
     // Update shieldbar UI
@@ -353,12 +358,8 @@ public class Player : MonoBehaviour
     public void UpdateShieldHealth(float newShieldHealth)
     {
         shieldHealth = newShieldHealth;
+        UpdateShieldUI(shieldHealth);
         lerpTimer = 0f;
-        
-        if(shieldHealth <= 0)
-        {
-            CrackedShield.SetActive(false);
-        }
     }
 
     public void UpdateBulletCount(int newBulletCount)
