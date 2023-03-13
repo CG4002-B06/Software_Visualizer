@@ -101,10 +101,6 @@ public class Player : MonoBehaviour
         if(shieldHealth == 0)
         {
             UpdateHealthUI(health);
-            if(Players.Equals(GameObject.Find("P1")))
-            {
-                openScreen.OpenBlueScreen(false);
-            }
         }
 
         if(health > 50)
@@ -151,28 +147,24 @@ public class Player : MonoBehaviour
     public void Shield()
     {
         shieldHealth = Mathf.Clamp(shieldHealth, 0, maxShieldHealth);
+        Debug.Log(shieldHealth);
+        // FrontShieldBar.fillAmount = shieldHealth / maxShieldHealth;
         UpdateShieldUI(shieldHealth);
-
-        if(shieldHealth <= 0 && Players.Equals(GameObject.Find("P1")))
-        {
-            CrackedShield.SetActive(false);
-        }
     }
 
     // Update shieldbar UI
     public void UpdateShieldUI(float shieldHealth)
     {
+        Debug.Log(shieldHealth);
         float fillF = FrontShieldBar.fillAmount;
         float hFraction = shieldHealth / maxShieldHealth;
 
-        if (fillF > hFraction)
-        {
-            FrontShieldBar.fillAmount = hFraction;
-            lerpTimer += Time.deltaTime;
-            float percentComplete = lerpTimer / chipSpeed;
-            percentComplete = percentComplete * percentComplete;
-            FrontShieldBar.fillAmount = Mathf.Lerp(fillF, hFraction, percentComplete);
-        }
+        FrontShieldBar.fillAmount = hFraction;
+        lerpTimer += Time.deltaTime;
+        float percentComplete = lerpTimer / chipSpeed;
+        percentComplete = percentComplete * percentComplete;
+        FrontShieldBar.fillAmount = Mathf.Lerp(fillF, hFraction, percentComplete);
+
     }
     
     // Update UI for bullet, shield and grenade counts
@@ -242,14 +234,6 @@ public class Player : MonoBehaviour
             CrackedShield.SetActive(true);
         }
 
-        // Update UI
-        if(shieldHealth == bulletDamage)
-        {
-            SWShield.SetActive(false);
-            openScreen.OpenBlueScreen(false);
-            lerpTimer = 0f;
-        }
-        
         lerpTimer = 0f;
     }
 
@@ -288,15 +272,10 @@ public class Player : MonoBehaviour
     public void ActivateShield()
     {
         // Update UI
-        FrontShieldBar.fillAmount = shieldHealth;
+        shieldHealth = 30;
         lerpTimer = 0f;
 
         // Update AR and screen effects
-        if(Players.Equals(GameObject.Find("P2")))
-        {
-            SWShield.SetActive(true);
-        }
-        
         if(Players.Equals(GameObject.Find("P1")))
         {
             
@@ -304,13 +283,25 @@ public class Player : MonoBehaviour
             shieldTimer.SetHasStart(true); 
             soundEffects.PlayShieldActivationSound();
         }
+        
+        if(Players.Equals(GameObject.Find("P2")))
+        {
+            SWShield.SetActive(true);
+        }
+
+        if(shieldHealth <= 0)
+        {
+            SWShield.SetActive(false);
+            openScreen.OpenBlueScreen(false);
+            lerpTimer = 0f;
+        }
     }
 
     // Helper functions
 // ---------------------------------------------------------------------------------------------------------------------
     public void DeactivateShield()
     {
-        // shieldHealth = 0;
+        shieldHealth = 0;
         soundEffects.PlayShieldDeactivationSound();
     }
 
@@ -358,7 +349,6 @@ public class Player : MonoBehaviour
     public void UpdateShieldHealth(float newShieldHealth)
     {
         shieldHealth = newShieldHealth;
-        UpdateShieldUI(shieldHealth);
         lerpTimer = 0f;
     }
 

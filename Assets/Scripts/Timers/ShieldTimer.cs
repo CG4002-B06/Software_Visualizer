@@ -44,7 +44,6 @@ public class ShieldTimer : MonoBehaviour
             ShieldCount.SetActive(false);
             ShieldPic.SetActive(false);
             
-
             if (currentTime <= 3)
             {
                 countdownText.color = Color.red;

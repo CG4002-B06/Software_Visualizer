@@ -25,6 +25,7 @@ SOFTWARE.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using M2MqttUnity;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -88,6 +89,7 @@ public class mqttReceiver : M2MqttUnityClient
 
     // a list to store the messages
     private List<string> eventMessages = new List<string>();
+    public TextMeshProUGUI connectionMessage;
     
     public void SetMessage(string msg)
     {
@@ -123,17 +125,20 @@ public class mqttReceiver : M2MqttUnityClient
     protected override void OnConnectionFailed(string errorMessage)
         {
             Debug.Log("CONNECTION FAILED! " + errorMessage);
+            connectionMessage.text = "CONNECTION \n FAILED! ";
         }
 
     protected override void OnDisconnected()
         {
             Debug.Log("Disconnected.");
             isConnected=false;
+            connectionMessage.text = "DISCONNECTED! ";
         }
 
     protected override void OnConnectionLost()
         {
             Debug.Log("CONNECTION LOST!");
+            connectionMessage.text = "CONNECTION \n LOST! ";
         }
 
     protected override void SubscribeTopics()

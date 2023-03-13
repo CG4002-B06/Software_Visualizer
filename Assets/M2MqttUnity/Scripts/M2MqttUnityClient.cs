@@ -26,6 +26,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
@@ -80,6 +81,8 @@ namespace M2MqttUnity
         /// </summary>
         public event Action ConnectionFailed;
 
+        public TextMeshProUGUI connectionMessage;
+
         /// <summary>
         /// Connect to the broker using current settings.
         /// </summary>
@@ -116,6 +119,9 @@ namespace M2MqttUnity
         protected virtual void OnConnected()
         {
             Debug.LogFormat("Connected to {0}:{1}...\n", brokerAddress, brokerPort.ToString());
+            
+            // Display whether connection is established or not
+            connectionMessage.text = "CONNECTION \n ESTABLISHED!";
 
             SubscribeTopics();
 
@@ -131,6 +137,7 @@ namespace M2MqttUnity
         protected virtual void OnConnectionFailed(string errorMessage)
         {
             Debug.LogWarning("Connection failed.");
+            connectionMessage.text = "CONNECTION \n FAILED!";
             if (ConnectionFailed != null)
             {
                 ConnectionFailed();
@@ -194,6 +201,7 @@ namespace M2MqttUnity
         protected virtual void OnDisconnected()
         {
             Debug.Log("Disconnected.");
+            connectionMessage.text = "DISCONNECTED";
         }
 
         /// <summary>
@@ -202,6 +210,7 @@ namespace M2MqttUnity
         protected virtual void OnConnectionLost()
         {
             Debug.LogWarning("CONNECTION LOST!");
+            connectionMessage.text = "CONNECTION \n LOST!";
         }
 
         /// <summary>

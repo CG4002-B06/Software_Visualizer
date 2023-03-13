@@ -10,6 +10,7 @@ public class mqttStateController : MonoBehaviour
     public mqttReceiver _eventSender;
 
     public TextMeshProUGUI simulatorMessage;
+    public TextMeshProUGUI connectionMessage;
 
     // Initial Values
     public const float maxHealth = 100;    
@@ -90,7 +91,7 @@ public class mqttStateController : MonoBehaviour
                 return;
             }
             
-            // Display action (not necessary)
+            // Display action name
             simulatorMessage.text = "" + player.action;
 
             // Perform actions only when there are no warning messages
