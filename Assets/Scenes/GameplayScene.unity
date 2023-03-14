@@ -1769,6 +1769,7 @@ MonoBehaviour:
   BulletCount: {fileID: 906591219}
   GrenadeCount: {fileID: 2103907926}
   ShieldCount: {fileID: 1578119916}
+  connectionText: {fileID: 1063641501}
   deathCounter: {fileID: 153264413}
   shieldTimer: {fileID: 291626093}
   grenadeThrower1: {fileID: 1716070073}
@@ -9294,6 +9295,7 @@ MonoBehaviour:
   BulletCount: {fileID: 1373493980}
   GrenadeCount: {fileID: 312158176}
   ShieldCount: {fileID: 1707656073}
+  connectionText: {fileID: 0}
   deathCounter: {fileID: 1184189742}
   shieldTimer: {fileID: 0}
   grenadeThrower1: {fileID: 0}
@@ -12570,12 +12572,11 @@ MonoBehaviour:
   autoConnect: 1
   mqttUserName: cg4002
   mqttPassword: password
-  connectionMessage: {fileID: 0}
+  connectionMessage: {fileID: 1063641501}
   topicSubscribe: Player
   topicPublish: QueryGrenade
   messagePublish: 
   autoTest: 0
-  connectionMessage: {fileID: 0}
 --- !u!1 &1700433574
 GameObject:
   m_ObjectHideFlags: 0

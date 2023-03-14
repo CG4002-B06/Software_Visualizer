@@ -37,6 +37,11 @@ public class mqttStateController : MonoBehaviour
     // Separate data and link it to variables used in the other scripts and call the necessary functions
     private void OnMessageArrivedHandler(string newMsg)
     {
+        if(newMsg == null)
+        {
+            connectionMessage.text = "CONNECTION BROKEN!";
+        }
+
         var gameState = JsonUtility.FromJson<MqttState>(newMsg);
 
         PlayerNo player = gameState.p1;
@@ -132,7 +137,7 @@ public class mqttStateController : MonoBehaviour
                 {
                     player1.Bullet();
 
-                    if(player.shot == true)
+                    if(player.isHit == true)
                     {
                         Debug.Log("isHit is true");
                         shootEffect.ShootBullet();
@@ -140,7 +145,7 @@ public class mqttStateController : MonoBehaviour
                         soundEffect.PlayHitSound();
                         // playerShootCount += 1;
                     }
-                    else if(player.shot == false)
+                    else
                     {
                         Debug.Log("isHit is false");
                         soundEffect.PlayMissSound();
@@ -149,12 +154,12 @@ public class mqttStateController : MonoBehaviour
                 }
                 else if(opponent.action == "shoot")
                 {
-                    if(opponent.shot == true)
+                    if(opponent.isHit == true)
                     {
                         player2.Bullet();
                         // opponentShootCount += 1;
                     }
-                    else if(opponent.shot == false)
+                    else
                     {
                         // opponentMissCount += 1;
                     }
@@ -252,7 +257,7 @@ public class PlayerNo
     public float shield_health;
     public int num_deaths = -1;
     public int num_shield;
-    public bool shot;
+    public bool isHit;
     public string invalid;
 }
 

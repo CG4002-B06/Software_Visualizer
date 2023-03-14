@@ -89,7 +89,7 @@ public class mqttReceiver : M2MqttUnityClient
 
     // a list to store the messages
     private List<string> eventMessages = new List<string>();
-    new public TextMeshProUGUI connectionMessage;
+    // new public TextMeshProUGUI connectionMessage;
     
     public void SetMessage(string msg)
     {

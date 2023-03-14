@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI BulletCount;
     public TextMeshProUGUI GrenadeCount;
     public TextMeshProUGUI ShieldCount;
+    public TextMeshProUGUI connectionText;
 
     // Scripts
     public DeathCounter deathCounter;
@@ -80,6 +81,9 @@ public class Player : MonoBehaviour
         inventoryBars.SetAmmoBar(bulletCount);
         inventoryBars.SetGrenadeBar(grenadeCount);
         inventoryBars.SetShieldBar(shieldCount);
+        connectionText.text = "CONNECTION ESTABLISHED!";
+        connectionText.color = Color.green;
+        Invoke("connectionMessage", 5f);
     }
 
     // Update is called once per frame
@@ -88,6 +92,11 @@ public class Player : MonoBehaviour
         Health();
         Shield();
         InventoryCount();
+    }
+
+    public void connectionMessage()
+    {
+        connectionText.text = "";
     }
 
     // General functions
@@ -147,7 +156,6 @@ public class Player : MonoBehaviour
     public void Shield()
     {
         shieldHealth = Mathf.Clamp(shieldHealth, 0, maxShieldHealth);
-        Debug.Log(shieldHealth);
         // FrontShieldBar.fillAmount = shieldHealth / maxShieldHealth;
         UpdateShieldUI(shieldHealth);
     }
@@ -155,7 +163,6 @@ public class Player : MonoBehaviour
     // Update shieldbar UI
     public void UpdateShieldUI(float shieldHealth)
     {
-        Debug.Log(shieldHealth);
         float fillF = FrontShieldBar.fillAmount;
         float hFraction = shieldHealth / maxShieldHealth;
 
@@ -229,10 +236,10 @@ public class Player : MonoBehaviour
             soundEffects.PlayBeingHitSound();
         }
 
-        if(shieldHealth >= bulletDamage)
-        {
-            CrackedShield.SetActive(true);
-        }
+        // if(shieldHealth >= bulletDamage)
+        // {
+        //     CrackedShield.SetActive(true);
+        // }
 
         lerpTimer = 0f;
     }
