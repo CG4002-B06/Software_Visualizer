@@ -358,19 +358,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoundEffects, Assembly-CSharp
-        m_MethodName: PlaySettingsButtonSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1412902653}
         m_TargetAssemblyTypeName: OpenGuide, Assembly-CSharp
         m_MethodName: CloseGuideCanvas
         m_Mode: 1
@@ -381,8 +369,8 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
+        m_CallState: 1
+      - m_Target: {fileID: 1412902653}
         m_TargetAssemblyTypeName: OpenGuide, Assembly-CSharp
         m_MethodName: OpenUILayoutCanvas
         m_Mode: 1
@@ -393,7 +381,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &89919025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3122,7 +3110,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1412902653}
         m_TargetAssemblyTypeName: OpenGuide, Assembly-CSharp
         m_MethodName: CloseGuideCanvas
         m_Mode: 1
@@ -3133,19 +3121,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoundEffects, Assembly-CSharp
-        m_MethodName: PlaySettingsButtonSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &821332257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3880,7 +3856,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1412902653}
         m_TargetAssemblyTypeName: OpenGuide, Assembly-CSharp
         m_MethodName: CloseUILayoutCanvas
         m_Mode: 1
@@ -3891,31 +3867,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoundEffects, Assembly-CSharp
-        m_MethodName: PlaySettingsButtonSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: OpenGuide, Assembly-CSharp
-        m_MethodName: CloseGuideCanvas
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &1070872630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4578,9 +4530,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SoundEffects, Assembly-CSharp
-        m_MethodName: PlaySettingsButtonSound
+      - m_Target: {fileID: 1412902653}
+        m_TargetAssemblyTypeName: OpenGuide, Assembly-CSharp
+        m_MethodName: CloseUILayoutCanvas
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4590,21 +4542,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1412902653}
         m_TargetAssemblyTypeName: OpenGuide, Assembly-CSharp
-        m_MethodName: CloseGuideCanvas
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: OpenGuide, Assembly-CSharp
-        m_MethodName: OpenUILayoutCanvas
+        m_MethodName: OpenGuideCanvas
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4835,7 +4775,6 @@ GameObject:
   - component: {fileID: 1427325123}
   - component: {fileID: 1427325122}
   - component: {fileID: 1427325121}
-  - component: {fileID: 1427325120}
   m_Layer: 5
   m_Name: HelpCanvas
   m_TagString: Untagged
@@ -4843,21 +4782,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1427325120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1427325119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffcc3cd4fb26ba440aa59e6868d4b1d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HelpCanvas: {fileID: 0}
-  SummaryCanvas: {fileID: 0}
-  UILayoutCanvas: {fileID: 0}
 --- !u!114 &1427325121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5851,7 +5775,6 @@ GameObject:
   - component: {fileID: 1676703863}
   - component: {fileID: 1676703862}
   - component: {fileID: 1676703861}
-  - component: {fileID: 1676703860}
   m_Layer: 5
   m_Name: UILayoutCanvas
   m_TagString: Untagged
@@ -5859,21 +5782,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1676703860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1676703859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffcc3cd4fb26ba440aa59e6868d4b1d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HelpCanvas: {fileID: 0}
-  SummaryCanvas: {fileID: 0}
-  UILayoutCanvas: {fileID: 0}
 --- !u!114 &1676703861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6872,18 +6780,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1412902648}
-        m_TargetAssemblyTypeName: ChangeScene, Assembly-CSharp
-        m_MethodName: ChangeSceneToGameplayP1
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
       - m_Target: {fileID: 1412902653}
         m_TargetAssemblyTypeName: OpenGuide, Assembly-CSharp
         m_MethodName: OpenGuideCanvas
