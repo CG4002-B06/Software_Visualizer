@@ -225,6 +225,7 @@ public class Player : MonoBehaviour
         if(Players.Equals(GameObject.Find("P1")))
         {
             openScreen.OpenWhiteScreen(true);
+            soundEffects.PlayBulletShootSound();
             Laser.SetActive(true);
             Invoke("InvokeShootLaser", 1f);
             changeCrossHairSize.changeSize(1f);

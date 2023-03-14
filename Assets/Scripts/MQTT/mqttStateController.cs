@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class mqttStateController : MonoBehaviour
@@ -41,6 +42,12 @@ public class mqttStateController : MonoBehaviour
 
         PlayerNo player = gameState.p1;
         PlayerNo opponent = gameState.p2;
+
+        if(player.disconnected == true)
+        {
+            connectionMessage.text = "CONNECTION \n DISCONNECTED!";
+            connectionMessage.color = Color.red;
+        }
 
         // Information for summary table
         // int playerMissCount = 0;
@@ -136,7 +143,6 @@ public class mqttStateController : MonoBehaviour
                     {
                         Debug.Log("isHit is true");
                         shootEffect.ShootBullet();
-                        soundEffect.PlayBulletShootSound();
                         soundEffect.PlayHitSound();
                         // playerShootCount += 1;
                     }
@@ -178,8 +184,9 @@ public class mqttStateController : MonoBehaviour
                 }
                 else if(player.action  == "logout" || opponent.action == "logout")
                 {
-                    player1.InvokeLogout();
-                    player2.InvokeLogout();
+                    SceneManager.LoadScene("LogoutScene");
+                    // player1.InvokeLogout();
+                    // player2.InvokeLogout();
                 }
                 
                 updatePlayerStatus(player, opponent);
@@ -254,6 +261,7 @@ public class PlayerNo
     public int num_shield;
     public bool isHit;
     public string invalid;
+    public bool disconnected;
 }
 
 [System.Serializable]
