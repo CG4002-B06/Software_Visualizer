@@ -29,7 +29,7 @@ public class ShieldTimer : MonoBehaviour
         hasStart = status;
         if(status == true)
         {
-            currentTime = 10f; // Remember to comment this out when testing with Game Engine
+            // currentTime = 10f; Remember to comment this out when testing with Game Engine
             countdownText.color = Color.white;
         }
     }

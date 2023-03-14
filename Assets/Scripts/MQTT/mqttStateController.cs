@@ -37,11 +37,6 @@ public class mqttStateController : MonoBehaviour
     // Separate data and link it to variables used in the other scripts and call the necessary functions
     private void OnMessageArrivedHandler(string newMsg)
     {
-        if(newMsg == null)
-        {
-            connectionMessage.text = "CONNECTION BROKEN!";
-        }
-
         var gameState = JsonUtility.FromJson<MqttState>(newMsg);
 
         PlayerNo player = gameState.p1;
