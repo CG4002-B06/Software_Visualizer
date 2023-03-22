@@ -11,7 +11,9 @@ public class mqttStateController : MonoBehaviour
     public mqttReceiver _eventSender;
 
     public TextMeshProUGUI simulatorMessage;
-    public TextMeshProUGUI connectionMessage;
+    public GameObject godModeButton;
+    public GameObject exitGodModeButton;
+    public bool godMode;
 
     // Initial Values
     public const float maxHealth = 100;    
@@ -35,6 +37,20 @@ public class mqttStateController : MonoBehaviour
         _eventSender.OnMessageArrived += OnMessageArrivedHandler;
     }
 
+    public void OnClickGodMode()
+    {
+        godMode = true;
+        exitGodModeButton.SetActive(true);
+        godModeButton.SetActive(false);
+    }
+
+    public void OnExitGodMode()
+    {
+        godMode = false;
+        exitGodModeButton.SetActive(false);
+        godModeButton.SetActive(true);
+    }
+
     // Separate data and link it to variables used in the other scripts and call the necessary functions
     private void OnMessageArrivedHandler(string newMsg)
     {
@@ -43,41 +59,23 @@ public class mqttStateController : MonoBehaviour
         PlayerNo player = gameState.p1;
         PlayerNo opponent = gameState.p2;
 
-        if(player.disconnected == true)
-        {
-            connectionMessage.text = "CONNECTION \n DISCONNECTED!";
-            connectionMessage.color = Color.red;
-        }
-
-        // Information for summary table
-        // int playerMissCount = 0;
-        // int playerShootCount = 0;
-        // int playerGrenadeMissCount = 0;
-        // int playerGrenadeHitCount = 0;
-        // int playerDeathCounter = player.num_deaths;
-        // int playerShootAcc = playerShootCount*100/(playerShootCount + playerMissCount);
-        // int playerGrenadeAcc = playerGrenadeHitCount*100/(playerGrenadeHitCount + playerGrenadeMissCount);
-
-        // int opponentMissCount = 0;
-        // int opponentShootCount = 0;
-        // int opponentGrenadeMissCount = 0;
-        // int opponentGrenadeHitCount = 0;
-        // int opponentDeathCounter = opponent.num_deaths; 
-        // int opponentShootAcc = opponentShootCount*100/(opponentShootCount + opponentMissCount);
-        // int opponentGrenadeAcc = opponentGrenadeHitCount*100/(opponentGrenadeHitCount + opponentGrenadeMissCount);
-
         if(PlayerSelection.PlayerIndex == 1)
         {
             player = gameState.p1;
             opponent = gameState.p2;
+            PlayerSummary.playerDeathCounter = player.num_deaths;
+            PlayerSummary.opponentDeathCounter = opponent.num_deaths;
+
             Debug.Log("Player 1 and Opponent Set");
             DisplayPlayerAction(player, opponent);
-            // summary.SendSummary(playerDeathCounter, playerShootAcc, playerGrenadeAcc, opponentDeathCounter, opponentShootAcc, opponentGrenadeAcc);
         } 
         else if (PlayerSelection.PlayerIndex == 2)
         {
             player = gameState.p2;
             opponent = gameState.p1;
+            PlayerSummary.playerDeathCounter = player.num_deaths;
+            PlayerSummary.opponentDeathCounter = opponent.num_deaths;
+
             Debug.Log("Player 2 and Opponent Set");
             DisplayPlayerAction(player, opponent);
         }
@@ -102,7 +100,7 @@ public class mqttStateController : MonoBehaviour
             simulatorMessage.text = "" + player.action;
 
             // Perform actions only when there are no warning messages
-            if(player.invalid == null)
+            if(player.invalid == null || godMode == true)
             {     
                 if(player.action == "grenade")
                 {
@@ -116,12 +114,12 @@ public class mqttStateController : MonoBehaviour
                             soundEffect.InvokePlayGrenadeExplosionSound();
                             soundEffect.PlayHitSound();
                             output.p1 = true;
-                            // playerGrenadeHitCount += 1;
+                            PlayerSummary.playerGrenadeHitCount += 1;
                         }
                         else {
                             soundEffect.PlayMissSound();
                             output.p1 = false;
-                            // playerGrenadeMissCount += 1;
+                            PlayerSummary.playerGrenadeMissCount += 1;
                         }
                         
                         Debug.Log(output.p1);
@@ -133,7 +131,7 @@ public class mqttStateController : MonoBehaviour
                 else if(opponent.action == "grenade")
                 {
                     player2.Grenade();
-                    // opponentGrenadeHitCount += 1;
+                    PlayerSummary.opponentGrenadeHitCount += 1;
                 }   
                 else if(player.action == "shoot") 
                 {
@@ -144,13 +142,13 @@ public class mqttStateController : MonoBehaviour
                         Debug.Log("isHit is true");
                         shootEffect.ShootBullet();
                         soundEffect.PlayHitSound();
-                        // playerShootCount += 1;
+                        PlayerSummary.playerShootCount += 1;
                     }
                     else
                     {
                         Debug.Log("isHit is false");
                         soundEffect.PlayMissSound();
-                        // playerMissCount += 1;
+                        PlayerSummary.playerMissCount += 1;
                     }        
                 }
                 else if(opponent.action == "shoot")
@@ -158,11 +156,11 @@ public class mqttStateController : MonoBehaviour
                     if(opponent.isHit == true)
                     {
                         player2.Bullet();
-                        // opponentShootCount += 1;
+                        PlayerSummary.opponentShootCount += 1;
                     }
                     else
                     {
-                        // opponentMissCount += 1;
+                        PlayerSummary.opponentMissCount += 1;
                     }
                 }
                 else if(player.action == "shield")
@@ -184,12 +182,15 @@ public class mqttStateController : MonoBehaviour
                 }
                 else if(player.action  == "logout" || opponent.action == "logout")
                 {
-                    SceneManager.LoadScene("LogoutScene");
-                    // player1.InvokeLogout();
-                    // player2.InvokeLogout();
+                    // SceneManager.LoadScene("LogoutScene");
+                    player1.InvokeLogout();
+                    player2.InvokeLogout();
                 }
                 
-                updatePlayerStatus(player, opponent);
+                if(godMode == false)
+                {
+                    updatePlayerStatus(player, opponent);
+                }
             }
             else 
             {
@@ -237,6 +238,17 @@ public class mqttStateController : MonoBehaviour
             player1.deathCounter.SetColorAndSize(Color.white, 24);
             player2.deathCounter.SetColorAndSize(Color.white, 24);
         }
+
+        if(player1_object.shield_time > 0)
+        {
+            player1.ActivateShield();
+            shieldTimer.SetTime(player1_object.shield_time);
+        }
+
+        if(player1_object.action == "logout")
+        {
+            SceneManager.LoadScene("LogoutScene");
+        }
     }
 }
 
@@ -261,7 +273,6 @@ public class PlayerNo
     public int num_shield;
     public bool isHit;
     public string invalid;
-    public bool disconnected;
 }
 
 [System.Serializable]

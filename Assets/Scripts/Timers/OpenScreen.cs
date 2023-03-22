@@ -38,7 +38,7 @@ public class OpenScreen : MonoBehaviour
     {
         hasHit = true;
         hasReload = false;
-        currentTime = 0.5f;
+        currentTime = 1f;
     }
 
     public void InvokeRedScreen()
@@ -74,7 +74,7 @@ public class OpenScreen : MonoBehaviour
         hasHit = false;
         if(status == true)
         {
-            currentTime = 0.5f;
+            currentTime = 1.5f;
         }
     }
 
