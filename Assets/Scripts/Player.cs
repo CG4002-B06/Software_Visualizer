@@ -81,9 +81,6 @@ public class Player : MonoBehaviour
         inventoryBars.SetAmmoBar(bulletCount);
         inventoryBars.SetGrenadeBar(grenadeCount);
         inventoryBars.SetShieldBar(shieldCount);
-        connectionText.text = "CONNECTION ESTABLISHED!";
-        connectionText.color = Color.green;
-        Invoke("connectionMessage", 5f);
     }
 
     // Update is called once per frame
@@ -92,11 +89,6 @@ public class Player : MonoBehaviour
         Health();
         Shield();
         InventoryCount();
-    }
-
-    public void connectionMessage()
-    {
-        connectionText.text = "";
     }
 
     // General functions

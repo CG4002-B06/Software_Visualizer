@@ -29,8 +29,8 @@ public class mqttEventController : MonoBehaviour
     {
         var gameEvent = JsonUtility.FromJson<MqttEvent>(newMsg);
 
-        Players player = gameEvent.p1;
-        Players opponent = gameEvent.p2;
+        string player = gameEvent.p1;
+        string opponent = gameEvent.p2;
 
         if(PlayerSelection.PlayerIndex == 1)
         {
@@ -47,45 +47,45 @@ public class mqttEventController : MonoBehaviour
             DisplayPlayerEvent(player, opponent);
         }
 
-        void DisplayPlayerEvent(Players player, Players opponent)
+        void DisplayPlayerEvent(string player, string opponent)
         {
-            Debug.Log(player.msg);
-            Debug.Log(opponent.msg);
+            Debug.Log(player);
+            Debug.Log(opponent);
 
-            if(player.msg == "DONT MOVE GLOVE! \n SENSORS ARE INITIALISING...")
+            if(player == "DONT MOVE GLOVE! \n SENSORS ARE INITIALISING...")
             {
                 blackScreen.SetActive(true);
-                connectionMessage.text = "" + player.msg;
+                connectionMessage.text = "" + player;
                 connectionMessage.color = Color.white;
             }
 
-            if(player.msg == "SENSORS HAVE BEEN INITIALISED \n ENJOY SHOOTING!")
+            if(player == "SENSORS HAVE BEEN INITIALISED \n ENJOY SHOOTING!")
             {
                 blackScreen.SetActive(false);
-                connectionMessage.text = "" + player.msg;
+                connectionMessage.text = "" + player;
                 connectionMessage.color = Color.green;
                 Invoke("ShowMessage" , 3f);
             }
 
-            if(player.msg == "ACTION UNDETECTED! \n REDO ACTION")
+            if(player == "ACTION UNDETECTED! \n REDO ACTION")
             {
                 blackScreen.SetActive(false);
-                connectionMessage.text = "" + player.msg;
+                connectionMessage.text = "" + player;
                 connectionMessage.color = Color.white;
                 Invoke("ShowMessage" , 3f);
             }
 
-            if(player.msg == "CONNECTION LOST \n GET CLOSER TO THE RELAY NODE")
+            if(player == "CONNECTION LOST \n GET CLOSER TO THE RELAY NODE")
             {
                 blackScreen.SetActive(true);
-                connectionMessage.text = "" + player.msg;
+                connectionMessage.text = "" + player;
                 connectionMessage.color = Color.red;
             }
 
-            if(player.msg == "CONNECTION RE-ESTABLISHED")
+            if(player == "CONNECTION RE-ESTABLISHED")
             {
                 blackScreen.SetActive(false);
-                connectionMessage.text = "" + player.msg;
+                connectionMessage.text = "" + player;
                 connectionMessage.color = Color.green;
                 Invoke("ShowMessage" , 3f);
             }          
@@ -96,12 +96,6 @@ public class mqttEventController : MonoBehaviour
 [System.Serializable]
 public class MqttEvent
 {
-    public Players p1;
-    public Players p2;
-}
-
-[System.Serializable]
-public class Players 
-{
-    public string msg;
+    public string p1;
+    public string p2;
 }

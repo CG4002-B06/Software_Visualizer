@@ -9,7 +9,6 @@ public class mqttStateController : MonoBehaviour
     public string nameController = "State Controller";
     public string tagOfTheMQTTReceiver = "MQTTState";
     public mqttReceiver _eventSender;
-
     public TextMeshProUGUI simulatorMessage;
     public GameObject godModeButton;
     public GameObject exitGodModeButton;
