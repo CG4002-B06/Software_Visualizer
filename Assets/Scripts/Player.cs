@@ -179,25 +179,29 @@ public class Player : MonoBehaviour
         GrenadeCount.color = Color.white;
         ShieldCount.color = Color.white;
 
-        if(bulletCount <= 2) 
+        if(bulletCount == 0) 
         {
             BulletCount.color = Color.red;
         }
-        else if (bulletCount == 3 || bulletCount == 4)
+        else if (bulletCount >= 1 && bulletCount <= 2)
         {
             BulletCount.color = Color.yellow;
         }
 
-        if(grenadeCount <= 1) 
+        if(grenadeCount == 0) 
         {
             GrenadeCount.color = Color.red;
+        } 
+        else if (grenadeCount == 1)
+        {
+            GrenadeCount.color = Color.yellow;
         }
 
-        if(shieldCount <= 1) 
+        if(shieldCount == 0) 
         {
             ShieldCount.color = Color.red;
         } 
-        else if (shieldCount == 2)
+        else if (shieldCount == 1)
         {
             ShieldCount.color = Color.yellow;
         }

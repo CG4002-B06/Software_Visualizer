@@ -39,6 +39,7 @@ public class mqttStateController : MonoBehaviour
     public void OnClickGodMode()
     {
         godMode = true;
+        simulatorMessage.text = "GOD MODE \n ACTIVATED";
         exitGodModeButton.SetActive(true);
         godModeButton.SetActive(false);
     }
@@ -46,6 +47,7 @@ public class mqttStateController : MonoBehaviour
     public void OnExitGodMode()
     {
         godMode = false;
+        simulatorMessage.text = "";
         exitGodModeButton.SetActive(false);
         godModeButton.SetActive(true);
     }

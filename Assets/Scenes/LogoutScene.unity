@@ -1704,12 +1704,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ad62bf590b8ce4dbd1e050f7bf8b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p1Death: {fileID: 639851014}
-  p1ShotAcc: {fileID: 1636268993}
-  p1GrenadeAcc: {fileID: 1907527785}
-  p2Death: {fileID: 1131924391}
-  p2ShotAcc: {fileID: 2039905498}
-  p2GrenadeAcc: {fileID: 10772182}
+  playerDeath: {fileID: 0}
+  playerShotAcc: {fileID: 0}
+  playerGrenadeAcc: {fileID: 0}
+  opponentDeath: {fileID: 0}
+  opponentShotAcc: {fileID: 0}
+  opponentGrenadeAcc: {fileID: 0}
 --- !u!1 &544361185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2698,7 +2698,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &799254794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4466,7 +4466,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1385944085}
         m_TargetAssemblyTypeName: ChangeScene, Assembly-CSharp
-        m_MethodName: ChangeSceneToGameplay
+        m_MethodName: ChangeSceneToGameplayP1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
