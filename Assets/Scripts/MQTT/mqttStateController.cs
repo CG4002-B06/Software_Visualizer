@@ -17,10 +17,6 @@ public class mqttStateController : MonoBehaviour
     // Initial Values
     public const float maxHealth = 100;    
     public const float maxShieldHealth = 30;
-    public int bulletCount = 6;
-    public int grenadeCount = 2;
-    public int shieldCount = 3;
-    public int killCount = 0;  
 
     public Player player1;
     public Player player2;
@@ -257,8 +253,8 @@ public class mqttStateController : MonoBehaviour
 public class MqttState 
 {
     public bool correction; 
-    public PlayerNo p1;
-    public PlayerNo p2;
+    public PlayerNo p1 = new PlayerNo();
+    public PlayerNo p2 = new PlayerNo();
 }
 
 [System.Serializable]
@@ -266,12 +262,12 @@ public class PlayerNo
 {
     public float hp;
     public string action;
-    public int bullets;
-    public int grenades;
-    public float shield_time;
-    public float shield_health;
+    public int bullets = 6;
+    public int grenades = 2;
+    public float shield_time = 0;
+    public float shield_health = 0;
     public int num_deaths = -1;
-    public int num_shield;
+    public int num_shield = 3;
     public bool isHit;
     public string invalid;
 }
