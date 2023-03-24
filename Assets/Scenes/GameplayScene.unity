@@ -268,8 +268,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4285559039
+  m_fontColor: {r: 1, g: 0.44025153, b: 0.44025153, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2977,6 +2977,106 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &289252910
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1862278654}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 32.42
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 32.42
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 32.42
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.939
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_Name
+      value: Og
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 66626fd62d571fc448cbb852c5d1303b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66626fd62d571fc448cbb852c5d1303b, type: 3}
+--- !u!4 &289252911 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 66626fd62d571fc448cbb852c5d1303b,
+    type: 3}
+  m_PrefabInstance: {fileID: 289252910}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &291626089
 GameObject:
   m_ObjectHideFlags: 0
@@ -3900,7 +4000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.20784315, g: 0.41176474, b: 0.4784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9070,7 +9170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.20392159, g: 0.4039216, b: 0.47058827, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10510,8 +10610,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294937961
+  m_fontColor: {r: 0.41194963, g: 0.5535629, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -12014,7 +12114,7 @@ MonoBehaviour:
         m_CallState: 1
       - m_Target: {fileID: 1578815383}
         m_TargetAssemblyTypeName: mqttStateController, Assembly-CSharp
-        m_MethodName: OnClickGodMode
+        m_MethodName: OnExitGodMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12251,8 +12351,8 @@ MonoBehaviour:
   tagOfTheMQTTReceiver: MQTTState
   _eventSender: {fileID: 1695488131}
   simulatorMessage: {fileID: 1700433576}
-  godModeButton: {fileID: 0}
-  exitGodModeButton: {fileID: 0}
+  godModeButton: {fileID: 831166604}
+  exitGodModeButton: {fileID: 1569636668}
   godMode: 0
   player1: {fileID: 153264412}
   player2: {fileID: 1184189741}
@@ -12350,6 +12450,7 @@ GameObject:
   - component: {fileID: 1601472158}
   - component: {fileID: 1601472157}
   - component: {fileID: 1601472161}
+  - component: {fileID: 1601472162}
   m_Layer: 5
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -12466,6 +12567,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97af446f77e4dc540b42f0f044461b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1601472162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601472156}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RunInBackground: 1
+  LogLevel: 1
+  NetworkConfig:
+    ProtocolVersion: 0
+    NetworkTransport: {fileID: 0}
+    PlayerPrefab: {fileID: 153264409}
+    NetworkPrefabs: []
+    TickRate: 30
+    ClientConnectionBufferTimeout: 10
+    ConnectionApproval: 0
+    ConnectionData: 
+    EnableTimeResync: 0
+    TimeResyncInterval: 30
+    EnsureNetworkVariableLengthSafety: 0
+    EnableSceneManagement: 1
+    ForceSamePrefabs: 1
+    RecycleNetworkIds: 1
+    NetworkIdRecycleDelay: 120
+    RpcHashSize: 0
+    LoadSceneTimeOut: 120
+    SpawnTimeout: 1
+    EnableNetworkLogs: 1
 --- !u!1 &1620783087
 GameObject:
   m_ObjectHideFlags: 0
@@ -14787,6 +14922,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1093210938}
+  - {fileID: 289252911}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
