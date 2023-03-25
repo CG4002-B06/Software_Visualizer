@@ -125,12 +125,13 @@ public class mqttStateController : MonoBehaviour
                         return;
                     }
                 } 
-                else if(opponent.action == "grenade")
+                if(opponent.action == "grenade")
                 {
+                    Debug.Log("Opponent Grenade Throwing Works!");
                     player2.Grenade();
                     PlayerSummary.opponentGrenadeHitCount += 1;
                 }   
-                else if(player.action == "shoot") 
+                if(player.action == "shoot") 
                 {
                     player1.Bullet();
 
@@ -148,8 +149,9 @@ public class mqttStateController : MonoBehaviour
                         PlayerSummary.playerMissCount += 1;
                     }        
                 }
-                else if(opponent.action == "shoot")
+                if(opponent.action == "shoot")
                 {
+                    Debug.Log("Opponent Shooting Works!");
                     if(opponent.isHit == true)
                     {
                         player2.Bullet();
@@ -160,24 +162,26 @@ public class mqttStateController : MonoBehaviour
                         PlayerSummary.opponentMissCount += 1;
                     }
                 }
-                else if(player.action == "shield")
+                if(player.action == "shield")
                 {
                     player1.ActivateShield();
                     shieldTimer.SetTime(player.shield_time);
                 }
-                else if(opponent.action == "shield")
+                if(opponent.action == "shield")
                 {
+                    Debug.Log("Opponent Shield Works!");
                     player2.ActivateShield();
                 }
-                else if(player.action == "reload")
+                if(player.action == "reload")
                 {
                     player1.ReloadBullets();
                 }
-                else if(opponent.action == "reload")
+                if(opponent.action == "reload")
                 {
+                    Debug.Log("Opponent Reload Works!");
                     player2.ReloadBullets();
                 }
-                else if(player.action  == "logout" || opponent.action == "logout")
+                if(player.action  == "logout" || opponent.action == "logout")
                 {
                     // SceneManager.LoadScene("LogoutScene");
                     player1.InvokeLogout();

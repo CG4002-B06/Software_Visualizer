@@ -19,7 +19,7 @@ public class GrenadeThrowerP2 : MonoBehaviour
         GameObject grenade = Instantiate(grenadePrefab, grenade2Spawn.position, grenade2Spawn.rotation);
         Rigidbody rb = grenade.GetComponent<Rigidbody>();
         rb.AddForce(grenade2Spawn.forward * throwForce, ForceMode.VelocityChange);
-        GameObject.Destroy(grenade, 2f);
+        GameObject.Destroy(grenade, 5f);
         Invoke("InvokeGrenadeExplosion", 2f);
     }
 
