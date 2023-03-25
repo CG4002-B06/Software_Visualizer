@@ -53,23 +53,20 @@ public class mqttStateController : MonoBehaviour
     {
         var gameState = JsonUtility.FromJson<MqttState>(newMsg);
 
-        PlayerNo player = gameState.p1;
-        PlayerNo opponent = gameState.p2;
-
         if(PlayerSelection.PlayerIndex == 1)
         {
-            player = gameState.p1;
-            opponent = gameState.p2;
+            PlayerNo player = gameState.p1;
+            PlayerNo opponent = gameState.p2;
             PlayerSummary.playerDeathCounter = player.num_deaths;
             PlayerSummary.opponentDeathCounter = opponent.num_deaths;
 
             Debug.Log("Player 1 and Opponent Set");
             DisplayPlayerAction(player, opponent);
         } 
-        else if (PlayerSelection.PlayerIndex == 2)
+        if (PlayerSelection.PlayerIndex == 2)
         {
-            player = gameState.p2;
-            opponent = gameState.p1;
+            PlayerNo player = gameState.p2;
+            PlayerNo opponent = gameState.p1;
             PlayerSummary.playerDeathCounter = player.num_deaths;
             PlayerSummary.opponentDeathCounter = opponent.num_deaths;
 
@@ -80,21 +77,28 @@ public class mqttStateController : MonoBehaviour
         void DisplayPlayerAction(PlayerNo player, PlayerNo opponent)
         {
             // These all show the correct numbers recieved from the packet
-            Debug.Log(player.bullets);
-            Debug.Log(player.grenades);
-            Debug.Log(player.num_shield);
+            Debug.Log(player.action);
+            Debug.Log(opponent.action);
 
             // this is a correct packet. should update player status
             if(gameState.correction)
             {
                 // soundEffect.PlayStatusUpdatingSound();
                 message.SetWarning("Game State Updating... \n Please wait a moment");
-                updatePlayerStatus(player, opponent);
-                return;
+                if(player == gameState.p1)
+                {
+                    updatePlayerStatus(player, opponent);
+                    return;
+                }
+                if(opponent == gameState.p1)
+                {
+                    updatePlayerStatus(opponent, player);
+                    return;
+                }
             }
             
             // Display action name
-            simulatorMessage.text = "" + player.action;
+            simulatorMessage.text = "" + player.action.ToUpper();
 
             // Perform actions only when there are no warning messages
             if(player.invalid == null || godMode == true)
@@ -122,14 +126,33 @@ public class mqttStateController : MonoBehaviour
                         Debug.Log(output.p1);
                         _eventSender.SetMessage(JsonUtility.ToJson(output));
                         _eventSender.Publish();
-                        return;
                     }
                 } 
                 if(opponent.action == "grenade")
                 {
                     Debug.Log("Opponent Grenade Throwing Works!");
-                    player2.Grenade();
-                    PlayerSummary.opponentGrenadeHitCount += 1;
+                    if (opponent.num_deaths < 0)
+                    {
+                        Output output = new Output();
+                        player2.Grenade();
+
+                        if(player2.ReturnTargetQuery())
+                        {
+                            soundEffect.InvokePlayGrenadeExplosionSound();
+                            soundEffect.PlayHitSound();
+                            output.p2 = true;
+                            PlayerSummary.opponentGrenadeHitCount += 1;
+                        }
+                        else {
+                            soundEffect.PlayMissSound();
+                            output.p2 = false;
+                            PlayerSummary.opponentGrenadeMissCount += 1;
+                        }
+                        
+                        Debug.Log(output.p2);
+                        _eventSender.SetMessage(JsonUtility.ToJson(output));
+                        _eventSender.Publish();
+                    }
                 }   
                 if(player.action == "shoot") 
                 {
@@ -190,7 +213,16 @@ public class mqttStateController : MonoBehaviour
                 
                 if(godMode == false)
                 {
-                    updatePlayerStatus(player, opponent);
+                    if(player == gameState.p1)
+                    {
+                        updatePlayerStatus(player, opponent);
+                        return;
+                    }
+                    if(opponent == gameState.p1)
+                    {
+                        updatePlayerStatus(opponent, player);
+                        return;
+                    }
                 }
             }
             else 
@@ -244,11 +276,6 @@ public class mqttStateController : MonoBehaviour
         {
             player1.ActivateShield();
             shieldTimer.SetTime(player1_object.shield_time);
-        }
-
-        if(player1_object.action == "logout")
-        {
-            SceneManager.LoadScene("LogoutScene");
         }
     }
 }
