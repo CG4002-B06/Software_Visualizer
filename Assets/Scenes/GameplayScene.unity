@@ -15199,9 +15199,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1601472161}
-        m_TargetAssemblyTypeName: ChangeScene, Assembly-CSharp
-        m_MethodName: ChangeSceneToLogout
+      - m_Target: {fileID: 153264412}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: InvokeLogout
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

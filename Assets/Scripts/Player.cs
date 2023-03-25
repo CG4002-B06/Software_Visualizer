@@ -329,7 +329,7 @@ public class Player : MonoBehaviour
         return status;
     }
 
-    public void Logout()
+    public void LogoutAction()
     {
         SceneManager.LoadScene("LogoutScene");
     }
@@ -338,7 +338,7 @@ public class Player : MonoBehaviour
     {
         soundEffects.PlayLogOutSound();
         soundEffects.PlaySiuuuSound();
-        Invoke("Logout", 1.5f);
+        Invoke("LogoutAction", 2f);
     }
 
     // Updating new component values after recieveing new data packet from Game Engine
