@@ -190,13 +190,11 @@ public class mqttStateController : MonoBehaviour
                         if(player2.ReturnTargetQuery())
                         {
                             soundEffect.InvokePlayGrenadeExplosionSound();
-                            soundEffect.PlayHitSound();
                             output.p2 = true;
                             PlayerSummary.opponentGrenadeHitCount += 1;
                         }
                         else 
                         {
-                            soundEffect.PlayMissSound();
                             output.p2 = false;
                             PlayerSummary.opponentGrenadeMissCount += 1;
                         }
