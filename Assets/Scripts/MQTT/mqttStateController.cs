@@ -120,7 +120,8 @@ public class mqttStateController : MonoBehaviour
                             output.p1 = true;
                             PlayerSummary.playerGrenadeHitCount += 1;
                         }
-                        else {
+                        else 
+                        {
                             soundEffect.PlayMissSound();
                             output.p1 = false;
                             PlayerSummary.playerGrenadeMissCount += 1;
@@ -150,13 +151,14 @@ public class mqttStateController : MonoBehaviour
                 if(player.action == "shield") // CONNECTED PLAYER SHIELD
                 {
                     player1.ActivateShield();
+                    shieldTimer.SetTime(player.shield_time);
                     if(player == gameState.p1)
                     {
-                        shieldTimer.SetTime(player.shield_time);
+                        shieldTimer.SetText(1);
                     }
                     if(player == gameState.p2)
                     {
-                        shieldTimer.SetTime(player.shield_time); // Change this. Shield countdown for player 2 is still showing at player 1 shield count. Fix it!
+                        shieldTimer.SetText(2);
                     }
                 } 
                 if(player.action == "reload") // CONNECTED PLAYER RELOAD
@@ -186,7 +188,8 @@ public class mqttStateController : MonoBehaviour
                             output.p2 = true;
                             PlayerSummary.opponentGrenadeHitCount += 1;
                         }
-                        else {
+                        else 
+                        {
                             soundEffect.PlayMissSound();
                             output.p2 = false;
                             PlayerSummary.opponentGrenadeMissCount += 1;

@@ -35,14 +35,12 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI BulletCount;
     public TextMeshProUGUI GrenadeCount;
     public TextMeshProUGUI ShieldCount;
-    public TextMeshProUGUI connectionText;
 
     // Scripts
     public DeathCounter deathCounter;
     public ShieldTimer shieldTimer;
     public GrenadeThrowerP1 grenadeThrower1;
     public GrenadeThrowerP2 grenadeThrower2;
-    public BulletShooter bulletShooter;
     public OpenScreen openScreen;
     public SoundEffects soundEffects;
     public InventoryBars inventoryBars;
@@ -57,7 +55,6 @@ public class Player : MonoBehaviour
     public GameObject CrossHair;
     public GameObject ImgTarget;
     public GameObject SWShield;
-    public GameObject CrackedShield;
 
     // Health and Shield Bar
     public Image FrontHealthBar;
