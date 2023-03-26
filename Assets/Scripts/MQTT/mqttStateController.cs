@@ -98,8 +98,13 @@ public class mqttStateController : MonoBehaviour
                 }
             }
 
+            if(player.invalid != null)
+            {
+                message.SetWarning(player.invalid); // CONNECTED PLAYER WARNING
+            }
+
             // If player has no warnings but opponent has warnings -> Only show player actions
-            if(player.invalid == null && opponent.invalid != null)
+            if(player.action != null && player.invalid == null)
             {
                 if(player.action == "grenade") // CONNECTED PLAYER GRENADE
                 {
@@ -145,37 +150,28 @@ public class mqttStateController : MonoBehaviour
                 if(player.action == "shield") // CONNECTED PLAYER SHIELD
                 {
                     player1.ActivateShield();
-                    shieldTimer.SetTime(player.shield_time);
+                    if(player == gameState.p1)
+                    {
+                        shieldTimer.SetTime(player.shield_time);
+                    }
+                    if(player == gameState.p2)
+                    {
+                        shieldTimer.SetTime(player.shield_time); // Change this. Shield countdown for player 2 is still showing at player 1 shield count. Fix it!
+                    }
                 } 
                 if(player.action == "reload") // CONNECTED PLAYER RELOAD
                 {
                     player1.ReloadBullets();
                 }
-                if(player.action  == "logout") // CONNECTED PLAYER LOGOUT
+                if(player.action == "logout") // CONNECTED PLAYER LOGOUT
                 {
                     player1.InvokeLogout();
-                }
-                
-                if(godMode == false)
-                {
-                    if(player == gameState.p1)
-                    {
-                        updatePlayerStatus(player, opponent);
-                        return;
-                    }
-                    if(player == gameState.p2)
-                    {
-                        updatePlayerStatus(opponent, player);
-                        return;
-                    }
                 }
             }  
 
             // If opponent has no warnings but player has warnings -> Only show opponent actions
-            if(opponent.invalid == null && player.invalid != null)
+            if(opponent.action != null && opponent.invalid == null)
             {
-                message.SetWarning(player.invalid); // CONNECTED PLAYER WARNING
-
                 if(opponent.action == "grenade") // OPPONENT GRENADE
                 {
                     if (opponent.num_deaths < 0)
@@ -226,22 +222,23 @@ public class mqttStateController : MonoBehaviour
                     player2.InvokeLogout();
                     simulatorMessage.text = "OPPONENT HAS \nLOGGED OUT!";
                 }
-                
-                if(godMode == false)
+            }
+            
+            if(godMode == false)
+            {
+                if(player == gameState.p1)
                 {
-                    if(player == gameState.p1)
-                    {
-                        updatePlayerStatus(player, opponent);
-                        return;
-                    }
-                    if(player == gameState.p2)
-                    {
-                        updatePlayerStatus(opponent, player);
-                        return;
-                    }
+                    updatePlayerStatus(player, opponent);
+                    return;
+                }
+                if(player == gameState.p2)
+                {
+                    updatePlayerStatus(opponent, player);
+                    return;
                 }
             }
         }
+        
     }
 
     private void updatePlayerStatus(PlayerNo player1_object, PlayerNo player2_object)
@@ -285,12 +282,6 @@ public class mqttStateController : MonoBehaviour
             player1.deathCounter.SetColorAndSize(Color.white, 24);
             player2.deathCounter.SetColorAndSize(Color.white, 24);
         }
-
-        if(player1_object.shield_time > 0)
-        {
-            player1.ActivateShield();
-            shieldTimer.SetTime(player1_object.shield_time);
-        }
     }
 }
 
@@ -314,7 +305,7 @@ public class PlayerNo
     public int num_deaths = -1;
     public int num_shield = 3;
     public bool isHit;
-    public string invalid;
+    public string invalid = null;
 }
 
 [System.Serializable]

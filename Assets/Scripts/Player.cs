@@ -282,7 +282,6 @@ public class Player : MonoBehaviour
         // Update AR and screen effects
         if(Players.Equals(GameObject.Find("P1")))
         {
-            
             Timer.SetActive(true);
             shieldTimer.SetHasStart(true); 
             soundEffects.PlayShieldActivationSound();
