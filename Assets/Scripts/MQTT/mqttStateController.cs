@@ -10,6 +10,8 @@ public class mqttStateController : MonoBehaviour
     public string tagOfTheMQTTReceiver = "MQTTState";
     public mqttReceiver _eventSender;
     public TextMeshProUGUI simulatorMessage;
+    public TextMeshProUGUI simulatorMessageP1;
+    public TextMeshProUGUI simulatorMessageP2;
     public GameObject godModeButton;
     public GameObject exitGodModeButton;
     public bool godMode;
@@ -23,7 +25,6 @@ public class mqttStateController : MonoBehaviour
     public SoundEffects soundEffect;
     public MessageTimer message;
     public ShieldTimer shieldTimer;
-    public Summary summary;
     public BulletShooter shootEffect;
 
     void Start()
@@ -35,7 +36,7 @@ public class mqttStateController : MonoBehaviour
     public void OnClickGodMode()
     {
         godMode = true;
-        simulatorMessage.text = "GOD MODE \n ACTIVATED";
+        simulatorMessage.text = "GOD MODE \nACTIVATED";
         exitGodModeButton.SetActive(true);
         godModeButton.SetActive(false);
     }
@@ -90,20 +91,17 @@ public class mqttStateController : MonoBehaviour
                     updatePlayerStatus(player, opponent);
                     return;
                 }
-                if(opponent == gameState.p1)
+                if(player == gameState.p2)
                 {
                     updatePlayerStatus(opponent, player);
                     return;
                 }
             }
-            
-            // Display action name
-            simulatorMessage.text = "" + player.action.ToUpper();
 
-            // Perform actions only when there are no warning messages
-            if(player.invalid == null || godMode == true)
-            {     
-                if(player.action == "grenade")
+            // If player has no warnings but opponent has warnings -> Only show player actions
+            if(player.invalid == null && opponent.invalid != null)
+            {
+                if(player.action == "grenade") // CONNECTED PLAYER GRENADE
                 {
                     if (player.num_deaths < 0)
                     {
@@ -128,9 +126,58 @@ public class mqttStateController : MonoBehaviour
                         _eventSender.Publish();
                     }
                 } 
-                if(opponent.action == "grenade")
+                if(player.action == "shoot") // CONNECTED PLAYER SHOOT
                 {
-                    Debug.Log("Opponent Grenade Throwing Works!");
+                    player1.Bullet();
+
+                    if(player.isHit == true)
+                    {
+                        shootEffect.ShootBullet();
+                        soundEffect.PlayHitSound();
+                        PlayerSummary.playerShootCount += 1;
+                    }
+                    else
+                    {
+                        soundEffect.PlayMissSound();
+                        PlayerSummary.playerMissCount += 1;
+                    }        
+                }
+                if(player.action == "shield") // CONNECTED PLAYER SHIELD
+                {
+                    player1.ActivateShield();
+                    shieldTimer.SetTime(player.shield_time);
+                } 
+                if(player.action == "reload") // CONNECTED PLAYER RELOAD
+                {
+                    player1.ReloadBullets();
+                }
+                if(player.action  == "logout") // CONNECTED PLAYER LOGOUT
+                {
+                    player1.InvokeLogout();
+                }
+                
+                if(godMode == false)
+                {
+                    if(player == gameState.p1)
+                    {
+                        updatePlayerStatus(player, opponent);
+                        return;
+                    }
+                    if(player == gameState.p2)
+                    {
+                        updatePlayerStatus(opponent, player);
+                        return;
+                    }
+                }
+            }  
+
+            // If opponent has no warnings but player has warnings -> Only show opponent actions
+            if(opponent.invalid == null && player.invalid != null)
+            {
+                message.SetWarning(player.invalid); // CONNECTED PLAYER WARNING
+
+                if(opponent.action == "grenade") // OPPONENT GRENADE
+                {
                     if (opponent.num_deaths < 0)
                     {
                         Output output = new Output();
@@ -153,28 +200,9 @@ public class mqttStateController : MonoBehaviour
                         _eventSender.SetMessage(JsonUtility.ToJson(output));
                         _eventSender.Publish();
                     }
-                }   
-                if(player.action == "shoot") 
+                } 
+                if(opponent.action == "shoot") // OPPONENT SHOOT
                 {
-                    player1.Bullet();
-
-                    if(player.isHit == true)
-                    {
-                        Debug.Log("isHit is true");
-                        shootEffect.ShootBullet();
-                        soundEffect.PlayHitSound();
-                        PlayerSummary.playerShootCount += 1;
-                    }
-                    else
-                    {
-                        Debug.Log("isHit is false");
-                        soundEffect.PlayMissSound();
-                        PlayerSummary.playerMissCount += 1;
-                    }        
-                }
-                if(opponent.action == "shoot")
-                {
-                    Debug.Log("Opponent Shooting Works!");
                     if(opponent.isHit == true)
                     {
                         player2.Bullet();
@@ -184,31 +212,19 @@ public class mqttStateController : MonoBehaviour
                     {
                         PlayerSummary.opponentMissCount += 1;
                     }
-                }
-                if(player.action == "shield")
+                }                
+                if(opponent.action == "shield") // OPPONENT SHIELD
                 {
-                    player1.ActivateShield();
-                    shieldTimer.SetTime(player.shield_time);
-                }
-                if(opponent.action == "shield")
-                {
-                    Debug.Log("Opponent Shield Works!");
                     player2.ActivateShield();
-                }
-                if(player.action == "reload")
+                }               
+                if(opponent.action == "reload") // OPPONENT RELOAD
                 {
-                    player1.ReloadBullets();
-                }
-                if(opponent.action == "reload")
-                {
-                    Debug.Log("Opponent Reload Works!");
                     player2.ReloadBullets();
                 }
-                if(player.action  == "logout" || opponent.action == "logout")
+                if(opponent.action == "logout") // OPPONENT LOGOUT
                 {
-                    // SceneManager.LoadScene("LogoutScene");
-                    player1.InvokeLogout();
                     player2.InvokeLogout();
+                    simulatorMessage.text = "OPPONENT HAS \nLOGGED OUT!";
                 }
                 
                 if(godMode == false)
@@ -218,23 +234,21 @@ public class mqttStateController : MonoBehaviour
                         updatePlayerStatus(player, opponent);
                         return;
                     }
-                    if(opponent == gameState.p1)
+                    if(player == gameState.p2)
                     {
                         updatePlayerStatus(opponent, player);
                         return;
                     }
                 }
             }
-            else 
-            {
-                // Display Warning message
-                message.SetWarning(player.invalid);
-            }
         }
     }
 
     private void updatePlayerStatus(PlayerNo player1_object, PlayerNo player2_object)
     {
+        simulatorMessageP1.text = "" + player1_object.action.ToUpper();
+        simulatorMessageP2.text = "" + player2_object.action.ToUpper();
+        
         float p1Health = Mathf.Clamp(player1_object.hp, 0, maxHealth);
         float p1ShieldHealth = Mathf.Clamp(player1_object.shield_health, 0, maxShieldHealth);
         player1.UpdateHealth(p1Health);
