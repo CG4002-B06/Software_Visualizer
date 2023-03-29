@@ -310,12 +310,10 @@ public class Player : MonoBehaviour
         status = target;
         if(target == false)
         {
-            CrossHair.SetActive(false);
             soundEffects.PlayTargetOffSightSound();
         } 
         else 
         {
-            CrossHair.SetActive(true);
             soundEffects.PlayTargetOnSightSound();
         }
     }
