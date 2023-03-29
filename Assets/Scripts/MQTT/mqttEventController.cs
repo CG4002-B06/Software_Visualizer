@@ -29,20 +29,17 @@ public class mqttEventController : MonoBehaviour
     {
         var gameEvent = JsonUtility.FromJson<MqttEvent>(newMsg);
 
-        string player = gameEvent.p1;
-        string opponent = gameEvent.p2;
-
         if(PlayerSelection.PlayerIndex == 1)
         {
-            player = gameEvent.p1;
-            opponent = gameEvent.p2;
+            string player = gameEvent.p1;
+            string opponent = gameEvent.p2;
             Debug.Log("Player 1 and Opponent Set");
             DisplayPlayerEvent(player, opponent);
         } 
-        else if (PlayerSelection.PlayerIndex == 2)
+        else if(PlayerSelection.PlayerIndex == 2)
         {
-            player = gameEvent.p2;
-            opponent = gameEvent.p1;
+            string player = gameEvent.p2;
+            string opponent = gameEvent.p1;
             Debug.Log("Player 2 and Opponent Set");
             DisplayPlayerEvent(player, opponent);
         }
@@ -70,7 +67,15 @@ public class mqttEventController : MonoBehaviour
             if(player == "ACTION UNDETECTED! \n REDO ACTION")
             {
                 blackScreen.SetActive(false);
-                connectionMessage.text = "" + player;
+                if(player == gameEvent.p1)
+                {
+                    connectionMessage.text = "P1" + player;
+                }
+                if(player == gameEvent.p2)
+                {
+                    connectionMessage.text = "P2" + player;
+                }
+                
                 connectionMessage.color = Color.white;
                 Invoke("ShowMessage" , 3f);
             }
@@ -78,14 +83,30 @@ public class mqttEventController : MonoBehaviour
             if(player == "CONNECTION LOST \n GET CLOSER TO THE RELAY NODE")
             {
                 blackScreen.SetActive(true);
-                connectionMessage.text = "" + player;
+                if(player == gameEvent.p1)
+                {
+                    connectionMessage.text = "P1" + player;
+                }
+                if(player == gameEvent.p2)
+                {
+                    connectionMessage.text = "P2" + player;
+                }
+                
                 connectionMessage.color = Color.red;
             }
 
             if(player == "CONNECTION RE-ESTABLISHED")
             {
                 blackScreen.SetActive(false);
-                connectionMessage.text = "" + player;
+                if(player == gameEvent.p1)
+                {
+                    connectionMessage.text = "P1" + player;
+                }
+                if(player == gameEvent.p2)
+                {
+                    connectionMessage.text = "P2" + player;
+                }
+                
                 connectionMessage.color = Color.green;
                 Invoke("ShowMessage" , 3f);
             }          
