@@ -14,6 +14,7 @@ public class mqttStateController : MonoBehaviour
     public TextMeshProUGUI simulatorMessageP2;
     public GameObject godModeButton;
     public GameObject exitGodModeButton;
+    public GameObject SWShield;
     public bool godMode;
 
     // Initial Values
@@ -273,7 +274,16 @@ public class mqttStateController : MonoBehaviour
         player2.UpdateGrenadeCount(player2_object.grenades);
         player2.UpdateShieldCount(player2_object.num_shield);
         player2.deathCounter.UpdatePlayerDeathCount(player2_object.num_deaths);
-        
+
+        if(player2_object.shield_time > 0)
+        {
+            SWShield.SetActive(true);
+        }
+        else 
+        {
+            SWShield.SetActive(false);
+        }
+
         // Assign Color and Size to death counters accordingly
         if(player1_object.num_deaths > player2_object.num_deaths)
         {
