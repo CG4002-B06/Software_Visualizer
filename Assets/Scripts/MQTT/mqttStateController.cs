@@ -226,7 +226,6 @@ public class mqttStateController : MonoBehaviour
                 }
                 if(opponent.action == "logout") // OPPONENT LOGOUT
                 {
-                    player2.InvokeLogout();
                     simulatorMessage.text = "OPPONENT HAS \nLOGGED OUT!";
                 }
             }
