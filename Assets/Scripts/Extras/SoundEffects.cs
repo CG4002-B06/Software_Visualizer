@@ -30,6 +30,13 @@ public class SoundEffects : MonoBehaviour
     public AudioSource logOutSound; 
     public AudioSource siuuuSound;
 
+    // Event Sounds
+    public AudioSource dontMoveGloveSound;
+    public AudioSource beginGameSound;
+    public AudioSource redoActionSound;
+    public AudioSource connectionLostSound;
+    public AudioSource connectionReestablishedSound; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +47,31 @@ public class SoundEffects : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void PlayDontMoveGloveSound()
+    {
+        dontMoveGloveSound.Play();
+    }
+
+    public void PlayBeginGameSound()
+    {
+        beginGameSound.Play();
+    }
+
+    public void PlayRedoActionSound()
+    {
+        redoActionSound.Play();
+    }
+
+    public void PlayConnectionLostSound()
+    {
+        connectionLostSound.Play();
+    }
+
+    public void PlayConnectionReestablishedSound()
+    {
+        connectionReestablishedSound.Play();
     }
 
     public void PlayBeingHitSound()

@@ -12,6 +12,7 @@ public class mqttEventController : MonoBehaviour
 
     public TextMeshProUGUI connectionMessage;
     public GameObject blackScreen;
+    public SoundEffects soundEffect;
 
     void Start()
     {
@@ -51,6 +52,7 @@ public class mqttEventController : MonoBehaviour
 
             if(player == "DONT MOVE GLOVE! \n SENSORS ARE INITIALISING...")
             {
+                soundEffect.PlayDontMoveGloveSound();
                 blackScreen.SetActive(true);
                 connectionMessage.text = "" + player;
                 connectionMessage.color = Color.white;
@@ -58,6 +60,7 @@ public class mqttEventController : MonoBehaviour
 
             if(player == "SENSORS HAVE BEEN INITIALISED \n ENJOY SHOOTING!")
             {
+                soundEffect.PlayBeginGameSound();
                 blackScreen.SetActive(false);
                 connectionMessage.text = "" + player;
                 connectionMessage.color = Color.green;
@@ -66,6 +69,7 @@ public class mqttEventController : MonoBehaviour
 
             if(player == "ACTION UNDETECTED! \n REDO ACTION")
             {
+                soundEffect.PlayRedoActionSound();
                 blackScreen.SetActive(false);
                 if(player == gameEvent.p1)
                 {
@@ -82,6 +86,7 @@ public class mqttEventController : MonoBehaviour
 
             if(player == "CONNECTION LOST \n GET CLOSER TO THE RELAY NODE")
             {
+                soundEffect.PlayConnectionLostSound();
                 blackScreen.SetActive(true);
                 if(player == gameEvent.p1)
                 {
@@ -97,6 +102,7 @@ public class mqttEventController : MonoBehaviour
 
             if(player == "CONNECTION RE-ESTABLISHED")
             {
+                soundEffect.PlayConnectionReestablishedSound();
                 blackScreen.SetActive(false);
                 if(player == gameEvent.p1)
                 {
