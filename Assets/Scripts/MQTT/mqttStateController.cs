@@ -113,7 +113,7 @@ public class mqttStateController : MonoBehaviour
                 playerPacketId = 0;
                 if(player.action == "grenade") // CONNECTED PLAYER GRENADE
                 {
-                    if (player.num_deaths < 0)
+                    if (player.num_deaths >= 0)
                     {
                         Output output = new Output();
                         player1.Grenade();
@@ -182,7 +182,7 @@ public class mqttStateController : MonoBehaviour
                 opponentPacketId = 0;
                 if(opponent.action == "grenade") // OPPONENT GRENADE
                 {
-                    if (opponent.num_deaths < 0)
+                    if (opponent.num_deaths >= 0)
                     {
                         Output output = new Output();
                         player2.Grenade();
@@ -308,7 +308,7 @@ public class PlayerNo
     public int grenades = 2;
     public float shield_time = 0;
     public float shield_health = 0;
-    public int num_deaths = -1;
+    public int num_deaths = 0;
     public int num_shield = 3;
     public bool isHit;
     public string invalid = null;

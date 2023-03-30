@@ -230,11 +230,6 @@ public class Player : MonoBehaviour
             soundEffects.PlayBeingHitSound();
         }
 
-        // if(shieldHealth >= bulletDamage)
-        // {
-        //     CrackedShield.SetActive(true);
-        // }
-
         lerpTimer = 0f;
     }
 
