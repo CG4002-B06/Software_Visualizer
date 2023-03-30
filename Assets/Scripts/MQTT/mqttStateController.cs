@@ -303,8 +303,8 @@ public class MqttState
 [System.Serializable]
 public class PlayerNo 
 {
-    public float hp;
-    public string action;
+    public float hp = 100;
+    public string action = null;
     public int bullets = 6;
     public int grenades = 2;
     public float shield_time = 0;
