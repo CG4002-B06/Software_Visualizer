@@ -84,6 +84,23 @@ public class mqttEventController : MonoBehaviour
                 Invoke("ShowMessage" , 3f);
             }
 
+            if(player == "CONNECTION RE-ESTABLISHED \n REDO ACTION")
+            {
+                soundEffect.PlayConnectionReestablishedSound();
+                blackScreen.SetActive(false);
+                if(player == gameEvent.p1)
+                {
+                    connectionMessage.text = "P1" + player;
+                }
+                if(player == gameEvent.p2)
+                {
+                    connectionMessage.text = "P2" + player;
+                }
+                
+                connectionMessage.color = Color.green;
+                Invoke("ShowMessage" , 3f);
+            }
+
             if(player == "CONNECTION LOST \n GET CLOSER TO THE RELAY NODE")
             {
                 soundEffect.PlayConnectionLostSound();
