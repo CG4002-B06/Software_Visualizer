@@ -116,26 +116,33 @@ public class mqttStateController : MonoBehaviour
                 {
                     if (player.num_deaths >= 0)
                     {
-                        Output output = new Output();
-
                         if(gameState.query == false)
                         {
                             player1.Grenade();
+
+                            if(player2.ReturnTargetQuery())
+                            {
+                                soundEffect.InvokePlayGrenadeExplosionSound();
+                                soundEffect.PlayHitSound();
+                            }
+                            else 
+                            {
+                                soundEffect.PlayMissSound();
+                            }
                         }
                         else 
                         {
+                            Output output = new Output();
+
                             if(player == gameState.p1)
                             {
                                 if(player2.ReturnTargetQuery())
                                 {
-                                    soundEffect.InvokePlayGrenadeExplosionSound();
-                                    soundEffect.PlayHitSound();
                                     output.p1 = true;
                                     PlayerSummary.playerGrenadeHitCount += 1;
                                 }
                                 else 
                                 {
-                                    soundEffect.PlayMissSound();
                                     output.p1 = false;
                                     PlayerSummary.playerGrenadeMissCount += 1;
                                 }
@@ -145,20 +152,16 @@ public class mqttStateController : MonoBehaviour
                             {
                                 if(player2.ReturnTargetQuery())
                                 {
-                                    soundEffect.InvokePlayGrenadeExplosionSound();
-                                    soundEffect.PlayHitSound();
                                     output.p2 = true;
                                     PlayerSummary.playerGrenadeHitCount += 1;
                                 }
                                 else 
                                 {
-                                    soundEffect.PlayMissSound();
                                     output.p2 = false;
                                     PlayerSummary.playerGrenadeMissCount += 1;
                                 }
                             }
 
-                            Debug.Log(output.p1);
                             _eventSender.SetMessage(JsonUtility.ToJson(output));
                             _eventSender.Publish();
                         }
@@ -211,24 +214,7 @@ public class mqttStateController : MonoBehaviour
                 {
                     if (opponent.num_deaths >= 0)
                     {
-                        // Output output = new Output();
                         player2.Grenade();
-
-                        // if(player2.ReturnTargetQuery())
-                        // {
-                        //     soundEffect.InvokePlayGrenadeExplosionSound();
-                        //     output.p2 = true;
-                        //     PlayerSummary.opponentGrenadeHitCount += 1;
-                        // }
-                        // else 
-                        // {
-                        //     output.p2 = false;
-                        //     PlayerSummary.opponentGrenadeMissCount += 1;
-                        // }
-                        
-                        // Debug.Log(output.p2);
-                        // _eventSender.SetMessage(JsonUtility.ToJson(output));
-                        // _eventSender.Publish();
                     }
                 } 
                 if(opponent.action == "shoot") // OPPONENT SHOOT

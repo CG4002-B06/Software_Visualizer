@@ -659,7 +659,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 2
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1560,7 +1560,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 2
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -4814,6 +4814,11 @@ MonoBehaviour:
   statusUpdatingSound: {fileID: 0}
   logOutSound: {fileID: 0}
   siuuuSound: {fileID: 0}
+  dontMoveGloveSound: {fileID: 0}
+  beginGameSound: {fileID: 0}
+  redoActionSound: {fileID: 0}
+  connectionLostSound: {fileID: 0}
+  connectionReestablishedSound: {fileID: 0}
 --- !u!1 &1427325119
 GameObject:
   m_ObjectHideFlags: 0
@@ -4869,6 +4874,11 @@ MonoBehaviour:
   statusUpdatingSound: {fileID: 0}
   logOutSound: {fileID: 0}
   siuuuSound: {fileID: 0}
+  dontMoveGloveSound: {fileID: 0}
+  beginGameSound: {fileID: 0}
+  redoActionSound: {fileID: 0}
+  connectionLostSound: {fileID: 0}
+  connectionReestablishedSound: {fileID: 0}
 --- !u!114 &1427325122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5735,6 +5745,11 @@ MonoBehaviour:
   statusUpdatingSound: {fileID: 0}
   logOutSound: {fileID: 0}
   siuuuSound: {fileID: 0}
+  dontMoveGloveSound: {fileID: 0}
+  beginGameSound: {fileID: 0}
+  redoActionSound: {fileID: 0}
+  connectionLostSound: {fileID: 0}
+  connectionReestablishedSound: {fileID: 0}
 --- !u!114 &1676703862
 MonoBehaviour:
   m_ObjectHideFlags: 0
