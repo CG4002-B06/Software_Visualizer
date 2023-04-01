@@ -331,6 +331,7 @@ public class mqttStateController : MonoBehaviour
 public class MqttState 
 {
     public bool correction; 
+    public bool query = true;
     public PlayerNo p1 = new PlayerNo();
     public PlayerNo p2 = new PlayerNo();
 }
@@ -348,7 +349,6 @@ public class PlayerNo
     public int num_shield = 3;
     public bool isHit = true;
     public string invalid = null;
-    public bool query = true;
 }
 
 [System.Serializable]
