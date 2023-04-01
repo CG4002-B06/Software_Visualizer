@@ -185,24 +185,24 @@ public class mqttStateController : MonoBehaviour
                 {
                     if (opponent.num_deaths >= 0)
                     {
-                        Output output = new Output();
+                        // Output output = new Output();
                         player2.Grenade();
 
-                        if(player2.ReturnTargetQuery())
-                        {
-                            soundEffect.InvokePlayGrenadeExplosionSound();
-                            output.p2 = true;
-                            PlayerSummary.opponentGrenadeHitCount += 1;
-                        }
-                        else 
-                        {
-                            output.p2 = false;
-                            PlayerSummary.opponentGrenadeMissCount += 1;
-                        }
+                        // if(player2.ReturnTargetQuery())
+                        // {
+                        //     soundEffect.InvokePlayGrenadeExplosionSound();
+                        //     output.p2 = true;
+                        //     PlayerSummary.opponentGrenadeHitCount += 1;
+                        // }
+                        // else 
+                        // {
+                        //     output.p2 = false;
+                        //     PlayerSummary.opponentGrenadeMissCount += 1;
+                        // }
                         
-                        Debug.Log(output.p2);
-                        _eventSender.SetMessage(JsonUtility.ToJson(output));
-                        _eventSender.Publish();
+                        // Debug.Log(output.p2);
+                        // _eventSender.SetMessage(JsonUtility.ToJson(output));
+                        // _eventSender.Publish();
                     }
                 } 
                 if(opponent.action == "shoot") // OPPONENT SHOOT
@@ -244,8 +244,7 @@ public class mqttStateController : MonoBehaviour
                     return;
                 }
             }
-        }
-        
+        } 
     }
 
     private void updatePlayerStatus(PlayerNo player1_object, PlayerNo player2_object)
@@ -275,11 +274,12 @@ public class mqttStateController : MonoBehaviour
         player2.UpdateShieldCount(player2_object.num_shield);
         player2.deathCounter.UpdatePlayerDeathCount(player2_object.num_deaths);
 
-        if(player2_object.shield_time > 0)
+        if(player2_object.shield_health > 0)
         {
             SWShield.SetActive(true);
         }
-        else 
+        
+        if(player2_object.shield_time <= 0 || player2_object.shield_health <= 0)
         {
             SWShield.SetActive(false);
         }

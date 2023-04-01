@@ -147,18 +147,6 @@ public class Player : MonoBehaviour
         shieldHealth = Mathf.Clamp(shieldHealth, 0, maxShieldHealth);
         // FrontShieldBar.fillAmount = shieldHealth / maxShieldHealth;
         UpdateShieldUI(shieldHealth);
-
-        if(shieldHealth <= 0 && Players.Equals(GameObject.Find("P1")))
-        {
-            openScreen.OpenBlueScreen(false);
-            lerpTimer = 0f;
-        }
-
-        if(shieldHealth <= 0 && Players.Equals(GameObject.Find("P2")))
-        {
-            SWShield.SetActive(false);
-            lerpTimer = 0f;
-        }
     }
 
     // Update shieldbar UI
@@ -235,6 +223,8 @@ public class Player : MonoBehaviour
             Invoke("InvokeShootLaser", 1f);
             changeCrossHairSize.changeSize(1f);
         }
+
+        health -= 10;
         
         if(Players.Equals(GameObject.Find("P2")))
         {
@@ -294,6 +284,18 @@ public class Player : MonoBehaviour
         if(Players.Equals(GameObject.Find("P2")))
         {
             SWShield.SetActive(true);
+        }
+
+        if(shieldHealth <= 0 && Players.Equals(GameObject.Find("P1")))
+        {
+            openScreen.OpenBlueScreen(false);
+            lerpTimer = 0f;
+        }
+
+        if(shieldHealth <= 0 && Players.Equals(GameObject.Find("P2")))
+        {
+            SWShield.SetActive(false);
+            lerpTimer = 0f;
         }
     }
 
