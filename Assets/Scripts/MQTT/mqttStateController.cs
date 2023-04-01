@@ -118,21 +118,41 @@ public class mqttStateController : MonoBehaviour
                     {
                         Output output = new Output();
                         player1.Grenade();
-
-                        if(player2.ReturnTargetQuery())
+                        
+                        if(player == gameState.p1)
                         {
-                            soundEffect.InvokePlayGrenadeExplosionSound();
-                            soundEffect.PlayHitSound();
-                            output.p1 = true;
-                            PlayerSummary.playerGrenadeHitCount += 1;
-                        }
-                        else 
-                        {
-                            soundEffect.PlayMissSound();
-                            output.p1 = false;
-                            PlayerSummary.playerGrenadeMissCount += 1;
+                            if(player2.ReturnTargetQuery())
+                            {
+                                soundEffect.InvokePlayGrenadeExplosionSound();
+                                soundEffect.PlayHitSound();
+                                output.p1 = true;
+                                PlayerSummary.playerGrenadeHitCount += 1;
+                            }
+                            else 
+                            {
+                                soundEffect.PlayMissSound();
+                                output.p1 = false;
+                                PlayerSummary.playerGrenadeMissCount += 1;
+                            }
                         }
                         
+                        if(player == gameState.p2)
+                        {
+                            if(player2.ReturnTargetQuery())
+                            {
+                                soundEffect.InvokePlayGrenadeExplosionSound();
+                                soundEffect.PlayHitSound();
+                                output.p2 = true;
+                                PlayerSummary.playerGrenadeHitCount += 1;
+                            }
+                            else 
+                            {
+                                soundEffect.PlayMissSound();
+                                output.p2 = false;
+                                PlayerSummary.playerGrenadeMissCount += 1;
+                            }
+                        }
+
                         Debug.Log(output.p1);
                         _eventSender.SetMessage(JsonUtility.ToJson(output));
                         _eventSender.Publish();
