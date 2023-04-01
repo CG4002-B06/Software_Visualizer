@@ -112,7 +112,7 @@ public class mqttStateController : MonoBehaviour
             if(player.action != null && player.invalid == null && playerPacketId != 0)
             {
                 playerPacketId = 0;
-                if(player.action == "grenade") // CONNECTED PLAYER GRENADE
+                if(player.action == "grenade" && player.hp == 100) // CONNECTED PLAYER GRENADE
                 {
                     if (player.num_deaths >= 0)
                     {
@@ -340,7 +340,7 @@ public class PlayerNo
     public float shield_health = 0;
     public int num_deaths = 0;
     public int num_shield = 3;
-    public bool isHit;
+    public bool isHit = true;
     public string invalid = null;
 }
 
