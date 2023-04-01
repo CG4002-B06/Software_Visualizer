@@ -112,50 +112,56 @@ public class mqttStateController : MonoBehaviour
             if(player.action != null && player.invalid == null && playerPacketId != 0)
             {
                 playerPacketId = 0;
-                if(player.action == "grenade" && player.hp == 100) // CONNECTED PLAYER GRENADE
+                if(player.action == "grenade") // CONNECTED PLAYER GRENADE
                 {
                     if (player.num_deaths >= 0)
                     {
                         Output output = new Output();
-                        player1.Grenade();
-                        
-                        if(player == gameState.p1)
-                        {
-                            if(player2.ReturnTargetQuery())
-                            {
-                                soundEffect.InvokePlayGrenadeExplosionSound();
-                                soundEffect.PlayHitSound();
-                                output.p1 = true;
-                                PlayerSummary.playerGrenadeHitCount += 1;
-                            }
-                            else 
-                            {
-                                soundEffect.PlayMissSound();
-                                output.p1 = false;
-                                PlayerSummary.playerGrenadeMissCount += 1;
-                            }
-                        }
-                        
-                        if(player == gameState.p2)
-                        {
-                            if(player2.ReturnTargetQuery())
-                            {
-                                soundEffect.InvokePlayGrenadeExplosionSound();
-                                soundEffect.PlayHitSound();
-                                output.p2 = true;
-                                PlayerSummary.playerGrenadeHitCount += 1;
-                            }
-                            else 
-                            {
-                                soundEffect.PlayMissSound();
-                                output.p2 = false;
-                                PlayerSummary.playerGrenadeMissCount += 1;
-                            }
-                        }
 
-                        Debug.Log(output.p1);
-                        _eventSender.SetMessage(JsonUtility.ToJson(output));
-                        _eventSender.Publish();
+                        if(player.query == false)
+                        {
+                            player1.Grenade();
+                        }
+                        else 
+                        {
+                            if(player == gameState.p1)
+                            {
+                                if(player2.ReturnTargetQuery())
+                                {
+                                    soundEffect.InvokePlayGrenadeExplosionSound();
+                                    soundEffect.PlayHitSound();
+                                    output.p1 = true;
+                                    PlayerSummary.playerGrenadeHitCount += 1;
+                                }
+                                else 
+                                {
+                                    soundEffect.PlayMissSound();
+                                    output.p1 = false;
+                                    PlayerSummary.playerGrenadeMissCount += 1;
+                                }
+                            }
+                            
+                            if(player == gameState.p2)
+                            {
+                                if(player2.ReturnTargetQuery())
+                                {
+                                    soundEffect.InvokePlayGrenadeExplosionSound();
+                                    soundEffect.PlayHitSound();
+                                    output.p2 = true;
+                                    PlayerSummary.playerGrenadeHitCount += 1;
+                                }
+                                else 
+                                {
+                                    soundEffect.PlayMissSound();
+                                    output.p2 = false;
+                                    PlayerSummary.playerGrenadeMissCount += 1;
+                                }
+                            }
+
+                            Debug.Log(output.p1);
+                            _eventSender.SetMessage(JsonUtility.ToJson(output));
+                            _eventSender.Publish();
+                        }
                     }
                 } 
                 if(player.action == "shoot") // CONNECTED PLAYER SHOOT
@@ -342,6 +348,7 @@ public class PlayerNo
     public int num_shield = 3;
     public bool isHit = true;
     public string invalid = null;
+    public bool query = true;
 }
 
 [System.Serializable]
