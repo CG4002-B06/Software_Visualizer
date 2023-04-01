@@ -118,7 +118,7 @@ public class mqttStateController : MonoBehaviour
                     {
                         Output output = new Output();
 
-                        if(player.query == false)
+                        if(gameState.query == false)
                         {
                             player1.Grenade();
                         }
