@@ -224,7 +224,10 @@ public class mqttStateController : MonoBehaviour
                 {
                     if (opponent.num_deaths >= 0)
                     {
-                        player2.Grenade();
+                        if(opponent.isHit == true) // If opponent cannot detect your QR code then its a miss
+                        {
+                            player2.Grenade();
+                        }
                     }
                 } 
                 if(opponent.action == "shoot") // OPPONENT SHOOT
