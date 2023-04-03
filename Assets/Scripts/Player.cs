@@ -299,14 +299,14 @@ public class Player : MonoBehaviour
     public void TargetFound(bool target)
     {
         status = target;
-        if(target == false)
-        {
-            soundEffects.PlayTargetOffSightSound();
-        } 
-        else 
-        {
-            soundEffects.PlayTargetOnSightSound();
-        }
+        // if(target == false)
+        // {
+        //     soundEffects.PlayTargetOffSightSound();
+        // } 
+        // else 
+        // {
+        //     soundEffects.PlayTargetOnSightSound();
+        // }
     }
 
     public bool ReturnTargetQuery()
