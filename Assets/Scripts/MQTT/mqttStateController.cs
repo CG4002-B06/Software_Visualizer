@@ -118,8 +118,18 @@ public class mqttStateController : MonoBehaviour
                     {
                         if(gameState.query == false)
                         {
-                            player1.Grenade();
+                            if(player == gameState.p1)
+                            {
+                                player1.Grenade();
+                                Debug.Log("Grenade thrown by Player!");
+                            }
 
+                            if(player == gameState.p2)
+                            {
+                                player1.Grenade();
+                                Debug.Log("Grenade thrown by Opponent!");
+                            }
+                            
                             if(player2.ReturnTargetQuery())
                             {
                                 soundEffect.InvokePlayGrenadeExplosionSound();
@@ -185,8 +195,8 @@ public class mqttStateController : MonoBehaviour
                 }
                 if(player.action == "shield") // CONNECTED PLAYER SHIELD
                 {
-                    player1.ActivateShield();
-                    shieldTimer.SetTime(player.shield_time);
+                    // player1.ActivateShield();
+                    // shieldTimer.SetTime(player.shield_time);
                     if(player == gameState.p1)
                     {
                         shieldTimer.SetText(1);
@@ -294,6 +304,17 @@ public class mqttStateController : MonoBehaviour
         if(player2_object.shield_time <= 0 || player2_object.shield_health <= 0)
         {
             SWShield.SetActive(false);
+        }
+
+        if(player1_object.shield_health > 0)
+        {
+            player1.ActivateShield();
+            shieldTimer.SetTime(player1_object.shield_time);
+        }
+
+        if(player1_object.shield_time <= 0 || player2_object.shield_health <= 0)
+        {
+            player1.DeactivateShield();
         }
 
         // Assign Color and Size to death counters accordingly
