@@ -73,11 +73,11 @@ public class mqttEventController : MonoBehaviour
                 blackScreen.SetActive(false);
                 if(player == gameEvent.p1)
                 {
-                    connectionMessage.text = "P1" + player;
+                    connectionMessage.text = "P1 " + player;
                 }
                 if(player == gameEvent.p2)
                 {
-                    connectionMessage.text = "P2" + player;
+                    connectionMessage.text = "P2 " + player;
                 }
                 
                 connectionMessage.color = Color.white;
@@ -90,11 +90,11 @@ public class mqttEventController : MonoBehaviour
                 blackScreen.SetActive(false);
                 if(player == gameEvent.p1)
                 {
-                    connectionMessage.text = "P1" + player;
+                    connectionMessage.text = "P1 " + player;
                 }
                 if(player == gameEvent.p2)
                 {
-                    connectionMessage.text = "P2" + player;
+                    connectionMessage.text = "P2 " + player;
                 }
                 
                 connectionMessage.color = Color.green;
@@ -107,11 +107,11 @@ public class mqttEventController : MonoBehaviour
                 blackScreen.SetActive(true);
                 if(player == gameEvent.p1)
                 {
-                    connectionMessage.text = "P1" + player;
+                    connectionMessage.text = "P1 " + player;
                 }
                 if(player == gameEvent.p2)
                 {
-                    connectionMessage.text = "P2" + player;
+                    connectionMessage.text = "P2 " + player;
                 }
                 
                 connectionMessage.color = Color.red;
@@ -123,11 +123,11 @@ public class mqttEventController : MonoBehaviour
                 blackScreen.SetActive(false);
                 if(player == gameEvent.p1)
                 {
-                    connectionMessage.text = "P1" + player;
+                    connectionMessage.text = "P1 " + player;
                 }
                 if(player == gameEvent.p2)
                 {
-                    connectionMessage.text = "P2" + player;
+                    connectionMessage.text = "P2 " + player;
                 }
                 
                 connectionMessage.color = Color.green;

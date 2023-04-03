@@ -284,18 +284,7 @@ public class Player : MonoBehaviour
         if(Players.Equals(GameObject.Find("P2")))
         {
             SWShield.SetActive(true);
-        }
-
-        if(shieldHealth <= 0 && Players.Equals(GameObject.Find("P1")))
-        {
-            openScreen.OpenBlueScreen(false);
-            lerpTimer = 0f;
-        }
-
-        if(shieldHealth <= 0 && Players.Equals(GameObject.Find("P2")))
-        {
-            SWShield.SetActive(false);
-            lerpTimer = 0f;
+            // Set timer for this also
         }
     }
 

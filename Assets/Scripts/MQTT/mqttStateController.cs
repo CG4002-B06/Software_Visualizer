@@ -195,8 +195,8 @@ public class mqttStateController : MonoBehaviour
                 }
                 if(player.action == "shield") // CONNECTED PLAYER SHIELD
                 {
-                    // player1.ActivateShield();
-                    // shieldTimer.SetTime(player.shield_time);
+                    player1.ActivateShield();
+                    shieldTimer.SetTime(player.shield_time);
                     if(player == gameState.p1)
                     {
                         shieldTimer.SetText(1);
@@ -324,6 +324,16 @@ public class mqttStateController : MonoBehaviour
             player1.DeactivateShield();
         }
 
+        if(player1_object.action == "logout")
+        {
+            player1.InvokeLogout();
+        }
+
+        if(player2_object.action == "logout")
+        {
+            simulatorMessage.text = "OPPONENT HAS \nLOGGED OUT!";
+        }
+
         // Assign Color and Size to death counters accordingly
         if(player1_object.num_deaths > player2_object.num_deaths)
         {
@@ -361,7 +371,7 @@ public class PlayerNo
     public float shield_health = 0;
     public int num_deaths = 0;
     public int num_shield = 3;
-    public bool isHit = true;
+    public bool isHit = false;
     public string invalid = null;
 }
 
