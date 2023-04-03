@@ -249,6 +249,15 @@ public class mqttStateController : MonoBehaviour
                 if(opponent.action == "shield") // OPPONENT SHIELD
                 {
                     player2.ActivateShield();
+                    shieldTimer.SetTime(opponent.shield_time);
+                    if(opponent == gameState.p1)
+                    {
+                        shieldTimer.SetText(2);
+                    }
+                    if(opponent == gameState.p2)
+                    {
+                        shieldTimer.SetText(1);
+                    }
                 }               
                 if(opponent.action == "reload") // OPPONENT RELOAD
                 {

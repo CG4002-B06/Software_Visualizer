@@ -81,7 +81,7 @@ public class mqttEventController : MonoBehaviour
                 }
                 
                 connectionMessage.color = Color.white;
-                Invoke("ShowMessage" , 3f);
+                Invoke("ShowMessage" , 5.5f);
             }
 
             if(player == "CONNECTION RE-ESTABLISHED \n REDO ACTION")
@@ -98,7 +98,7 @@ public class mqttEventController : MonoBehaviour
                 }
                 
                 connectionMessage.color = Color.green;
-                Invoke("ShowMessage" , 3f);
+                Invoke("ShowMessage" , 5.5f);
             }
 
             if(player == "CONNECTION LOST \n GET CLOSER TO THE RELAY NODE")
@@ -131,7 +131,7 @@ public class mqttEventController : MonoBehaviour
                 }
                 
                 connectionMessage.color = Color.green;
-                Invoke("ShowMessage" , 3f);
+                Invoke("ShowMessage" , 5f);
             }          
         }
     }

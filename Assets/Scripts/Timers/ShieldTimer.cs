@@ -17,7 +17,9 @@ public class ShieldTimer : MonoBehaviour
     public GameObject ShieldPicP2;
     public OpenScreen openScreen;
     public Player shieldHealth;
+    public GameObject SWShield;
     bool hasStart = false;
+    bool hasStart2 = false;
     bool player1 = false;
     bool player2 = false;
 
@@ -29,6 +31,11 @@ public class ShieldTimer : MonoBehaviour
     public void SetHasStart(bool status)
     {
         hasStart = status;
+    }
+
+    public void SetHasStart2(bool status)
+    {
+        hasStart2 = status;
     }
 
     public void SetText(int playerNumber)
@@ -104,6 +111,62 @@ public class ShieldTimer : MonoBehaviour
                 CrackedShieldUI.SetActive(false);
                 openScreen.OpenBlueScreen(false);
                 shieldHealth.DeactivateShield();
+            }
+        }
+
+        if(hasStart2 && player1)
+        {
+            SWShield.SetActive(true);
+            currentTime -= 1 * Time.deltaTime;
+            countdownTextP1.text = currentTime.ToString("0");
+            ShieldCountP1.SetActive(false);
+            ShieldPicP1.SetActive(false);
+            
+            if(currentTime <= 3)
+            {
+                countdownTextP1.color = Color.red;
+            }
+            if(currentTime <= 1)
+            {
+                CrackedShieldUI.SetActive(true);
+            }
+            if(currentTime <= 0)
+            {
+                currentTime = 0;
+                countdownTextP1.text = "" + currentTime;
+
+                ShieldCountP1.SetActive(true);
+                ShieldPicP1.SetActive(true);
+                Timer.SetActive(false);
+                SWShield.SetActive(false);
+            }
+        }
+
+        if(hasStart2 && player2)
+        {
+            SWShield.SetActive(true);
+            currentTime -= 1 * Time.deltaTime;
+            countdownTextP2.text = currentTime.ToString("0");
+            ShieldCountP2.SetActive(false);
+            ShieldPicP2.SetActive(false);
+            
+            if(currentTime <= 3)
+            {
+                countdownTextP2.color = Color.red;
+            }
+            if(currentTime <= 1)
+            {
+                CrackedShieldUI.SetActive(true);
+            }
+            if(currentTime <= 0)
+            {
+                currentTime = 0;
+                countdownTextP2.text = "" + currentTime;
+
+                ShieldCountP2.SetActive(true);
+                ShieldPicP2.SetActive(true);
+                Timer.SetActive(false);
+                SWShield.SetActive(false);
             }
         }
     }
