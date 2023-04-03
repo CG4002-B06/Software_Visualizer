@@ -283,8 +283,8 @@ public class Player : MonoBehaviour
         
         if(Players.Equals(GameObject.Find("P2")))
         {
-            SWShield.SetActive(true);
-            // Set timer for this also
+            Timer.SetActive(true);
+            shieldTimer.SetHasStart2(true); 
         }
     }
 
