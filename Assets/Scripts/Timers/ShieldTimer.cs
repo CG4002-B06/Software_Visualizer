@@ -20,8 +20,6 @@ public class ShieldTimer : MonoBehaviour
     public GameObject SWShield;
     bool hasStart = false;
     bool hasStart2 = false;
-    bool player1 = false;
-    bool player2 = false;
 
     public void SetTime(float time)
     {
@@ -39,20 +37,6 @@ public class ShieldTimer : MonoBehaviour
         hasStart2 = status;
         Debug.Log("Counter 2");
     }
-
-    // public void SetText(int playerNumber)
-    // {
-    //     if(playerNumber == 1)
-    //     {
-    //         player1 = true;
-    //         // currentTime = 10f;
-    //     }
-    //     if(playerNumber == 2)
-    //     {
-    //         player2 = true;
-    //         // currentTime = 10f;
-    //     }   
-    // }
 
     void Update()
     {

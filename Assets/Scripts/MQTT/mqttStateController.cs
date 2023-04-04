@@ -9,7 +9,6 @@ public class mqttStateController : MonoBehaviour
     public string nameController = "State Controller";
     public string tagOfTheMQTTReceiver = "MQTTState";
     public mqttReceiver _eventSender;
-    public OpenScreen openScreen;
     public TextMeshProUGUI simulatorMessage;
     public TextMeshProUGUI simulatorMessageP1;
     public TextMeshProUGUI simulatorMessageP2;
@@ -69,10 +68,6 @@ public class mqttStateController : MonoBehaviour
             PlayerNo opponent = gameState.p2;
             PlayerSummary.playerDeathCounter = player.num_deaths;
             PlayerSummary.opponentDeathCounter = opponent.num_deaths;
-            playerName.text = "Player 1";
-            playerName.color = Color.red;
-            opponentName.text = "Player 2";
-            opponentName.color = Color.blue;
 
             Debug.Log("Player 1 and Opponent Set");
             DisplayPlayerAction(player, opponent);
@@ -83,10 +78,6 @@ public class mqttStateController : MonoBehaviour
             PlayerNo opponent = gameState.p1;
             PlayerSummary.playerDeathCounter = player.num_deaths;
             PlayerSummary.opponentDeathCounter = opponent.num_deaths;
-            playerName.text = "Player 2";
-            playerName.color = Color.blue;
-            opponentName.text = "Player 1";
-            opponentName.color = Color.red;
 
             Debug.Log("Player 2 and Opponent Set");
             DisplayPlayerAction(player, opponent);
@@ -103,7 +94,16 @@ public class mqttStateController : MonoBehaviour
             {
                 // soundEffect.PlayStatusUpdatingSound();
                 message.SetWarning("Game State Updating... \n Please wait a moment");
-                updatePlayerStatus(player, opponent);
+                if(player == gameState.p1)
+                {
+                    updatePlayerStatus(player, opponent);
+                    return;
+                }
+                if(player == gameState.p2)
+                {
+                    updatePlayerStatus(opponent, player);
+                    return;
+                }
                 return;
             }
 
@@ -259,8 +259,16 @@ public class mqttStateController : MonoBehaviour
             
             if(godMode == false)
             {
-                updatePlayerStatus(player, opponent);
-                return;
+                if(player == gameState.p1)
+                {
+                    updatePlayerStatus(player, opponent);
+                    return;
+                }
+                if(player == gameState.p2)
+                {
+                    updatePlayerStatus(opponent, player);
+                    return;
+                }
             }
         } 
     }
@@ -337,7 +345,7 @@ public class mqttStateController : MonoBehaviour
             player1.deathCounter.SetColorAndSize(Color.white, 24);
             player2.deathCounter.SetColorAndSize(Color.white, 24);
         }
-    }
+    }   
 }
 
 [System.Serializable]
