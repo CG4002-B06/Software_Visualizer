@@ -23,8 +23,8 @@ public class mqttStateController : MonoBehaviour
     // Initial Values
     public const float maxHealth = 100;    
     public const float maxShieldHealth = 30;
-    private int playerPacketId = 0;
-    private int opponentPacketId = 0;
+    private int currentId = 0;
+    private int previousId = 100000;
 
     public Player player1;
     public Player player2;
@@ -59,8 +59,7 @@ public class mqttStateController : MonoBehaviour
     private void OnMessageArrivedHandler(string newMsg)
     {
         var gameState = JsonUtility.FromJson<MqttState>(newMsg);
-        playerPacketId = 1;
-        opponentPacketId = 1;
+        currentId = gameState.id;
 
         if(PlayerSelection.PlayerIndex == 1)
         {
@@ -112,9 +111,9 @@ public class mqttStateController : MonoBehaviour
             }
 
             // Player actions
-            if(player.action != null && player.invalid == null && playerPacketId != 0)
+            if(player.action != null && player.invalid == null && currentId != previousId)
             {
-                playerPacketId = 0;
+                previousId = currentId;
                 if(player.action == "grenade") // CONNECTED PLAYER GRENADE
                 {
                     if (player.num_deaths >= 0)
@@ -212,9 +211,9 @@ public class mqttStateController : MonoBehaviour
             }  
 
             // Opponent actions
-            if(opponent.action != null && opponent.invalid == null && opponentPacketId != 0)
+            if(opponent.action != null && opponent.invalid == null && currentId != previousId)
             {
-                opponentPacketId = 0;
+                previousId = currentId;
                 if(opponent.action == "grenade") // OPPONENT GRENADE
                 {
                     if (opponent.num_deaths >= 0)
@@ -342,6 +341,7 @@ public class mqttStateController : MonoBehaviour
 [System.Serializable]
 public class MqttState 
 {
+    public int id;
     public bool correction; 
     public bool query = true;
     public PlayerNo p1 = new PlayerNo();
