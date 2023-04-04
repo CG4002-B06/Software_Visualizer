@@ -7,6 +7,8 @@ using TMPro;
 public class ShieldTimer : MonoBehaviour
 {
     float currentTime = 10;
+    
+    float currentTime2 = 10;
     [SerializeField] TextMeshProUGUI countdownTextP1;
     [SerializeField] TextMeshProUGUI countdownTextP2;
     public GameObject Timer;
@@ -26,16 +28,21 @@ public class ShieldTimer : MonoBehaviour
         currentTime = time;
     }
 
+    public void SetTime2(float time)
+    {
+        currentTime2 = time;
+    }
+
     public void SetHasStart(bool status)
     {
         hasStart = status;
-        Debug.Log(hasStart);
+        countdownTextP1.color = Color.white;
     }
 
     public void SetHasStart2(bool status)
     {
         hasStart2 = status;
-        Debug.Log("Counter 2");
+        countdownTextP2.color = Color.white;
     }
 
     void Update()
@@ -69,7 +76,7 @@ public class ShieldTimer : MonoBehaviour
                 CrackedShieldUI.SetActive(false);
                 openScreen.OpenBlueScreen(false);
                 hasStart = false;
-                Timer.SetActive(false);
+                // Timer.SetActive(false);
                 currentTime = 10;
                 shieldHealth.DeactivateShield();
             }
@@ -136,27 +143,27 @@ public class ShieldTimer : MonoBehaviour
         if(hasStart2)
         {
             SWShield.SetActive(true);
-            currentTime -= 1 * Time.deltaTime;
-            countdownTextP2.text = currentTime.ToString("0");
+            currentTime2 -= 1 * Time.deltaTime;
+            countdownTextP2.text = currentTime2.ToString("0");
             ShieldCountP2.SetActive(false);
             ShieldPicP2.SetActive(false);
             
-            if(currentTime <= 3)
+            if(currentTime2 <= 3)
             {
                 countdownTextP2.color = Color.red;
             }
-            if(currentTime <= 0)
+            if(currentTime2 <= 0)
             {
-                currentTime = 0;
-                countdownTextP2.text = "" + currentTime;
+                currentTime2 = 0;
+                countdownTextP2.text = "" + currentTime2;
                 countdownTextP2.text = "";
 
                 ShieldCountP2.SetActive(true);
                 ShieldPicP2.SetActive(true);
                 SWShield.SetActive(false);
                 hasStart2 = false;
-                Timer.SetActive(false);
-                currentTime = 10;
+                // Timer.SetActive(false);
+                currentTime2 = 10;
                 shieldHealth.DeactivateShield();
             }
         }

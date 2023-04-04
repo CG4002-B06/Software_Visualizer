@@ -68,6 +68,10 @@ public class mqttStateController : MonoBehaviour
             PlayerNo opponent = gameState.p2;
             PlayerSummary.playerDeathCounter = player.num_deaths;
             PlayerSummary.opponentDeathCounter = opponent.num_deaths;
+            playerName.text = "Player 1";
+            playerName.color = Color.red;
+            opponentName.text = "Player 2";
+            opponentName.color = Color.blue;
 
             Debug.Log("Player 1 and Opponent Set");
             DisplayPlayerAction(player, opponent);
@@ -78,6 +82,10 @@ public class mqttStateController : MonoBehaviour
             PlayerNo opponent = gameState.p1;
             PlayerSummary.playerDeathCounter = player.num_deaths;
             PlayerSummary.opponentDeathCounter = opponent.num_deaths;
+            playerName.text = "Player 2";
+            playerName.color = Color.blue;
+            opponentName.text = "Player 1";
+            opponentName.color = Color.red;
 
             Debug.Log("Player 2 and Opponent Set");
             DisplayPlayerAction(player, opponent);
@@ -245,7 +253,7 @@ public class mqttStateController : MonoBehaviour
                 if(opponent.action == "shield") // OPPONENT SHIELD
                 {
                     player2.ActivateShield();
-                    shieldTimer.SetTime(opponent.shield_time);
+                    shieldTimer.SetTime2(opponent.shield_time);
                 }               
                 if(opponent.action == "reload") // OPPONENT RELOAD
                 {
