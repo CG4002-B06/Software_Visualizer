@@ -293,7 +293,10 @@ public class Player : MonoBehaviour
     public void DeactivateShield()
     {
         shieldHealth = 0;
-        soundEffects.PlayShieldDeactivationSound();
+        if(Players.Equals(GameObject.Find("P1")))
+        {
+            soundEffects.PlayShieldDeactivationSound();
+        }
     }
 
     public void TargetFound(bool target)

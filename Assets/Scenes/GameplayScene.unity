@@ -3235,6 +3235,7 @@ MonoBehaviour:
   ShieldPicP2: {fileID: 1626547809}
   openScreen: {fileID: 114184567}
   shieldHealth: {fileID: 153264412}
+  SWShield: {fileID: 0}
 --- !u!1 &312158174
 GameObject:
   m_ObjectHideFlags: 0
@@ -10364,7 +10365,7 @@ MonoBehaviour:
   GrenadeCount: {fileID: 312158176}
   ShieldCount: {fileID: 1707656073}
   deathCounter: {fileID: 1184189742}
-  shieldTimer: {fileID: 0}
+  shieldTimer: {fileID: 1738989795}
   grenadeThrower1: {fileID: 0}
   grenadeThrower2: {fileID: 1491309889}
   openScreen: {fileID: 114184567}
@@ -13006,6 +13007,8 @@ MonoBehaviour:
   simulatorMessage: {fileID: 1700433576}
   simulatorMessageP1: {fileID: 1498100053}
   simulatorMessageP2: {fileID: 1788868512}
+  playerName: {fileID: 0}
+  opponentName: {fileID: 0}
   godModeButton: {fileID: 831166604}
   exitGodModeButton: {fileID: 1569636668}
   SWShield: {fileID: 0}
@@ -14890,6 +14893,7 @@ MonoBehaviour:
   ShieldPicP2: {fileID: 1626547809}
   openScreen: {fileID: 114184567}
   shieldHealth: {fileID: 1184189741}
+  SWShield: {fileID: 1093210934}
 --- !u!114 &1738989796
 MonoBehaviour:
   m_ObjectHideFlags: 0
