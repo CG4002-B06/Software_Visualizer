@@ -102,16 +102,7 @@ public class mqttStateController : MonoBehaviour
             {
                 // soundEffect.PlayStatusUpdatingSound();
                 message.SetWarning("Game State Updating... \n Please wait a moment");
-                if(player == gameState.p1)
-                {
-                    updatePlayerStatus(player, opponent);
-                    return;
-                }
-                if(player == gameState.p2)
-                {
-                    updatePlayerStatus(opponent, player);
-                    return;
-                }
+                updatePlayerStatus(player, opponent);
                 return;
             }
 
@@ -267,16 +258,8 @@ public class mqttStateController : MonoBehaviour
             
             if(godMode == false)
             {
-                if(player == gameState.p1)
-                {
-                    updatePlayerStatus(player, opponent);
-                    return;
-                }
-                if(player == gameState.p2)
-                {
-                    updatePlayerStatus(opponent, player);
-                    return;
-                }
+                updatePlayerStatus(player, opponent);
+                return;
             }
         } 
     }

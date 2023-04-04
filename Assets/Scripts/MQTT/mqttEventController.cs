@@ -13,6 +13,7 @@ public class mqttEventController : MonoBehaviour
     public TextMeshProUGUI connectionMessage;
     public GameObject blackScreen;
     public SoundEffects soundEffect;
+    private int packetId = 0;
 
     void Start()
     {
@@ -29,6 +30,7 @@ public class mqttEventController : MonoBehaviour
     private void OnMessageArrivedHandler(string newMsg)
     {
         var gameEvent = JsonUtility.FromJson<MqttEvent>(newMsg);
+        packetId = 1;
 
         if(PlayerSelection.PlayerIndex == 1)
         {
@@ -50,16 +52,18 @@ public class mqttEventController : MonoBehaviour
             Debug.Log(player);
             Debug.Log(opponent);
 
-            if(player == "DONT MOVE GLOVE! \n SENSORS ARE INITIALISING...")
+            if(player == "DONT MOVE GLOVE! \n SENSORS ARE INITIALISING..." && packetId != 0)
             {
+                packetId = 0;
                 soundEffect.PlayDontMoveGloveSound();
                 blackScreen.SetActive(true);
                 connectionMessage.text = "" + player;
                 connectionMessage.color = Color.white;
             }
 
-            if(player == "SENSORS HAVE BEEN INITIALISED \n ENJOY SHOOTING!")
+            if(player == "SENSORS HAVE BEEN INITIALISED \n ENJOY SHOOTING!" && packetId != 0)
             {
+                packetId = 0;
                 soundEffect.PlayBeginGameSound();
                 blackScreen.SetActive(false);
                 connectionMessage.text = "" + player;
@@ -67,8 +71,9 @@ public class mqttEventController : MonoBehaviour
                 Invoke("ShowMessage" , 3f);
             }
 
-            if(player == "ACTION UNDETECTED! \n REDO ACTION")
+            if(player == "ACTION UNDETECTED! \n REDO ACTION" && packetId != 0)
             {
+                packetId = 0;
                 soundEffect.PlayRedoActionSound();
                 blackScreen.SetActive(false);
                 if(player == gameEvent.p1)
@@ -84,8 +89,9 @@ public class mqttEventController : MonoBehaviour
                 Invoke("ShowMessage" , 5.5f);
             }
 
-            if(player == "CONNECTION RE-ESTABLISHED \n REDO ACTION")
+            if(player == "CONNECTION RE-ESTABLISHED \n REDO ACTION" && packetId != 0)
             {
+                packetId = 0;
                 soundEffect.PlayConnectionReestablishedSound();
                 blackScreen.SetActive(false);
                 if(player == gameEvent.p1)
@@ -101,8 +107,9 @@ public class mqttEventController : MonoBehaviour
                 Invoke("ShowMessage" , 5.5f);
             }
 
-            if(player == "CONNECTION LOST \n GET CLOSER TO THE RELAY NODE")
+            if(player == "CONNECTION LOST \n GET CLOSER TO THE RELAY NODE" && packetId != 0)
             {
+                packetId = 0;
                 soundEffect.PlayConnectionLostSound();
                 blackScreen.SetActive(true);
                 if(player == gameEvent.p1)
@@ -117,8 +124,9 @@ public class mqttEventController : MonoBehaviour
                 connectionMessage.color = Color.red;
             }
 
-            if(player == "CONNECTION RE-ESTABLISHED")
+            if(player == "CONNECTION RE-ESTABLISHED" && packetId != 0)
             {
+                packetId = 0;
                 soundEffect.PlayConnectionReestablishedSound();
                 blackScreen.SetActive(false);
                 if(player == gameEvent.p1)
