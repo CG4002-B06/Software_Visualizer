@@ -93,7 +93,11 @@ public class Player : MonoBehaviour
 
     public void Health()
     {
-        HP.text = "" + health;
+        if(Players.Equals(GameObject.Find("P1")))
+        {
+            HP.text = "" + health;
+        }
+        
         health = Mathf.Clamp(health, 0, maxHealth);
 
         if(shieldHealth == 0)

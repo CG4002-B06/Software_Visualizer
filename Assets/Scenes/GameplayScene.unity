@@ -13007,6 +13007,8 @@ MonoBehaviour:
   simulatorMessageP2: {fileID: 1788868512}
   playerName: {fileID: 30283191}
   opponentName: {fileID: 1343823557}
+  playerHP: {fileID: 421759151}
+  opponentHP: {fileID: 138192302}
   godModeButton: {fileID: 831166604}
   exitGodModeButton: {fileID: 1569636668}
   SWShield: {fileID: 1093210934}

@@ -14,6 +14,8 @@ public class mqttStateController : MonoBehaviour
     public TextMeshProUGUI simulatorMessageP2;
     public TextMeshProUGUI playerName;
     public TextMeshProUGUI opponentName;
+    public TextMeshProUGUI playerHP;
+    public TextMeshProUGUI opponentHP;
 
     public GameObject godModeButton;
     public GameObject exitGodModeButton;
@@ -273,11 +275,13 @@ public class mqttStateController : MonoBehaviour
         float p1ShieldHealth = Mathf.Clamp(player1_object.shield_health, 0, maxShieldHealth);
         player1.UpdateHealth(p1Health);
         player1.UpdateShieldHealth(p1ShieldHealth);
+        playerHP.text = "" + player1_object.hp;
 
         float p2Health = Mathf.Clamp(player2_object.hp, 0, maxHealth);
         float p2ShieldHealth = Mathf.Clamp(player2_object.shield_health, 0, maxShieldHealth);
         player2.UpdateHealth(p2Health);
         player2.UpdateShieldHealth(p2ShieldHealth);
+        opponentHP.text = "" + player2_object.hp;
         
         // Player 1
         player1.UpdateBulletCount(player1_object.bullets);
