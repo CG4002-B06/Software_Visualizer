@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI BulletCount;
     public TextMeshProUGUI GrenadeCount;
     public TextMeshProUGUI ShieldCount;
+    public TextMeshProUGUI playerName;
+    public TextMeshProUGUI opponentName;
 
     // Scripts
     public DeathCounter deathCounter;
@@ -78,6 +80,22 @@ public class Player : MonoBehaviour
         inventoryBars.SetAmmoBar(bulletCount);
         inventoryBars.SetGrenadeBar(grenadeCount);
         inventoryBars.SetShieldBar(shieldCount);
+
+        if(PlayerSelection.PlayerIndex == 1)
+        {
+            playerName.text = "Player 1";
+            playerName.color = Color.red;
+            opponentName.text = "Player 2";
+            opponentName.color = Color.blue;
+        }
+
+        if(PlayerSelection.PlayerIndex == 2)
+        {
+            playerName.text = "Player 2";
+            playerName.color = Color.blue;
+            opponentName.text = "Player 1";
+            opponentName.color = Color.red;
+        }
     }
 
     // Update is called once per frame
@@ -93,11 +111,7 @@ public class Player : MonoBehaviour
 
     public void Health()
     {
-        if(Players.Equals(GameObject.Find("P1")))
-        {
-            HP.text = "" + health;
-        }
-        
+        HP.text = "" + health;
         health = Mathf.Clamp(health, 0, maxHealth);
 
         if(shieldHealth == 0)
@@ -227,8 +241,6 @@ public class Player : MonoBehaviour
             Invoke("InvokeShootLaser", 1f);
             changeCrossHairSize.changeSize(1f);
         }
-
-        health -= 10;
         
         if(Players.Equals(GameObject.Find("P2")))
         {
@@ -274,7 +286,6 @@ public class Player : MonoBehaviour
     public void ActivateShield()
     {
         // Update UI
-        shieldHealth = 30;
         lerpTimer = 0f;
 
         // Update AR and screen effects

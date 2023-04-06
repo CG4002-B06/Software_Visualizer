@@ -1829,6 +1829,8 @@ MonoBehaviour:
   BulletCount: {fileID: 906591219}
   GrenadeCount: {fileID: 2103907926}
   ShieldCount: {fileID: 1578119916}
+  playerName: {fileID: 30283191}
+  opponentName: {fileID: 1343823557}
   deathCounter: {fileID: 153264413}
   shieldTimer: {fileID: 291626093}
   grenadeThrower1: {fileID: 1716070073}
@@ -10364,6 +10366,8 @@ MonoBehaviour:
   BulletCount: {fileID: 1373493980}
   GrenadeCount: {fileID: 312158176}
   ShieldCount: {fileID: 1707656073}
+  playerName: {fileID: 30283191}
+  opponentName: {fileID: 1343823557}
   deathCounter: {fileID: 1184189742}
   shieldTimer: {fileID: 1738989795}
   grenadeThrower1: {fileID: 0}
@@ -13005,10 +13009,9 @@ MonoBehaviour:
   simulatorMessage: {fileID: 1700433576}
   simulatorMessageP1: {fileID: 1498100053}
   simulatorMessageP2: {fileID: 1788868512}
-  playerName: {fileID: 30283191}
-  opponentName: {fileID: 1343823557}
   playerHP: {fileID: 421759151}
   opponentHP: {fileID: 138192302}
+  openScreen: {fileID: 114184567}
   godModeButton: {fileID: 831166604}
   exitGodModeButton: {fileID: 1569636668}
   SWShield: {fileID: 1093210934}

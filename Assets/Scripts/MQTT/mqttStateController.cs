@@ -12,11 +12,10 @@ public class mqttStateController : MonoBehaviour
     public TextMeshProUGUI simulatorMessage;
     public TextMeshProUGUI simulatorMessageP1;
     public TextMeshProUGUI simulatorMessageP2;
-    public TextMeshProUGUI playerName;
-    public TextMeshProUGUI opponentName;
     public TextMeshProUGUI playerHP;
     public TextMeshProUGUI opponentHP;
 
+    public OpenScreen openScreen;
     public GameObject godModeButton;
     public GameObject exitGodModeButton;
     public GameObject SWShield;
@@ -70,10 +69,6 @@ public class mqttStateController : MonoBehaviour
             PlayerNo opponent = gameState.p2;
             PlayerSummary.playerDeathCounter = player.num_deaths;
             PlayerSummary.opponentDeathCounter = opponent.num_deaths;
-            playerName.text = "Player 1";
-            playerName.color = Color.red;
-            opponentName.text = "Player 2";
-            opponentName.color = Color.blue;
 
             Debug.Log("Player 1 and Opponent Set");
             DisplayPlayerAction(player, opponent);
@@ -84,10 +79,6 @@ public class mqttStateController : MonoBehaviour
             PlayerNo opponent = gameState.p1;
             PlayerSummary.playerDeathCounter = player.num_deaths;
             PlayerSummary.opponentDeathCounter = opponent.num_deaths;
-            playerName.text = "Player 2";
-            playerName.color = Color.blue;
-            opponentName.text = "Player 1";
-            opponentName.color = Color.red;
 
             Debug.Log("Player 2 and Opponent Set");
             DisplayPlayerAction(player, opponent);
@@ -288,6 +279,22 @@ public class mqttStateController : MonoBehaviour
         player1.UpdateGrenadeCount(player1_object.grenades);
         player1.UpdateShieldCount(player1_object.num_shield);
         player1.deathCounter.UpdatePlayerDeathCount(player1_object.num_deaths);
+
+        if(player1_object.shield_health > 0)
+        {
+            player1.ActivateShield();
+            shieldTimer.SetTime(player1_object.shield_time);
+        }
+
+        if(player1_object.shield_time <= 0 || player1_object.shield_health <= 0)
+        {
+            openScreen.OpenBlueScreen(false); // Remember to add instance to openscreen gameobject
+        }
+
+        if(player1_object.action == "logout")
+        {
+            player1.InvokeLogout();
+        }
         
         // Player 2   
         player2.UpdateBulletCount(player2_object.bullets);
@@ -298,27 +305,12 @@ public class mqttStateController : MonoBehaviour
         if(player2_object.shield_health > 0)
         {
             SWShield.SetActive(true);
+            shieldTimer.SetTime2(player2_object.shield_time);
         }
         
         if(player2_object.shield_time <= 0 || player2_object.shield_health <= 0)
         {
             SWShield.SetActive(false);
-        }
-
-        if(player1_object.shield_health > 0)
-        {
-            player1.ActivateShield();
-            shieldTimer.SetTime(player1_object.shield_time);
-        }
-
-        if(player1_object.shield_time <= 0 || player2_object.shield_health <= 0)
-        {
-            player1.DeactivateShield();
-        }
-
-        if(player1_object.action == "logout")
-        {
-            player1.InvokeLogout();
         }
 
         if(player2_object.action == "logout")
