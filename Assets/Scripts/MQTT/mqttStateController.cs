@@ -33,6 +33,8 @@ public class mqttStateController : MonoBehaviour
     public MessageTimer message;
     public ShieldTimer shieldTimer;
     public BulletShooter shootEffect;
+    public bool playerShieldActive = false;
+    public bool opponentShieldActive = false;
 
     void Start()
     {
@@ -193,6 +195,7 @@ public class mqttStateController : MonoBehaviour
                 {
                     player1.ActivateShield();
                     shieldTimer.SetTime(player.shield_time);
+                    playerShieldActive = true;
                 } 
                 if(player.action == "reload") // CONNECTED PLAYER RELOAD
                 {
@@ -238,6 +241,7 @@ public class mqttStateController : MonoBehaviour
                 {
                     player2.ActivateShield();
                     shieldTimer.SetTime2(opponent.shield_time);
+                    opponentShieldActive = true;
                 }               
                 if(opponent.action == "reload") // OPPONENT RELOAD
                 {
@@ -280,15 +284,16 @@ public class mqttStateController : MonoBehaviour
         player1.UpdateShieldCount(player1_object.num_shield);
         player1.deathCounter.UpdatePlayerDeathCount(player1_object.num_deaths);
 
-        if(player1_object.shield_health > 0)
-        {
+        if(player1_object.shield_health > 0 && playerShieldActive == false)
+        { 
             player1.ActivateShield();
             shieldTimer.SetTime(player1_object.shield_time);
+            playerShieldActive = true;
         }
 
         if(player1_object.shield_time <= 0 || player1_object.shield_health <= 0)
         {
-            openScreen.OpenBlueScreen(false); // Remember to add instance to openscreen gameobject
+            openScreen.OpenBlueScreen(false); 
         }
 
         if(player1_object.action == "logout")
@@ -302,10 +307,11 @@ public class mqttStateController : MonoBehaviour
         player2.UpdateShieldCount(player2_object.num_shield);
         player2.deathCounter.UpdatePlayerDeathCount(player2_object.num_deaths);
 
-        if(player2_object.shield_health > 0)
+        if(player2_object.shield_health > 0 && opponentShieldActive == false)
         {
             SWShield.SetActive(true);
             shieldTimer.SetTime2(player2_object.shield_time);
+            opponentShieldActive = true;
         }
         
         if(player2_object.shield_time <= 0 || player2_object.shield_health <= 0)
