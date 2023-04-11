@@ -58,6 +58,11 @@ public class mqttStateController : MonoBehaviour
         godModeButton.SetActive(true);
     }
 
+    public void InvokeReloadText()
+    {
+        simulatorMessage.text = "";
+    }
+
     // Separate data and link it to variables used in the other scripts and call the necessary functions
     private void OnMessageArrivedHandler(string newMsg)
     {
@@ -119,12 +124,16 @@ public class mqttStateController : MonoBehaviour
                             if(player == gameState.p1)
                             {
                                 player1.Grenade();
+                                SWShield.SetActive(false);
+                                opponentShieldActive = false;
                                 Debug.Log("Grenade thrown by Player!");
                             }
 
                             if(player == gameState.p2)
                             {
                                 player1.Grenade();
+                                SWShield.SetActive(false);
+                                opponentShieldActive = false;
                                 Debug.Log("Grenade thrown by Opponent!");
                             }
                             
@@ -218,6 +227,8 @@ public class mqttStateController : MonoBehaviour
                         if(opponent.isHit == true && gameState.query == false) // If opponent cannot detect your QR code then its a miss
                         {
                             player2.Grenade();
+                            openScreen.OpenBlueScreen(false);
+                            playerShieldActive = false;
                         }
                         else
                         {
@@ -246,6 +257,7 @@ public class mqttStateController : MonoBehaviour
                 if(opponent.action == "reload") // OPPONENT RELOAD
                 {
                     simulatorMessage.text = "OPPONENT HAS \nRELOADED!";
+                    Invoke("InvokeReloadText", 2f);
                 }
                 if(opponent.action == "logout") // OPPONENT LOGOUT
                 {
