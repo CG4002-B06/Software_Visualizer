@@ -245,7 +245,7 @@ public class mqttStateController : MonoBehaviour
                 }               
                 if(opponent.action == "reload") // OPPONENT RELOAD
                 {
-                    player2.ReloadBullets();
+                    simulatorMessage.text = "OPPONENT HAS \nRELOADED!";
                 }
                 if(opponent.action == "logout") // OPPONENT LOGOUT
                 {

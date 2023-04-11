@@ -278,6 +278,7 @@ public class Player : MonoBehaviour
     // Action function for reload
     public void ReloadBullets()
     {
+        // Update AR and screen effects
         openScreen.OpenYellowScreen(true);
         soundEffects.PlayReloadSound();
     }

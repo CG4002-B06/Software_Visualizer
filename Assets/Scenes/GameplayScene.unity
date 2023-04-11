@@ -13022,6 +13022,8 @@ MonoBehaviour:
   message: {fileID: 251490806}
   shieldTimer: {fileID: 291626093}
   shootEffect: {fileID: 2001871780}
+  playerShieldActive: 0
+  opponentShieldActive: 0
 --- !u!1 &1581476327
 GameObject:
   m_ObjectHideFlags: 0
