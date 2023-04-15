@@ -33,6 +33,7 @@ public class mqttStateController : MonoBehaviour
     public MessageTimer message;
     public ShieldTimer shieldTimer;
     public BulletShooter shootEffect;
+    public Summary summary;
     public bool playerShieldActive = false;
     public bool opponentShieldActive = false;
 
@@ -213,6 +214,7 @@ public class mqttStateController : MonoBehaviour
                 if(player.action == "logout") // CONNECTED PLAYER LOGOUT
                 {
                     player1.InvokeLogout();
+                    summary.SendSummary();
                 }
             }  
 

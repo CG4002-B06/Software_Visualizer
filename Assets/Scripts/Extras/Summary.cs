@@ -26,6 +26,12 @@ public class Summary : MonoBehaviour
 
     void Update()
     {
+        playerDeath.text = "" + playerDeathCounter;
+        playerShotAcc.text = "" + playerShotAccuracy + "%";
+        playerGrenadeAcc.text = "" + playerGrenadeAccuracy + "%";
+        opponentDeath.text = "" + opponentDeathCounter;
+        opponentShotAcc.text = "" + opponentShotAccuracy + "%";
+        opponentGrenadeAcc.text = "" + opponentGrenadeAccuracy + "%";
     }
 
     public void SendSummary()
