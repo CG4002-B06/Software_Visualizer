@@ -1,6 +1,6 @@
 # Software_Visualizer
 
-A Sci-Fi themed AR laser tag game brought to you by CG4002 B06.
+A Sci-Fi themed AR laser tag game brought to you by CG4002 B06 using Unity
 
 ## Setup
 1. Install git lfs from [here](https://git-lfs.com/)
